@@ -1,10 +1,12 @@
 # 申请社区插件市场收录
 
-本文面向维护者，依据 2026-10-23 核对的市场规则编写。**尚未申请收录，也不表示任何市场已收录本项目。** 提交 Issue/PR、修改仓库 topic 或添加索引源，都应在作者另行确认后操作。
+本文面向维护者，依据 2026-10-23 核对的市场规则编写。**已获作者授权，向开放插件市场提交 [收录申请 #53](https://github.com/polang233/dsh-plugin-index/issues/53)；当前为 OPEN，等待维护者审核，尚未确认收录。** 其他市场的 Issue/PR 或索引源配置变更仍需另行确认。
 
 本项目采用 **GitHub 公开源码 + GitHub Release 预构建包**，不发布 npm。公开仓库为 [yyyzl/dsh-image-feedback](https://github.com/yyyzl/dsh-image-feedback)，包名为 `@yyyzl/dsh-image-feedback`，版本为 `0.1.0`。[包清单](../package.json)中的 `private: true` 是防止误发 npm 的保护，不妨碍公开源码或通过 Git/Release 安装，也不代表已取得同名 npm scope。
 
-仓库已设置 `dsh-plugin`、`deepseek-harness`、`image-annotation`、`feedback` topics。这只提供发现线索或候选入口，不代表市场接受收录；尚未提交市场 Issue/PR。
+仓库已设置 `dsh-plugin`、`deepseek-harness`、`image-annotation`、`feedback` topics。这只提供发现线索或候选入口，不代表市场接受收录；除上述申请外，尚未向其他市场提交 Issue/PR。
+
+[v0.1.0 Release](https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.1.0) 已公开发布，安装包已匿名下载并核对 SHA-256。该版本固定提交为 `2b2328c336215d454a7f3c84426ff0688e1e7926`；[Node.js 22 / 24 CI](https://github.com/yyyzl/dsh-image-feedback/actions/runs/39844975332) 均通过。以下流程用于复核或准备后续版本。
 
 ## 先完成可安装的公开发布
 

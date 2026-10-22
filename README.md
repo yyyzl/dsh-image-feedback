@@ -7,6 +7,7 @@ DeepSeek Harness 原生右侧栏插件：框选后直接写意见，拖动选区
 - 包标识：`@yyyzl/dsh-image-feedback`，版本 `0.1.0`。
 - 分发：本仓库的 [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>)，不是 npm。保留 `private: true` 防止误发布到 npm；包名不代表 npm 上已存在该包或已确认同名 scope 的所有权。
 - 兼容性边界由[清单](<package.json>)声明；原本地实现已在 Harness `0.2.1-rc.2` 验证过主要交互。公开命名版本的实机安装和旧版迁移尚未验证，详见[测试说明](<docs/TESTING.md>)。
+- 市场状态：[开放插件市场申请 #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) 已提交，待审核，尚不代表收录。
 - 这是第三方插件，不是 Harness 官方组件。不需要独立服务器，不修改宿主 ASAR。
 
 > 已安装 `@local/dsh-image-feedback`？先阅读下面的迁移步骤。**不能同时启用旧版和公开版**，它们共享存储域、命令和界面标识。

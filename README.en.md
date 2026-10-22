@@ -7,6 +7,7 @@ A native DeepSeek Harness sidebar: draw a region, type feedback immediately, dra
 - Package identifier: `@yyyzl/dsh-image-feedback`, version `0.1.0`.
 - Distribution: [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>), not npm. `private: true` intentionally prevents accidental npm publication. The package identifier does not establish npm availability or ownership of that registry scope.
 - Compatibility is declared in the [manifest](<package.json>). Main interactions were checked on the original local implementation with Harness `0.2.1-rc.2`; live installation and migration of the public namespace have not yet been verified. See [testing status](<docs/TESTING.md>).
+- Market status: [listing request #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) has been submitted to the open plugin index. Review is pending; this is not an accepted listing.
 - This is a third-party plugin, not an official Harness component. It needs no separate server and does not modify the host ASAR.
 
 > Already using `@local/dsh-image-feedback`? Follow the migration steps below. **Never enable both bundles together**: they share storage, commands, and UI identifiers.

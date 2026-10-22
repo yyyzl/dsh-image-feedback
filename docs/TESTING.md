@@ -12,9 +12,11 @@ This guide distinguishes deterministic tests, original-build observations, and r
 | Original local UI on Harness `0.2.1-rc.2` | Human checks confirmed region autofocus, red markers/readable send control, direct region movement, and point-marker dragging | Every theme, viewport width, zoom level, or browser |
 | Original Host transport with synthetic images | Independent image-bearing submission accepted; an identical retry was deduplicated | Actual UI canvas export or completed model image editing |
 | Public namespaced source on Node.js `24.21.0` | 120 tests, rebuild and package checks passed after renaming module owners; entry 4,091 bytes / lazy editor 115,691 bytes | Live public installation or migration |
+| [GitHub CI for the v0.1.0 source](<https://github.com/yyyzl/dsh-image-feedback/actions/runs/39844975332>) | Node.js 22 and 24 jobs passed tests, rebuild parity, package validation, packing and archive verification | Browser rendering or a live profile installation |
+| Public v0.1.0 asset | Anonymous download matched SHA-256 `cb59eb16fbdce8a3cd7cff2ce51a129c5660e4f07ba90542b6d34027187840d2`; all 35 packed files passed closure, identity, byte-parity and documentation-link checks | Installation or model-provider behavior |
 | Public `@yyyzl/dsh-image-feedback` installation and legacy migration | Not yet live-verified in this documentation snapshot | Preserved identifiers alone do not establish a successful migration |
 
-The recorded Node run used Node.js `24.21.0`; the release-preparation environment also has pnpm `11.28.5`, now pinned in the [manifest](<../package.json>). Development supports Node.js 22+, but this does not claim that Node 22 or every runtime/package-manager combination has already been exercised. CI jobs require their own actual results. Private session records, real identifiers, user quotes, and design concepts are deliberately not included as public evidence.
+The recorded Node run used Node.js `24.21.0`; the release-preparation environment also has pnpm `11.28.5`, now pinned in the [manifest](<../package.json>). The linked CI run separately exercised Node.js 22 and 24; it does not establish coverage of every runtime/package-manager combination. Private session records, real identifiers, user quotes, and design concepts are deliberately not included as public evidence.
 
 Publishing source or packing an archive does not update the original installed local bundle. Record any later public-release verification separately, with its exact version and limits.
 
