@@ -1,0 +1,37 @@
+{
+  "name": "@yyyzl/dsh-image-feedback",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Annotate images, reposition regions and pins, and send independent image feedback in DeepSeek Harness.",
+  "license": "MIT",
+  "author": { "name": "yyyzl", "url": "https://github.com/yyyzl" },
+  "repository": { "type": "git", "url": "git+https://github.com/yyyzl/dsh-image-feedback.git" },
+  "homepage": "https://github.com/yyyzl/dsh-image-feedback#readme",
+  "bugs": { "url": "https://github.com/yyyzl/dsh-image-feedback/issues" },
+  "keywords": ["dsh-plugin", "deepseek-harness", "image-feedback", "image-annotation", "cordis"],
+  "packageManager": "pnpm@11.28.5",
+  "engines": { "node": ">=22", "dsh": ">=0.2.1-rc.2 <0.3.0" },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": ["index.js", "host.js", "editor-core.js", "client.js", "client.editor.js", "cordis.patch.yml", "locale/*.json", "icon.svg", "README.md", "README.en.md", "LICENSE", "SECURITY.md", "CONTRIBUTING.md", "docs/", "src/", "scripts/", "tests/"],
+  "dependencies": { "zod": "4.4.3" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check client.js && node --check index.js && node scripts/validate-package.mjs",
+    "verify:pack": "node scripts/verify-package.mjs"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-ui-conversation", "@deepseek-ai/dsh-client-ui-sidebar-right"]
+    }
+  }
+}

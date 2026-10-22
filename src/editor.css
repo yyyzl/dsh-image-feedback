@@ -1,0 +1,999 @@
+/* Session-bound image feedback. All surfaces inherit the Harness theme. */
+.dif-root {
+  /* User-requested image markup: intentionally independent of the UI brand color. */
+  --dif-annotation: #dc2626;
+  --dif-annotation-ink: #ffffff;
+  --dif-accent-soft: color-mix(in srgb, var(--dsw-alias-brand-primary) 8%, transparent);
+  --dif-accent-line: color-mix(in srgb, var(--dsw-alias-brand-primary) 24%, transparent);
+  --dif-shadow: color-mix(in srgb, var(--dsw-alias-label-primary) 9%, transparent);
+  --dif-grid: color-mix(in srgb, var(--dsw-alias-border-l2) 65%, transparent);
+
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 280px;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-bg-base);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dif-root *,
+.dif-root *::before,
+.dif-root *::after {
+  box-sizing: border-box;
+}
+
+.dif-root :where(button, input, textarea, select, summary) {
+  font: inherit;
+}
+
+.dif-root :where(button, summary, input, textarea, select, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+.dif-root :where(button, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dif-root :where(button, input, textarea, select):disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.dif-root .dif-spacer {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.dif-root .dif-subtle {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* A quiet source strip, rather than a second application header. */
+.dif-root .dif-source {
+  z-index: 6;
+  display: flex;
+  flex: 0 0 40px;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-specific-sidebar-fill);
+}
+
+.dif-root .dif-source-name {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dif-root .dif-dimensions {
+  flex: 0 0 auto;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dif-root .dif-save-state {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.dif-root .dif-save-state::before {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: var(--dsw-alias-state-idle-primary);
+  content: "";
+}
+
+.dif-root .dif-save-state:is([data-state="saved"], [data-state="ready"])::before {
+  background: var(--dsw-alias-state-success-primary);
+}
+
+.dif-root .dif-save-state:is([data-state="saving"], [data-state="loading"])::before {
+  background: var(--dsw-alias-brand-primary);
+}
+
+.dif-root .dif-save-state:is([data-state="dirty"], [data-state="unsaved"])::before {
+  background: var(--dsw-alias-state-warn-primary);
+}
+
+.dif-root .dif-save-state:is([data-state="error"], [data-state="failed"])::before {
+  background: var(--dsw-alias-state-error-primary);
+}
+
+/* Small, mostly borderless controls; strong emphasis is reserved for Send. */
+.dif-root .dif-btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  margin: 0;
+  padding: 4px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  appearance: none;
+  color: var(--dsw-alias-label-primary);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 450;
+  line-height: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.dif-root .dif-btn:hover:not(:disabled) {
+  background: var(--dsw-alias-bg-layer-2);
+}
+
+.dif-root .dif-btn:active:not(:disabled) {
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 8%, transparent);
+}
+
+.dif-root .dif-btn[aria-pressed="true"] {
+  border-color: var(--dif-accent-line);
+  color: var(--dsw-alias-brand-primary);
+  background: var(--dif-accent-soft);
+}
+
+.dif-root .dif-icon-btn {
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  padding: 5px;
+}
+
+.dif-root .dif-icon {
+  display: block;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.dif-root .dif-btn.dif-primary {
+  /* Use the known contrasting text/base pair, never guess an on-brand foreground. */
+  border-color: var(--dsw-alias-label-primary);
+  color: var(--dsw-alias-bg-base);
+  background: var(--dsw-alias-label-primary);
+  font-weight: 600;
+}
+
+.dif-root .dif-primary :where(.dif-tool-label, .dif-icon) {
+  color: inherit;
+}
+
+.dif-root .dif-btn.dif-primary:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--dsw-alias-label-primary) 94%, var(--dsw-alias-bg-base));
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 94%, var(--dsw-alias-bg-base));
+}
+
+.dif-root .dif-btn.dif-secondary {
+  border-color: var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-base);
+}
+
+.dif-root .dif-btn.dif-secondary:hover:not(:disabled) {
+  border-color: var(--dsw-alias-border-l2);
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.dif-root .dif-text-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: var(--dsw-alias-label-secondary);
+  background: transparent;
+  font-size: 11px;
+  line-height: 18px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dif-root .dif-text-action:hover:not(:disabled) {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.dif-root .dif-tool-label {
+  min-width: 0;
+  font-size: 11px;
+}
+
+.dif-root .dif-toolbar {
+  z-index: 3;
+  display: flex;
+  flex: 0 0 44px;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-base);
+}
+
+.dif-root .dif-toolgroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+}
+
+.dif-root .dif-divider {
+  width: 1px;
+  height: 18px;
+  flex: 0 0 1px;
+  margin: 0 1px;
+  background: var(--dsw-alias-border-l1);
+}
+
+/* Native details menu. Its surface is local to the editor, not document.body. */
+.dif-root .dif-menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.dif-root .dif-menu > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--dsw-alias-label-secondary);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dif-root .dif-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.dif-root .dif-menu > summary:hover,
+.dif-root .dif-menu[open] > summary {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-bg-layer-2);
+}
+
+.dif-root .dif-menu-body {
+  position: absolute;
+  z-index: 12;
+  top: calc(100% + 6px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: max-content;
+  min-width: 170px;
+  max-width: min(280px, calc(100cqw - 24px));
+  max-height: min(360px, 65vh);
+  overflow: auto;
+  padding: 5px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-overlay);
+  box-shadow: 0 3px 8px var(--dif-shadow), 0 12px 32px var(--dif-shadow);
+}
+
+.dif-root .dif-menu-body .dif-btn,
+.dif-root .dif-menu-body .dif-text-action {
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 9px;
+  color: var(--dsw-alias-label-primary);
+  text-align: left;
+  white-space: normal;
+}
+
+.dif-root .dif-menuheading {
+  padding: 6px 9px 3px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.dif-root .dif-menu-body .dif-divider {
+  width: auto;
+  height: 1px;
+  flex-basis: 1px;
+  margin: 4px 5px;
+}
+
+/* The image gets the remaining space. Only this viewport owns canvas scroll. */
+.dif-root .dif-canvas-area {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 140px;
+  overflow: hidden;
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.dif-root .dif-stage {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  background-color: var(--dsw-alias-bg-layer-1);
+  background-image: radial-gradient(circle, var(--dif-grid) 0.65px, transparent 0.85px);
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.dif-root .dif-stage:focus-visible {
+  outline-offset: -3px;
+}
+
+.dif-root .dif-canvas-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.dif-root .dif-canvas {
+  display: block;
+  flex: none;
+  max-width: none;
+  border: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-base);
+  box-shadow: 0 1px 3px var(--dif-shadow), 0 8px 24px var(--dif-shadow);
+  user-select: none;
+  touch-action: none;
+}
+
+.dif-root .dif-zoom {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  min-height: 30px;
+  padding: 2px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 7px;
+  color: var(--dsw-alias-label-secondary);
+  background: color-mix(in srgb, var(--dsw-alias-bg-overlay) 92%, transparent);
+  box-shadow: 0 2px 8px var(--dif-shadow);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dif-root .dif-zoom .dif-btn {
+  min-height: 26px;
+  padding: 2px 7px;
+  font-size: 11px;
+}
+
+.dif-root .dif-zoom .dif-icon-btn {
+  width: 26px;
+  height: 26px;
+  padding: 4px;
+}
+
+.dif-root .dif-zoom .dif-divider {
+  height: 14px;
+  margin: 0 3px;
+}
+
+.dif-root .dif-mode-hint {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 10px;
+  max-width: calc(100% - 20px);
+  overflow: hidden;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Compact notes: rows for navigation, one focused editor for the selected note. */
+.dif-root .dif-bottom {
+  display: flex;
+  /* Keep image geometry stable while selecting the next region or changing focus. */
+  flex: 0 1 clamp(104px, 26%, 220px);
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  max-height: 38%;
+  overflow: hidden;
+  border-top: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-base);
+}
+
+.dif-root .dif-list-title {
+  display: flex;
+  flex: 0 0 36px;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.dif-root .dif-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 4px;
+  color: var(--dsw-alias-label-secondary);
+  background: var(--dsw-alias-bg-layer-1);
+  font-size: 10px;
+  font-weight: 450;
+  font-variant-numeric: tabular-nums;
+}
+
+.dif-root .dif-notes-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 220px;
+  overflow: auto;
+  padding: 0 6px 6px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.dif-root .dif-note-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  margin: 1px 0;
+  padding: 5px 7px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: var(--dsw-alias-label-primary);
+  background: transparent;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dif-root .dif-note-row:hover {
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.dif-root .dif-note-row:is([data-selected="true"], [data-selected=""]) {
+  background: var(--dif-accent-soft);
+}
+
+.dif-root .dif-number {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 50%;
+  color: var(--dsw-alias-label-secondary);
+  background: var(--dsw-alias-bg-layer-2);
+  font-size: 10px;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+
+.dif-root .dif-note-row:is([data-selected="true"], [data-selected=""]) .dif-number,
+.dif-root .dif-inspector .dif-number {
+  color: var(--dsw-alias-brand-primary);
+  background: color-mix(in srgb, var(--dsw-alias-brand-primary) 12%, transparent);
+}
+
+.dif-root .dif-note-snippet {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dif-root .dif-kind {
+  flex: 0 0 auto;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.dif-root .dif-inspector {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin: 4px 8px 8px;
+  overflow: hidden;
+  border: 1px solid var(--dif-accent-line);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--dsw-alias-brand-primary) 4%, var(--dsw-alias-bg-base));
+}
+
+.dif-root .dif-inspector:focus-within {
+  border-color: color-mix(in srgb, var(--dsw-alias-brand-primary) 52%, transparent);
+  box-shadow: 0 0 0 1px var(--dif-accent-soft);
+}
+
+.dif-root .dif-note-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 28px;
+  padding: 3px 6px 0 9px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+}
+
+.dif-root .dif-note-head .dif-icon-btn {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  padding: 3px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.dif-root .dif-note-head .dif-icon {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+}
+
+.dif-root .dif-inspector textarea {
+  display: block;
+  width: 100%;
+  min-height: 62px;
+  max-height: 140px;
+  margin: 0;
+  padding: 8px 10px 10px;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  color: var(--dsw-alias-label-primary);
+  background: transparent;
+  font-size: 12px;
+  line-height: 1.65;
+  resize: vertical;
+  scrollbar-width: thin;
+}
+
+.dif-root .dif-inspector textarea:focus-visible {
+  outline: none;
+}
+
+.dif-root .dif-inspector textarea::placeholder,
+.dif-root .dif-import input::placeholder {
+  color: var(--dsw-alias-label-secondary);
+  opacity: 0.75;
+}
+
+.dif-root .dif-note-help {
+  padding: 0 10px 8px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.dif-root .dif-empty-notes {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 2px 12px 8px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+  line-height: 18px;
+}
+
+/* Footer stays reachable; notices do not compete with the canvas when idle. */
+.dif-root .dif-footer {
+  z-index: 2;
+  display: flex;
+  flex: 0 0 52px;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 8px 12px;
+  border-top: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-specific-sidebar-fill);
+}
+
+.dif-root .dif-summary {
+  display: -webkit-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+  line-height: 16px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.dif-root .dif-footer-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.dif-root .dif-footer-actions .dif-btn {
+  min-height: 32px;
+}
+
+.dif-root .dif-status {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 90px;
+  overflow: auto;
+  padding: 7px 12px;
+  border-top: 1px solid color-mix(in srgb, var(--dsw-alias-state-warn-primary) 20%, transparent);
+  color: var(--dsw-alias-label-secondary);
+  background: color-mix(in srgb, var(--dsw-alias-state-warn-primary) 5%, var(--dsw-alias-bg-base));
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  scrollbar-width: thin;
+}
+
+.dif-root .dif-status[data-error="true"] {
+  border-top-color: color-mix(in srgb, var(--dsw-alias-state-error-primary) 20%, transparent);
+  color: var(--dsw-alias-state-error-primary);
+  background: color-mix(in srgb, var(--dsw-alias-state-error-primary) 5%, var(--dsw-alias-bg-base));
+}
+
+/* Optional import/library overlays occupy the panel, never the chat surface. */
+.dif-root .dif-import {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.dif-root .dif-import input {
+  flex: 1 1 auto;
+  width: 0;
+  min-width: 0;
+  height: 31px;
+  padding: 5px 8px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 5px;
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-bg-base);
+  font-size: 12px;
+}
+
+.dif-root .dif-library {
+  position: absolute;
+  z-index: 8;
+  top: 44px;
+  right: 10px;
+  left: 10px;
+  max-height: min(360px, 70%);
+  overflow: auto;
+  padding: 0 8px 8px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-overlay);
+  box-shadow: 0 4px 12px var(--dif-shadow), 0 16px 36px var(--dif-shadow);
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.dif-root .dif-library-head {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 4px 2px;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-overlay);
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.dif-root .dif-asset-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  padding-top: 8px;
+}
+
+.dif-root .dif-asset {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  margin: 0;
+  padding: 4px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--dsw-alias-label-primary);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dif-root .dif-asset:hover {
+  border-color: var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.dif-root .dif-asset:is([aria-pressed="true"], [data-selected="true"], [data-selected=""]) {
+  border-color: var(--dif-accent-line);
+  background: var(--dif-accent-soft);
+}
+
+.dif-root .dif-asset img {
+  display: block;
+  width: 100%;
+  height: 80px;
+  aspect-ratio: 4 / 3;
+  padding: 3px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 3px;
+  background: var(--dsw-alias-bg-layer-1);
+  object-fit: contain;
+}
+
+.dif-root .dif-asset :where(span, .dif-asset-name) {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 1px;
+  font-size: 10px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dif-root .dif-inline-confirm {
+  position: absolute;
+  z-index: 9;
+  top: 92px;
+  right: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 7px;
+  background: var(--dsw-alias-bg-overlay);
+  box-shadow: 0 4px 16px var(--dif-shadow);
+  font-size: 12px;
+}
+
+.dif-root .dif-inline-confirm p {
+  flex-basis: 100%;
+  margin: 0 0 2px;
+}
+
+/* Calm empty state: paste is primary guidance, not another permanent toolbar. */
+.dif-root .dif-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: auto;
+  padding: 22px;
+  text-align: center;
+}
+
+.dif-root .dif-empty > .dif-icon,
+.dif-root .dif-empty > svg {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 2px;
+  color: color-mix(in srgb, var(--dsw-alias-label-secondary) 60%, transparent);
+}
+
+.dif-root .dif-empty :where(h2, h3, strong) {
+  max-width: 260px;
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.5;
+}
+
+.dif-root .dif-empty :where(p, .dif-subtle) {
+  max-width: 260px;
+  margin: 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.dif-root .dif-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dif-root .dif-empty-more {
+  margin-top: 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+}
+
+/* Width adaptation follows this sidebar, not the entire application window. */
+@container (max-width: 400px) {
+  .dif-root .dif-source {
+    gap: 6px;
+    padding-inline: 10px;
+  }
+
+  .dif-root .dif-toolbar {
+    gap: 5px;
+    padding-inline: 8px;
+  }
+
+  .dif-root .dif-footer {
+    gap: 7px;
+    padding-inline: 10px;
+  }
+
+  .dif-root .dif-footer-actions {
+    gap: 4px;
+  }
+
+  .dif-root .dif-footer-actions .dif-btn {
+    padding-inline: 7px;
+  }
+
+  .dif-root .dif-canvas-wrap {
+    padding: 16px;
+  }
+}
+
+@container (max-width: 380px) {
+  .dif-root .dif-footer :where(.dif-extra-label, .dif-footer-label) {
+    display: none;
+  }
+
+  .dif-root .dif-dimensions {
+    font-size: 9px;
+  }
+
+  .dif-root .dif-list-title {
+    padding-inline: 10px;
+  }
+}
+
+@container (max-width: 360px) {
+  .dif-root .dif-toolbar .dif-tool-label {
+    display: none;
+  }
+
+  .dif-root .dif-source .dif-save-state {
+    gap: 4px;
+    font-size: 9px;
+  }
+
+  .dif-root .dif-toolbar {
+    gap: 4px;
+  }
+
+  .dif-root .dif-toolgroup {
+    gap: 1px;
+  }
+
+  .dif-root .dif-kind {
+    font-size: 9px;
+  }
+
+  .dif-root .dif-zoom {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .dif-root .dif-asset-grid {
+    gap: 4px;
+  }
+
+  .dif-root .dif-empty {
+    padding: 18px;
+  }
+}
+
+@container (min-width: 600px) {
+  .dif-root .dif-source,
+  .dif-root .dif-footer {
+    padding-inline: 16px;
+  }
+
+  .dif-root .dif-toolbar {
+    padding-inline: 14px;
+  }
+
+  .dif-root .dif-list-title {
+    padding-inline: 16px;
+  }
+
+  .dif-root .dif-notes-scroll {
+    padding-inline: 10px;
+  }
+
+  .dif-root .dif-inspector {
+    margin-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dif-root *,
+  .dif-root *::before,
+  .dif-root *::after {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}

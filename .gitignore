@@ -1,0 +1,13 @@
+node_modules/
+*.tgz
+artifacts/
+verification/
+design/
+coverage/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.pem
+*.key
+*.log
