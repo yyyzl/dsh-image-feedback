@@ -22,6 +22,7 @@ Local recovery can contain sensitive comments. Disabling or uninstalling the bun
 - The Agent tool is bound to its executing session. Supplying another `sessionId` must not grant access to that session's assets or drafts.
 - Path imports read files on the **Host machine** through the requesting Agent's filesystem service. They are not browser uploads. Effective read permissions come from Harness and may be broader than a workspace; do not assume a workspace sandbox exists. The plugin does not bypass a rejected read with another filesystem implementation.
 - The plugin retains normalized attachment references rather than putting image Base64 into draft records. It validates asset identity and coordinates before saving or sending.
+- GUI import/load/save operations use an owner-authenticated, session-capability-authorized streaming POST endpoint with declared and actual byte limits. They do not execute human commands or wake the model. Legacy internal command rows are suppressed only in the renderer; durable audit records, tool calls and submitted feedback are retained.
 - Sending is explicit and independent of the chat composer. Inserting text is a separate action and does not send images.
 - A queued/accepted response is not proof of a model response or successful image editing. Retry uncertain submissions with the same request ID; changing the ID can create a second request.
 

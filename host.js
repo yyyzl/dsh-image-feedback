@@ -11,6 +11,7 @@ export const COMMAND_NAME = 'image-feedback';
 export const TOOL_NAME = 'image_feedback';
 export const IMAGE_ROUTE = '/api/image-feedback/image';
 export const AUTH_ROUTE = '/api/image-feedback/authorize';
+export const OPERATIONS_ROUTE = '/api/image-feedback/operations';
 const AUTH_TTL_MS = 30 * 60 * 1000;
 const HISTORY_KEY = 'localImageFeedbackHistory';
 // dsh-storage UNIT_NAME_RE: /^[a-z][a-z0-9_]*$/ (safe filename and SQL identifier).
@@ -380,7 +381,7 @@ export async function installHost(ctx, options = {}) {
     const authorization = randomBytes(32).toString('hex');
     const expiresAt = now + AUTH_TTL_MS;
     authorizations.set(authorization, { agent, expiresAt });
-    return new Response(JSON.stringify({ authorization, expiresAt }), { headers });
+    return new Response(JSON.stringify({ authorization, expiresAt, reviewLabels: 'unified-v1' }), { headers });
   }
   function authorizeCommand(agent, input) {
     if (!input || typeof input !== 'object' || Array.isArray(input)) fail('INVALID_REQUEST', 'Provide a JSON image-feedback operation.');
@@ -388,6 +389,46 @@ export async function installHost(ctx, options = {}) {
     if (!grant || grant.agent !== agent || grant.expiresAt <= Date.now()) fail('OWNER_AUTH_REQUIRED', 'Open the image-feedback panel in the authenticated owner GUI to authorize this session.');
     const { authorization: _authorization, ...operation } = input;
     return operation;
+  }
+  // GUI storage traffic is not a human command: it must never enter commands.execute
+  // or append command/run and command/done records to the conversation.
+  async function serveOperation(request) {
+    const headers = { 'Cache-Control': 'private, no-store', 'Content-Type': 'application/json', 'X-Content-Type-Options': 'nosniff' };
+    const reply = (value, status = 200) => new Response(JSON.stringify(value), { status, headers });
+    const admission = ctx.connection.admit({ headers: request.headers });
+    if ('rejection' in admission) return reply({ ok: false, error: { code: 'OWNER_AUTH_REQUIRED', message: 'Owner authentication required.' } }, admission.rejection);
+    if (admission.peer.principal.kind !== 'owner') return reply({ ok: false, error: { code: 'OWNER_AUTH_REQUIRED', message: 'Image feedback operations are owner-only.' } }, 403);
+    if (request.method !== 'POST') return reply({ ok: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'Use POST for image-feedback operations.' } }, 405);
+    if (request.headers.get('content-type')?.split(';')[0].trim().toLowerCase() !== 'application/json') return reply({ ok: false, error: { code: 'INVALID_REQUEST', message: 'Send application/json.' } }, 415);
+    try {
+      const maxBytes = Math.ceil(ctx.attachments.imageLimits.maxImageBytes / 3) * 4 + MAX_DRAFT_BYTES;
+      const declared = Number(request.headers.get('content-length'));
+      if (Number.isFinite(declared) && declared > maxBytes) fail('REQUEST_LIMIT', 'Image-feedback request exceeds the Host byte limit.');
+      const reader = request.body?.getReader();
+      if (!reader) fail('INVALID_REQUEST', 'Provide a JSON image-feedback operation.');
+      const chunks = []; let size = 0;
+      try {
+        while (true) {
+          cancelled(request.signal);
+          const { value, done } = await reader.read(); if (done) break;
+          size += value.byteLength;
+          if (size > maxBytes) { await reader.cancel(); fail('REQUEST_LIMIT', 'Image-feedback request exceeds the Host byte limit.'); }
+          chunks.push(Buffer.from(value));
+        }
+      } finally { reader.releaseLock(); }
+      cancelled(request.signal);
+      let input;
+      try { input = JSON.parse(Buffer.concat(chunks, size).toString('utf8')); } catch { fail('INVALID_REQUEST', 'Provide a valid JSON image-feedback operation.'); }
+      const sessionId = ID.parse(input?.sessionId);
+      const agent = ctx.agents.get(sessionId);
+      const operation = authorizeCommand(agent, input);
+      const result = await execute(agent, operation, request.signal);
+      return reply(result, result.ok ? 200 : result.error?.code === 'INVALID_REQUEST' ? 400 : 409);
+    } catch (error) {
+      const result = errorValue(error);
+      const status = result.error.code === 'OWNER_AUTH_REQUIRED' ? 403 : result.error.code === 'REQUEST_LIMIT' ? 413 : 400;
+      return reply(result, status);
+    }
   }
   async function serveImage(request) {
     const headers = { 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "sandbox; default-src 'none'" };
@@ -463,6 +504,7 @@ export async function installHost(ctx, options = {}) {
     }));
     disposers.push(ctx.connection.fetch.register({ path: IMAGE_ROUTE, methods: ['GET', 'HEAD'], requestBody: 'buffered', fetch: request => track(() => serveImage(request)) }));
     disposers.push(ctx.connection.fetch.register({ path: AUTH_ROUTE, methods: ['GET'], requestBody: 'buffered', fetch: request => track(() => authorize(request)) }));
+    disposers.push(ctx.connection.fetch.register({ path: OPERATIONS_ROUTE, methods: ['POST'], requestBody: 'streaming', fetch: request => track(() => serveOperation(request)) }));
   } catch (error) {
     closed = true;
     for (const dispose of disposers.reverse()) await dispose();

@@ -13,6 +13,32 @@ test('primary-button CSS pairs primary text background with base-colored readabl
   assert.match(css,/\.dif-primary :where\(\.dif-tool-label, \.dif-icon\)\s*\{\s*color: inherit;/);
   assert.ok(contrast('f7f7f7','171717')>4.5);assert.ok(contrast('171717','ffffff')>4.5);
 });
+test('selected tools use a solid contrasting pair in both palettes and retain it on hover',async()=>{
+  const css=await read('src/editor.css');
+  const selected=css.match(/\.dif-root \.dif-toolgroup \.dif-btn\[aria-pressed="true"\] \{([^}]+)\}/)[1];
+  assert.match(selected,/color:\s*var\(--dsw-alias-bg-base\)/);
+  assert.match(selected,/background:\s*var\(--dsw-alias-label-primary\)/);
+  assert.match(selected,/border-color:\s*var\(--dsw-alias-label-primary\)/);
+  assert.doesNotMatch(selected,/background:\s*var\(--dif-accent-soft\)/);
+  const hover=css.match(/\.dif-root \.dif-toolgroup \.dif-btn\[aria-pressed="true"\]:hover:not\(:disabled\) \{([^}]+)\}/)[1];
+  assert.match(hover,/background:\s*var\(--dsw-alias-label-primary\)/);
+  const unselected=css.match(/\.dif-root \.dif-toolgroup \.dif-btn\[aria-pressed="false"\] \{([^}]+)\}/)[1];
+  assert.match(unselected,/color:\s*var\(--dsw-alias-label-secondary\)/);
+});
+test('panel background requests cannot use the human command transport or fall back to it',async()=>{
+  const adapter=await read('src/editor.js');
+  assert.match(adapter,/fetch\('\/api\/image-feedback\/operations',\{method:'POST'/);
+  assert.match(adapter,/credentials:'same-origin'/);
+  assert.match(adapter,/authorization:grant\.authorization/);
+  assert.doesNotMatch(adapter,/remote\.commands|commands\.execute|\/image-feedback \+/);
+  assert.match(adapter,/OWNER_AUTH_REQUIRED.*retryAuthorization/);
+});
+test('legacy internal command rows are hidden only through the exact command-view seat',async()=>{
+  const entry=await read('src/client-entry.js');
+  assert.match(entry,/name:'conversation\.chat\.commandview',key:'image-feedback'\},\(\)=>null/);
+  assert.doesNotMatch(entry,/name:'conversation\.chat\.node'|name:'conversation\.chat\.flow'/);
+  assert.doesNotMatch(entry,/\.events\.splice|\.events\.filter|session\.append/);
+});
 test('red image markup and white numbers use the same readable palette in the live SVG and exported reference',async()=>{
   const [css,view,adapter]=await Promise.all([read('src/editor.css'),read('src/editor-view.js'),read('src/editor.js')]);
   assert.match(css,/--dif-annotation:\s*#dc2626;/);assert.match(css,/--dif-annotation-ink:\s*#ffffff;/);

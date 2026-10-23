@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { installHost, IMAGE_ROUTE, AUTH_ROUTE, decodeBase64, historicalImages } from '../host.js';
+import { installHost, IMAGE_ROUTE, AUTH_ROUTE, OPERATIONS_ROUTE, decodeBase64, historicalImages } from '../host.js';
 import * as core from '../editor-core.js';
 
 // No fixture creates a real Agent, calls the GUI, opens sockets, or touches profile files.
@@ -77,13 +77,21 @@ function fixture(backing = { rows: new Map(), images: new Map() }) {
   const agent = newAgent();
   const start = () => installHost(ctx, { core });
   const http = (route, params, peer = 'owner', method = 'GET') => routes.get(route).fetch(new Request(`http://fixture.invalid${route}?${new URLSearchParams(params)}`, { method, headers: { 'x-test-peer': peer } }));
+  const operation = (payload, options = {}) => {
+    const method = options.method || 'POST';
+    return routes.get(OPERATIONS_ROUTE).fetch(new Request(`http://fixture.invalid${OPERATIONS_ROUTE}`, {
+      method, headers: { 'x-test-peer': options.peer || 'owner', 'content-type': 'application/json', ...options.headers },
+      ...(['GET', 'HEAD'].includes(method) ? {} : { body: options.body ?? JSON.stringify(payload) }),
+      ...(options.signal ? { signal: options.signal } : {}),
+    }));
+  };
   const addHistory = (target = agent, bytes = PNG, seq = 0) => {
     const ref = reference(bytes);
     backing.images.set(ref.attachmentId, { ref, data: bytes });
     target.session.events.push({ type: 'user/message', seq, time: 20 + seq, data: { content: [{ type: 'image', attachment: ref }] } });
     return ref;
   };
-  return { ctx, agent, newAgent, agents, commands, tools, routes, projections, effects, calls, backing, start, http, addHistory,
+  return { ctx, agent, newAgent, agents, commands, tools, routes, projections, effects, calls, backing, start, http, operation, addHistory,
     set failPut(value) { failPut = value; }, set failFlush(value) { failFlush = value; }, set failPrompt(value) { failPrompt = value; } };
 }
 const importPng = (service, agent, extra = {}) => service.execute(agent, { action: 'import', source: { kind: 'base64', data: PNG.toString('base64') }, ...extra }, signal());
@@ -244,6 +252,62 @@ test('authenticated binary preview rejects unauthenticated, nonowner and cross-s
   assert.deepEqual(Buffer.from(await response.arrayBuffer()), PNG);
   const metadata = await host.execute(f.agent, { action: 'read', assetId: asset.assetId }, signal());
   assert.equal(JSON.stringify(metadata).includes(PNG.toString('base64')), false);
+  await host.dispose();
+});
+
+test('GUI operations import, read, load and autosave without executing commands or appending chat events', async () => {
+  const f = fixture(); const host = await f.start();
+  f.commands.get('image-feedback').handler = () => { throw new Error('GUI traffic must never execute a human command'); };
+  const before = copy(f.agent.session.events);
+  const grant = await (await f.http(AUTH_ROUTE, { sessionId: f.agent.id })).json();
+  assert.equal(grant.reviewLabels, 'unified-v1');
+  const { authorization } = grant;
+  const request = async operation => {
+    const response = await f.operation({ ...operation, sessionId: f.agent.id, authorization });
+    assert.equal(response.status, 200); assert.equal(response.headers.get('cache-control'), 'private, no-store');
+    const value = await response.json(); assert.equal(value.ok, true); return value;
+  };
+  const asset = (await request({ action: 'import', source: { kind: 'base64', data: PNG.toString('base64') } })).asset;
+  await request({ action: 'read', assetId: asset.assetId });
+  await request({ action: 'list' });
+  assert.equal((await request({ action: 'loadDraft' })).version, 0);
+  let draft = draftFor(asset);
+  for (let i = 0; i < 24; i++) {
+    draft = core.addAnnotation(draft, { text: 'Review '+i, target: { kind: 'global' } });
+    assert.equal((await request({ action: 'saveDraft', draft, expectedVersion: i })).version, i+1);
+  }
+  assert.deepEqual(f.agent.session.events, before);
+  assert.equal(f.calls.prompt.length, 0, 'background editing never wakes the agent');
+  const explicit = { action: 'submit', draft, requestId: 'explicit-gui-feedback' };
+  assert.equal((await request(explicit)).accepted, true);
+  assert.equal((await request(explicit)).duplicate, true);
+  assert.equal(f.calls.prompt.length, 1, 'only explicit submit sends, exactly once');
+  assert.equal((await f.tools.get('image_feedback').execute({ action: 'loadDraft' }, { agent: f.agent, signal: signal() })).version, 24);
+  await host.dispose();
+});
+
+test('GUI operations enforce owner admission, session grant, method, schema and size limits', async () => {
+  const f = fixture(); const host = await f.start();
+  const { authorization } = await (await f.http(AUTH_ROUTE, { sessionId: f.agent.id })).json();
+  const payload = { sessionId: f.agent.id, action: 'list', authorization };
+  assert.equal((await f.operation(payload, { peer: 'anonymous' })).status, 401);
+  assert.equal((await f.operation(payload, { peer: 'guest' })).status, 403);
+  assert.equal((await f.operation({ ...payload, authorization: 'forged' })).status, 403);
+  assert.equal((await f.operation({ action: 'list', sessionId: f.agent.id })).status, 403);
+  const other = f.newAgent('other-gui-session');
+  assert.equal((await f.operation({ ...payload, sessionId: other.id })).status, 403);
+  assert.equal((await f.operation(payload, { method: 'GET' })).status, 405);
+  assert.equal((await f.operation(payload, { headers: { 'content-type': 'text/plain' } })).status, 415);
+  assert.equal((await f.operation(payload, { body: '{broken' })).status, 400);
+  assert.equal((await f.operation({ ...payload, action: 'unknown' })).status, 400);
+  assert.equal((await f.operation(payload, { headers: { 'content-length': '9000000' } })).status, 413);
+  assert.equal((await f.operation(payload, { body: 'x'.repeat(2000000) })).status, 413, 'actual streamed size is enforced without Content-Length');
+  assert.equal((await f.operation({ ...payload, action: 'saveDraft', draft: null, expectedVersion: 99 })).status, 409);
+  const stop = new AbortController(); stop.abort();
+  assert.equal((await (await f.operation(payload, { signal: stop.signal })).json()).error.code, 'ABORTED');
+  f.newAgent(f.agent.id); // A replacement Agent invalidates the old exact-Agent grant.
+  assert.equal((await f.operation(payload)).status, 403);
+  assert.equal(f.calls.prompt.length, 0);
   await host.dispose();
 });
 

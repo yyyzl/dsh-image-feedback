@@ -1,20 +1,20 @@
 # 图片反馈 · Image Feedback
 
-[English](<README.en.md>) · [测试范围](<docs/TESTING.md>) · [安全与数据处理](<SECURITY.md>) · [市场收录](<docs/MARKETPLACE.md>)
+[English](<README.en.md>) · [更新记录](<CHANGELOG.md>) · [测试范围](<docs/TESTING.md>) · [安全与数据处理](<SECURITY.md>) · [市场收录](<docs/MARKETPLACE.md>)
 
 DeepSeek Harness 原生右侧栏插件：框选后直接写意见，拖动选区调整位置，再将原图、编号参考图与反馈独立发送到当前会话。
 
-- 包标识：`@yyyzl/dsh-image-feedback`，版本 `0.1.0`。
+- 包标识：`@yyyzl/dsh-image-feedback`，版本 `0.2.0`。
 - 分发：本仓库的 [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>)，不是 npm。保留 `private: true` 防止误发布到 npm；包名不代表 npm 上已存在该包或已确认同名 scope 的所有权。
 - 兼容性边界由[清单](<package.json>)声明；原本地实现已在 Harness `0.2.1-rc.2` 验证过主要交互。公开命名版本的实机安装和旧版迁移尚未验证，详见[测试说明](<docs/TESTING.md>)。
-- 市场状态：[开放插件市场申请 #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) 已提交，待审核，尚不代表收录。
+- 市场状态：[开放插件市场申请 #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) 已审核收录 v0.1.0；v0.2.0 需维护者重新核查固定提交后升级。
 - 这是第三方插件，不是 Harness 官方组件。不需要独立服务器，不修改宿主 ASAR。
 
 > 已安装 `@local/dsh-image-feedback`？先阅读下面的迁移步骤。**不能同时启用旧版和公开版**，它们共享存储域、命令和界面标识。
 
 ## 安装
 
-安装前在 [v0.1.0 Release](<https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.1.0>) 核对预构建包和 [SHA256SUMS.txt](<https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.1.0/SHA256SUMS.txt>)，使用下方固定版本地址。
+安装前在 [v0.2.0 Release](<https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.2.0>) 核对预构建包和 [SHA256SUMS.txt](<https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.2.0/SHA256SUMS.txt>)，使用下方固定版本地址。
 
 请当前 Harness 会话中的 Agent 使用正式 `plugin_manager` 工具。先查询：
 
@@ -25,7 +25,7 @@ DeepSeek Harness 原生右侧栏插件：框选后直接写意见，拖动选区
 确认没有冲突的旧版处于启用状态后，再安装：
 
 ```json
-{"action":"install_bundle","target":"https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.1.0/yyyzl-dsh-image-feedback-0.1.0.tgz"}
+{"action":"install_bundle","target":"https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.2.0/yyyzl-dsh-image-feedback-0.2.0.tgz"}
 ```
 
 安装影响当前 profile 的所有会话。遵循管理工具返回的版本限制、警告和后续操作；需要刷新或重启时按提示执行。不要手动编辑 profile、替换宿主文件或绕过版本限制。
@@ -46,6 +46,15 @@ DeepSeek Harness 原生右侧栏插件：框选后直接写意见，拖动选区
 4. 在原会话核对素材和草稿。若不一致，停止编辑，保留导出文件并报告问题，不要手工搬动或删除宿主存储。
 
 公开版保留 `dsh_image_feedback` 存储域、草稿 schema、恢复键以及原侧栏标识，以减少兼容性变化。这不是已完成迁移测试的保证。发布仓库和发布包不会自动升级原有本地安装。
+
+## v0.2.0 更新与升级
+
+- 画布、意见列表、导出参考图和反馈文本统一使用连续编号；仅移动未写文字的图块也包含在评审列表中，原有草稿 ID 不变。
+- 新增鼠标位置锚定的滚轮缩放、触控板捏合及 Safari 手势支持，改善边界和连续缩放行为。
+- 重整评审工作台、图块缩略图和位移信息，优化窄侧栏、短窗口、焦点和键盘反馈。
+- 导入、加载和自动保存改用私有、会话授权的后台接口，不再新增聊天命令行；旧内部命令记录仅隐藏显示，不删除审计数据。
+
+从公开 v0.1.0 升级时先保存并导出重要草稿，通过正式管理器安装上面的新版地址，**重启 Harness 并刷新页面**，确保 Host 与 Client 同时更新。只刷新旧 Host 不足以启用新接口；新客户端会拒绝使用旧 Host 发送编号不一致的反馈。存储域、草稿 schema 和恢复键保持不变，但本次没有执行真实迁移验收。
 
 ## 使用
 
@@ -86,7 +95,7 @@ pnpm run build
 pnpm run check
 ```
 
-已记录的自动化基线是 **120 项确定性测试**，不是 120 项浏览器 E2E。公开命名版本、安装包、迁移与真实 UI 的验收必须分别记录，不能由构建成功推定。详见[测试说明](<docs/TESTING.md>)和[贡献指南](<CONTRIBUTING.md>)。
+已记录的自动化基线是 **145 项确定性测试**，不是 145 项浏览器 E2E。公开命名版本、安装包、迁移与真实 UI 的验收必须分别记录，不能由构建成功推定。详见[测试说明](<docs/TESTING.md>)和[贡献指南](<CONTRIBUTING.md>)。
 
 源码修改不会自动更新已安装的客户端制品；先构建，再按正式安装流程更新并刷新原 Harness 页面。不要为验证插件另起一个替代服务器。
 

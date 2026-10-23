@@ -1,12 +1,18 @@
 # 申请社区插件市场收录
 
-本文面向维护者，依据 2026-10-23 核对的市场规则编写。**已获作者授权，向开放插件市场提交 [收录申请 #53](https://github.com/polang233/dsh-plugin-index/issues/53)；当前为 OPEN，等待维护者审核，尚未确认收录。** 其他市场的 Issue/PR 或索引源配置变更仍需另行确认。
+本文面向维护者，依据 2026-10-23 核对的市场规则编写。**开放插件市场已通过 [申请 #53](https://github.com/polang233/dsh-plugin-index/issues/53) 收录 v0.1.0，申请已关闭。v0.2.0 是新的发布版本，市场需重新核查并更新固定提交；不能把原版本已收录当作新版已上线。** 作者已授权在原 Issue 回复新版信息，不另开申请。其他市场的 Issue/PR 或索引源配置变更仍需另行确认。
 
-本项目采用 **GitHub 公开源码 + GitHub Release 预构建包**，不发布 npm。公开仓库为 [yyyzl/dsh-image-feedback](https://github.com/yyyzl/dsh-image-feedback)，包名为 `@yyyzl/dsh-image-feedback`，版本为 `0.1.0`。[包清单](../package.json)中的 `private: true` 是防止误发 npm 的保护，不妨碍公开源码或通过 Git/Release 安装，也不代表已取得同名 npm scope。
+本项目采用 **GitHub 公开源码 + GitHub Release 预构建包**，不发布 npm。公开仓库为 [yyyzl/dsh-image-feedback](https://github.com/yyyzl/dsh-image-feedback)，包名为 `@yyyzl/dsh-image-feedback`，当前发布版本为 `0.2.0`。[包清单](../package.json)中的 `private: true` 是防止误发 npm 的保护，不妨碍公开源码或通过 Git/Release 安装，也不代表已取得同名 npm scope。
 
 仓库已设置 `dsh-plugin`、`deepseek-harness`、`image-annotation`、`feedback` topics。这只提供发现线索或候选入口，不代表市场接受收录；除上述申请外，尚未向其他市场提交 Issue/PR。
 
 [v0.1.0 Release](https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.1.0) 已公开发布，安装包已匿名下载并核对 SHA-256。该版本固定提交为 `2b2328c336215d454a7f3c84426ff0688e1e7926`；[Node.js 22 / 24 CI](https://github.com/yyyzl/dsh-image-feedback/actions/runs/39844975332) 均通过。以下流程用于复核或准备后续版本。
+
+## 新版通知规则
+
+根据[贡献指南](https://github.com/polang233/dsh-plugin-index/blob/main/.github/CONTRIBUTING.md)，固定 Git 提交来源不会自动跟随仓库 main 或 GitHub latest Release。发布 v0.2.0 后，在原 Issue #53 回复新版本、完整提交 SHA、Release 地址、下载包及 SHA-256、兼容范围与实际验证边界；维护者重新核查后才升级市场。无需新建 PR，也不应自行改写他人的收录配置。
+
+以下 v0.1.0 地址和命令是首次发布的历史示例；准备新版时使用对应版本的标签与实际文件，当前安装地址见 [README](../README.md)。
 
 ## 先完成可安装的公开发布
 
@@ -94,4 +100,4 @@ GitHub-only 插件可以由支持 Git 来源的市场列入索引，不必发布
 
 索引是第三方声明，不是安全认证。本次调研的 profile 索引列表为空，本文没有添加任何源。使用者应自行判断信任关系，再在 **插件 → 实验性插件 → 自定义插件市场 → 发现 → 添加索引源** 中手动添加；作者不能因发布或收录而替用户修改配置。
 
-以上链接和流程来自已读取的上游仓库文档；市场索引端点的实时可用性未在本次环境中验证。正式投稿前重读对应贡献指南并确认公开发布资产可下载。
+以上链接和流程来自已读取的上游仓库文档。v0.1.0 已在正式索引中核对；新版本是否上线需要重新检查，不能由 GitHub Release 发布成功推定。正式通知前重读贡献指南并确认公开发布资产可下载。

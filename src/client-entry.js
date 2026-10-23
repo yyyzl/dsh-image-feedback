@@ -47,6 +47,9 @@ window.__ModuleLoader__.load({
           id:ID,kind:KIND,title:()=>t('title'),
           guide:[{id:'image-feedback',title:()=>t('title'),description:()=>t('description'),icon:Icon,order:50}]
         }));
+        // Hide only legacy internal storage-command rows; retain durable audit records.
+        // Actual tool calls and submitted feedback remain visible.
+        ctx.slots.inject('conversation.chat.commandview',()=>ctx.slots.register({name:'conversation.chat.commandview',key:'image-feedback'},()=>null));
         ctx.slots.inject('conversation.input.left',()=>ctx.slots.register({name:'conversation.input.left',id:'local-image-feedback-open',order:35,locale:NS},Launch));
         ctx.slots.inject('sidebar.right.pane.tab',()=>ctx.slots.register({name:'sidebar.right.pane.tab',key:ID,locale:NS},Body));
         ctx.slots.inject('sidebar.right.pane.tab.title',()=>ctx.slots.register({name:'sidebar.right.pane.tab.title',key:ID,locale:NS},props=>h('span',{style:{display:'inline-flex',alignItems:'center',gap:5}},h(Icon),props.t('title'))));

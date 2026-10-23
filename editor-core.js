@@ -497,6 +497,35 @@ export function getMoves(input) {
     delta: { x: block.destination.x - block.source.x, y: block.destination.y - block.source.y }, zIndex: block.zIndex })));
 }
 
+/** One contiguous presentation ledger for comments and uncommented moves.
+ * IDs and stored annotation numbers remain immutable; display numbers belong to
+ * this exact draft snapshot and are shared by UI, reference artwork and text.
+ */
+export function getReviewItems(input) {
+  const draft = validateDraft(input), moves = new Map(getMoves(draft).map(move => [move.blockId, move]));
+  const generatedOrder = id => { const match = /^(?:block|annotation)-(\d+)(?:-\d+)?$/u.exec(id); const value = match ? Number(match[1]) : null; return Number.isSafeInteger(value) ? value : null; };
+  const primary = new Map();
+  for (const note of draft.annotations) if (note.target.kind === 'block' && !note.target.local && !primary.has(note.target.blockId)) primary.set(note.target.blockId, note);
+  const items = [];
+  for (const note of draft.annotations) {
+    const block = note.target.kind === 'block' ? blockById(draft, note.target.blockId) : null;
+    const whole = block && primary.get(block.id) === note;
+    const resolved = resolveAnnotation(draft, note.id);
+    const orders = [generatedOrder(note.id), whole ? generatedOrder(block.id) : null].filter(value => value !== null);
+    items.push({ key: whole ? 'block:'+block.id : 'note:'+note.id, annotationId: note.id, blockId: block?.id || null,
+      annotation: note, block, text: note.text, kind: note.target.kind === 'global' ? 'global' : whole && moves.has(block.id) ? 'move' : 'comment',
+      source: resolved.source, layout: resolved.layout, move: whole ? moves.get(block.id) || null : null,
+      order: whole && generatedOrder(block.id) === null ? Number.MAX_SAFE_INTEGER : orders.length ? Math.min(...orders) : note.number });
+  }
+  for (const block of draft.blocks) if (moves.has(block.id) && !primary.has(block.id)) {
+    items.push({ key: 'block:'+block.id, annotationId: null, blockId: block.id, annotation: null, block, text: '', kind: 'move',
+      source: { kind: 'region', rect: block.source }, layout: { kind: 'region', rect: block.destination }, move: moves.get(block.id),
+      order: generatedOrder(block.id) ?? Number.MAX_SAFE_INTEGER });
+  }
+  items.sort((a,b) => a.order-b.order || (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+  return freeze(items.map(({order: _order, ...item}, index) => ({...item, number: index+1})));
+}
+
 export function hasFeedback(input) {
   const draft = validateDraft(input);
   return draft.blocks.some(moved) || draft.annotations.some((annotation) => annotation.text.trim().length > 0);
@@ -507,7 +536,9 @@ const anchorLabel = (anchor) => anchor.kind === 'point' ? `point (${anchor.point
 
 /** Human-readable instructions AND exact JSON; real uncommented moves are retained. */
 export function buildFeedback(input) {
-  const draft = validateDraft(input); const moves = getMoves(draft);
+  const draft = validateDraft(input); const moves = getMoves(draft); const reviewItems = getReviewItems(draft);
+  const noteNumbers = new Map(reviewItems.filter(item => item.annotationId).map(item => [item.annotationId, item.number]));
+  const moveNumbers = new Map(reviewItems.filter(item => item.move).map(item => [item.blockId, item.number]));
   const lines = [
     'Image feedback',
     `Bound session: ${JSON.stringify(draft.sessionId)}; source asset: ${JSON.stringify(draft.asset.assetId)}.`,
@@ -516,9 +547,10 @@ export function buildFeedback(input) {
     'Blocks only translate, with source size unchanged. Higher zIndex is on top. Layout-position comments stay fixed; block-local comments follow their block.',
     `Moves (${moves.length}):`,
   ];
-  lines.push('Reference block labels: ' + (draft.blocks.map((block, index) => `B${index + 1} = ${JSON.stringify(block.id)}`).join('; ') || 'none') + '.');
+  lines.push('Reference review labels: ' + (reviewItems.map(item => `#${item.number} = ${JSON.stringify(item.key)}`).join('; ') || 'none') + '.');
+  lines.push('Use these review labels for the numbered reference image. Stored annotation.number values in the JSON are legacy identities, not current display labels.');
   if (!moves.length) lines.push('- No block translations.');
-  for (const move of moves) lines.push(`- Block ${JSON.stringify(move.blockId)}: source ${rectLabel(move.source)} -> destination ${rectLabel(move.destination)}; delta (${move.delta.x}, ${move.delta.y}); zIndex ${move.zIndex}.`);
+  for (const move of moves) lines.push(`- #${moveNumbers.get(move.blockId)} Block ${JSON.stringify(move.blockId)}: source ${rectLabel(move.source)} -> destination ${rectLabel(move.destination)}; delta (${move.delta.x}, ${move.delta.y}); zIndex ${move.zIndex}.`);
   lines.push(`Comments (${draft.annotations.length}):`);
   if (!draft.annotations.length) lines.push('- No text comments; retain every move listed above.');
   for (const annotation of draft.annotations) {
@@ -526,7 +558,7 @@ export function buildFeedback(input) {
     const where = target.kind === 'global' ? 'global'
       : target.kind === 'block' ? `block ${JSON.stringify(target.blockId)}, source ${anchorLabel(resolved.source)}, layout ${anchorLabel(resolved.layout)}`
         : `fixed layout ${anchorLabel(resolved.layout)} (not an original-image anchor)`;
-    lines.push(`- #${annotation.number} [${where}]: ${JSON.stringify(annotation.text)}`);
+    lines.push(`- #${noteNumbers.get(annotation.id)} [${where}]: ${JSON.stringify(annotation.text)}`);
   }
   const json = serializeDraft(draft, { pretty: true });
   lines.push('Structured feedback (same immutable source and coordinate system):', '```json', json, '```');
@@ -586,5 +618,5 @@ export class History {
 const API = Object.freeze({ SCHEMA_VERSION, LIMITS, CoreError, createDraft, validateDraft, serializeDraft, deserializeDraft,
   rectanglesOverlap, containsPoint, rectFromPoints, viewToAsset, assetToView, subtractRect, getSourceRemainders,
   addBlock, moveBlock, resetBlock, resetAllMoves, reorderBlock, removeBlock, splitBlock, cutBlock, hitTest,
-  addAnnotation, updateAnnotation, removeAnnotation, resolveAnnotation, getMoves, hasFeedback, buildFeedback, History });
+  addAnnotation, updateAnnotation, removeAnnotation, resolveAnnotation, getMoves, getReviewItems, hasFeedback, buildFeedback, History });
 export default API;

@@ -1,20 +1,20 @@
 # Image Feedback
 
-[简体中文](<README.md>) · [Testing](<docs/TESTING.md>) · [Security and data handling](<SECURITY.md>) · [Marketplace submission](<docs/MARKETPLACE.md>)
+[简体中文](<README.md>) · [Changelog](<CHANGELOG.md>) · [Testing](<docs/TESTING.md>) · [Security and data handling](<SECURITY.md>) · [Marketplace submission](<docs/MARKETPLACE.md>)
 
 A native DeepSeek Harness sidebar: draw a region, type feedback immediately, drag regions to rearrange image blocks, then send the original image, numbered reference, and feedback to the current session.
 
-- Package identifier: `@yyyzl/dsh-image-feedback`, version `0.1.0`.
+- Package identifier: `@yyyzl/dsh-image-feedback`, version `0.2.0`.
 - Distribution: [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>), not npm. `private: true` intentionally prevents accidental npm publication. The package identifier does not establish npm availability or ownership of that registry scope.
 - Compatibility is declared in the [manifest](<package.json>). Main interactions were checked on the original local implementation with Harness `0.2.1-rc.2`; live installation and migration of the public namespace have not yet been verified. See [testing status](<docs/TESTING.md>).
-- Market status: [listing request #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) has been submitted to the open plugin index. Review is pending; this is not an accepted listing.
+- Market status: v0.1.0 was accepted through [request #53](<https://github.com/polang233/dsh-plugin-index/issues/53>). Updating the market to v0.2.0 requires maintainer review of its pinned commit.
 - This is a third-party plugin, not an official Harness component. It needs no separate server and does not modify the host ASAR.
 
 > Already using `@local/dsh-image-feedback`? Follow the migration steps below. **Never enable both bundles together**: they share storage, commands, and UI identifiers.
 
 ## Install
 
-Before installing, check the prebuilt archive and [SHA256SUMS.txt](<https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.1.0/SHA256SUMS.txt>) on the [v0.1.0 release](<https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.1.0>). Use the fixed-version URL below.
+Before installing, check the prebuilt archive and [SHA256SUMS.txt](<https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.2.0/SHA256SUMS.txt>) on the [v0.2.0 release](<https://github.com/yyyzl/dsh-image-feedback/releases/tag/v0.2.0>). Use the fixed-version URL below.
 
 Ask the Agent in your Harness session to use the official `plugin_manager` tool. List bundles first:
 
@@ -25,7 +25,7 @@ Ask the Agent in your Harness session to use the official `plugin_manager` tool.
 After confirming that the legacy bundle is not active, install:
 
 ```json
-{"action":"install_bundle","target":"https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.1.0/yyyzl-dsh-image-feedback-0.1.0.tgz"}
+{"action":"install_bundle","target":"https://github.com/yyyzl/dsh-image-feedback/releases/download/v0.2.0/yyyzl-dsh-image-feedback-0.2.0.tgz"}
 ```
 
 Installation affects every session in the current profile. Follow the manager's compatibility checks, warnings, and refresh/restart instructions. Do not edit profile manifests, replace host files, or bypass version restrictions.
@@ -46,6 +46,15 @@ Use `enabled: true` to re-enable, or `remove_bundle` to uninstall. Disabling doe
 4. Check assets and drafts in the original session. If they differ, stop editing, retain your export, and report the problem. Do not manually move or delete host storage.
 
 The public package retains the `dsh_image_feedback` storage domain, draft schema, recovery key, and legacy sidebar identifiers to reduce compatibility changes. This is not a verified migration guarantee. Publishing this repository or a release does not automatically update an existing local installation.
+
+## v0.2.0 changes and upgrading
+
+- One contiguous review numbering scheme across the canvas, list, exported reference and feedback text, including move-only blocks; persisted draft IDs remain unchanged.
+- Cursor-anchored wheel zoom, trackpad pinch and Safari gestures, with improved bounds and continuous zoom behavior.
+- Redesigned responsive review desk, block crops and movement metadata, with better short-panel focus and keyboard handling.
+- Imports, loading and autosaves use a private session-authorized background endpoint, not new chat commands. Legacy internal command rows are hidden without deleting audit records.
+
+When upgrading from public v0.1.0, save/export important work, install the new URL through the official manager, then **restart Harness and refresh the page** so Host and Client update together. Refreshing an old Host is insufficient; the new Client refuses to submit mismatched review labels through it. Storage domain, schema and recovery keys are unchanged, but live migration has not been verified in this release procedure.
 
 ## Use
 
@@ -86,7 +95,7 @@ pnpm run build
 pnpm run check
 ```
 
-The recorded baseline is **120 deterministic tests**, not 120 browser E2E tests. Public-namespace, archive-install, migration, and live-UI acceptance need separate evidence; a successful build does not prove them. See [testing](<docs/TESTING.md>) and [contributing](<CONTRIBUTING.md>).
+The recorded baseline is **145 deterministic tests**, not 145 browser E2E tests. Public-namespace, archive-install, migration, and live-UI acceptance need separate evidence; a successful build does not prove them. See [testing](<docs/TESTING.md>) and [contributing](<CONTRIBUTING.md>).
 
 Source edits do not automatically update installed Client artifacts. Build first, update through the supported installation flow, and refresh the existing Harness page. Do not start a replacement server to validate the plugin.
 

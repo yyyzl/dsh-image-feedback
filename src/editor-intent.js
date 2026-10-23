@@ -1,3 +1,22 @@
+/** Pure view helpers. Zoom never mutates a draft or consumes an undo step. */
+export function wheelZoomScale(scale,deltaY,deltaMode=0,viewportHeight=600,pinch=false) {
+  if(![scale,deltaY,viewportHeight].every(Number.isFinite)||scale<=0)return scale;
+  const pixels=deltaY*(deltaMode===1?16:deltaMode===2?Math.max(1,viewportHeight):1);
+  return Math.max(.02,Math.min(8,scale*Math.exp(-Math.max(-240,Math.min(240,pixels))*(pinch ? .01 : .002))));
+}
+export function anchoredZoomPlan({width,height,viewportWidth,viewportHeight,scale,nextScale,scrollLeft=0,scrollTop=0,x,y,padding=20,anchor=null}) {
+  if(![width,height,viewportWidth,viewportHeight,scale,nextScale,scrollLeft,scrollTop,x,y,padding].every(Number.isFinite)||scale<=0||nextScale<=0)throw new Error('Invalid zoom geometry');
+  const next=Math.max(.02,Math.min(8,nextScale));
+  if(anchor!==null&&![anchor.x,anchor.y].every(Number.isFinite))throw new Error('Invalid zoom anchor');
+  function axis(size,viewport,scroll,point,fixed){
+    const origin=Math.max(padding,(viewport-size*scale)/2),assetPoint=fixed??(scroll+point-origin)/scale;
+    const newOrigin=Math.max(padding,(viewport-size*next)/2),maximum=Math.max(0,size*next+2*padding-viewport);
+    return {anchor:assetPoint,scroll:Math.max(0,Math.min(maximum,newOrigin+assetPoint*next-point))};
+  }
+  const horizontal=axis(width,viewportWidth,scrollLeft,x,anchor?.x),vertical=axis(height,viewportHeight,scrollTop,y,anchor?.y);
+  return {scale:next,scrollLeft:horizontal.scroll,scrollTop:vertical.scroll,point:{x:horizontal.anchor,y:vertical.anchor}};
+}
+
 /** Pure direct-edit interaction rules; selecting a block never creates an empty comment. */
 export function settleFeedbackText(core,controller,noteId=null) {
   const state=controller.getSnapshot();

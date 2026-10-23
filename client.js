@@ -47,6 +47,9 @@ window.__ModuleLoader__.load({
           id:ID,kind:KIND,title:()=>t('title'),
           guide:[{id:'image-feedback',title:()=>t('title'),description:()=>t('description'),icon:Icon,order:50}]
         }));
+        // Hide only legacy internal storage-command rows; retain durable audit records.
+        // Actual tool calls and submitted feedback remain visible.
+        ctx.slots.inject('conversation.chat.commandview',()=>ctx.slots.register({name:'conversation.chat.commandview',key:'image-feedback'},()=>null));
         ctx.slots.inject('conversation.input.left',()=>ctx.slots.register({name:'conversation.input.left',id:'local-image-feedback-open',order:35,locale:NS},Launch));
         ctx.slots.inject('sidebar.right.pane.tab',()=>ctx.slots.register({name:'sidebar.right.pane.tab',key:ID,locale:NS},Body));
         ctx.slots.inject('sidebar.right.pane.tab.title',()=>ctx.slots.register({name:'sidebar.right.pane.tab.title',key:ID,locale:NS},props=>h('span',{style:{display:'inline-flex',alignItems:'center',gap:5}},h(Icon),props.t('title'))));
@@ -55,4 +58,4 @@ window.__ModuleLoader__.load({
   }
 });
 
-// lazy-editor-sha256: add829b02a7c1a6fd3a13d5c2a34cd84f2d878b6dcdd119d2a284adfd06fae58
+// lazy-editor-sha256: 9690fbd5148dc6ee1edd9d8e7f55000cc318b9008394e99832eb1294ea582c2b

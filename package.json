@@ -1,6 +1,6 @@
 {
   "name": "@yyyzl/dsh-image-feedback",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Annotate images, reposition regions and pins, and send independent image feedback in DeepSeek Harness.",
@@ -18,7 +18,7 @@
     "./locale/*.json": "./locale/*.json",
     "./icon": "./icon.svg"
   },
-  "files": ["index.js", "host.js", "editor-core.js", "client.js", "client.editor.js", "cordis.patch.yml", "locale/*.json", "icon.svg", "README.md", "README.en.md", "LICENSE", "SECURITY.md", "CONTRIBUTING.md", "docs/", "src/", "scripts/", "tests/"],
+  "files": ["index.js", "host.js", "editor-core.js", "client.js", "client.editor.js", "cordis.patch.yml", "locale/*.json", "icon.svg", "README.md", "README.en.md", "CHANGELOG.md", "LICENSE", "SECURITY.md", "CONTRIBUTING.md", "docs/", "src/", "scripts/", "tests/"],
   "dependencies": { "zod": "4.4.3" },
   "scripts": {
     "build": "node scripts/build.mjs",

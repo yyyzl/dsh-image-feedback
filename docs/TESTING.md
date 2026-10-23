@@ -2,7 +2,21 @@
 
 This guide distinguishes deterministic tests, original-build observations, and release work still requiring verification. It is not a browser E2E or migration certification.
 
-## Recorded baseline
+## v0.2.0 validation
+
+After synchronizing the optimized implementation into the public package, all **145 deterministic tests** passed locally on Node.js `24.21.0`. Build and package validation passed; entry 4,400 bytes / lazy editor 135,921 bytes. These are not browser E2E tests. This publishing procedure does not repeat live UI, public-profile installation, migration or model submissions. Prior UI evidence below applies to the original baseline only.
+
+New coverage:
+
+- [Canvas zoom](<../tests/canvas-zoom.test.mjs>): wheel/pinch normalization, cursor anchors, centered-to-overflow transitions, bounds and coalescing; listener wiring is a source contract.
+- [Review ledger](<../tests/review-ledger.test.mjs>): shared labels, move-only items, deletion/undo, serialization and local-note separation.
+- [Refinements](<../tests/refinement-regressions.test.mjs>): custom-ID move order and burst anchors; focus wiring is a source contract.
+- [Design contracts](<../tests/design-contract.test.mjs>): responsive rules, local focus/scroll behavior, keyboard locks and localization; not rendered visual QA.
+- [Host](<../tests/host.test.mjs>): Request-based owner/session authorization, 24 autosaves without command events, body-size enforcement, cancellation and submission deduplication.
+
+Upgrade requires a Harness restart plus page refresh so the updated Host endpoint and Client load together. Storage/schema/recovery identifiers remain stable; that alone is not migration proof.
+
+## Recorded v0.1.0 baseline
 
 | Check | Observed result | What it does not prove |
 |---|---|---|
