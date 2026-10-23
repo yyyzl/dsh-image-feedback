@@ -44,6 +44,48 @@ export function selectionRectangle(start,end,scale=1) {
   const rect={x,y,width:Math.round(Math.max(start.x,end.x))-x,height:Math.round(Math.max(start.y,end.y))-y};
   return rect.width>=2&&rect.height>=2?rect:null;
 }
+/** Filter layout ownership once per immutable block list, never once per mouse event. */
+export function prepareSmartHoverIndex(core,draft,index) {
+  if(!draft||!index||index.assetId!==draft.asset.assetId||index.width!==draft.asset.width||index.height!==draft.asset.height)return null;
+  if(index.blocks===draft.blocks)return index;
+  const overlap=(a,b)=>a.x<b.x+b.width&&b.x<a.x+a.width&&a.y<b.y+b.height&&b.y<a.y+a.height;
+  const candidates=index.candidates.filter(item=>{
+    const r=item.rect;
+    return r&&['x','y','width','height'].every(key=>Number.isFinite(r[key]))&&r.width>=2&&r.height>=2&&r.x>=0&&r.y>=0&&r.x+r.width<=index.width&&r.y+r.height<=index.height&&!draft.blocks.some(block=>overlap(r,block.source)||overlap(r,block.destination));
+  });
+  return {...index,candidates,blocks:draft.blocks};
+}
+/** Preview-only hit testing. No draft validation, pixel scan or geometry rebuilding on pointermove. */
+export function smartHoverCandidate(core,engine,draft,index,position,previous=null) {
+  if(!draft||!index||index.assetId!==draft.asset.assetId||index.width!==draft.asset.width||index.height!==draft.asset.height)return null;
+  if(!position||!Number.isFinite(position.x)||!Number.isFinite(position.y)||position.x<0||position.y<0||position.x>=index.width||position.y>=index.height)return null;
+  const prepared=prepareSmartHoverIndex(core,draft,index);
+  return prepared?engine.pick(prepared.candidates,position,previous):null;
+}
+export function selectionGestureCurrent(gesture,controller,sessionId) {
+  const now=controller.getSnapshot();
+  return !!gesture&&gesture.owner===controller&&gesture.sessionId===sessionId&&gesture.history===now.history&&!!now.draft&&gesture.assetId===now.draft.asset.assetId&&(gesture.kind==='pan'||gesture.version===now.history.version);
+}
+/** Convert optional shape metadata into a bounded, non-interactive SVG geometry. */
+export function smartSelectionOutline(candidate) {
+  const r=candidate?.rect;
+  if(!r||!['x','y','width','height'].every(key=>Number.isFinite(r[key]))||r.width<=0||r.height<=0)return null;
+  const rect={x:r.x,y:r.y,width:r.width,height:r.height};
+  if(candidate.shape==='ellipse')return {tag:'ellipse',attrs:{cx:r.x+r.width/2,cy:r.y+r.height/2,rx:r.width/2,ry:r.height/2}};
+  if(candidate.shape==='capsule')return {tag:'rect',attrs:{...rect,rx:Math.min(r.width,r.height)/2}};
+  if(candidate.shape==='polygon'&&Array.isArray(candidate.outline)&&candidate.outline.length>=3&&candidate.outline.length<=8&&candidate.outline.every(p=>Array.isArray(p)&&p.length===2&&p.every(n=>Number.isFinite(n)&&n>=0&&n<=1)))return {tag:'polygon',attrs:{points:candidate.outline.map(([u,v])=>(r.x+u*r.width)+','+(r.y+v*r.height)).join(' ')}};
+  return {tag:'rect',attrs:rect};
+}
+/** A preview is only a click shortcut: once a manual drag starts it can never snap back. */
+export function selectionGestureResult(start,end,scale,candidate=null,manual=false) {
+  const rect=selectionRectangle(start,end,scale);
+  if(rect)return rect;
+  if(manual||Math.hypot(end.x-start.x,end.y-start.y)*scale>=4)return null;
+  const r=candidate?.rect;
+  if(!r||!['x','y','width','height'].every(key=>Number.isFinite(r[key]))||r.width<2||r.height<2)return null;
+  return {x:r.x,y:r.y,width:r.width,height:r.height};
+}
+
 /** Move only a point anchor in layout pixels; its free/local binding and all image blocks stay unchanged. */
 export function movePointAnnotation(core,draft,noteId,layoutPoint) {
   const current=core.validateDraft(draft),note=current.annotations.find(item=>item.id===noteId);

@@ -2,6 +2,10 @@
 
 This guide distinguishes deterministic tests, original-build observations, and release work still requiring verification. It is not a browser E2E or migration certification.
 
+## Unreleased smart selection
+
+The working tree adds an independent local pixel detector, whole-row/paragraph layout grouping, a bounded/cancellable Worker adapter and smart-hover/manual-drag interaction. All **191 local deterministic tests** pass; public build entry 4,400 bytes / lazy editor 206,152 bytes. A private clean UI screenshot improved from 1/5 to 5/5 target groups at multiple ink/whitespace/timestamp points, with 8/8 pointer-path/control checks and source-coordinate/high-DPI metadata checks. The user refreshed the installed linked plugin and confirmed whole rows and paragraphs select correctly; this is human UI verification, not automated browser E2E or universal recognition proof. This is not part of the published v0.2.0 archive. See [smart selection](<SMART-SELECTION.md>) for measured observations, real-page feedback and known limitations. Algorithm tests, isolated Worker tests, adapter scheduling tests and source-level UI contracts remain distinct from browser E2E verification.
+
 ## v0.2.0 validation
 
 After synchronizing the optimized implementation into the public package, all **145 deterministic tests** passed locally on Node.js `24.21.0`. Build and package validation passed; entry 4,400 bytes / lazy editor 135,921 bytes. These are not browser E2E tests. This publishing procedure does not repeat live UI, public-profile installation, migration or model submissions. Prior UI evidence below applies to the original baseline only.

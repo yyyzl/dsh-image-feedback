@@ -10,6 +10,9 @@ if (/^import\s/m.test(core)) throw new Error('Core must be standalone: update th
 if ((core.match(/^export default /gm)||[]).length!==1) throw new Error('Expected one explicit default API export in editor-core.js');
 core=core.replace(/^export (?=(?:const|let|function|class)\b)/gm,'').replace(/^export default /m,'return ');
 if (/^export\s/m.test(core)) throw new Error('Unsupported ESM export in core');
+const smart=(await readFile(resolve(root,'src/smart-selection.js'),'utf8')).replace(/^export (?=function\b)/gm,'');
+const smartClient=(await readFile(resolve(root,'src/smart-selection-client.js'),'utf8')).replace(/^export (?=function\b)/gm,'');
+if(/^import\s|^export\s/m.test(smart+smartClient))throw new Error('Smart selection must be standalone');
 const editor=await readFile(resolve(root,'src/editor.js'),'utf8');
 const view=await readFile(resolve(root,'src/editor-view.js'),'utf8');
 const intent=(await readFile(resolve(root,'src/editor-intent.js'),'utf8')).replace(/^export (?=function\b)/gm,'');
@@ -18,7 +21,7 @@ const state=(await readFile(resolve(root,'src/session-state.js'),'utf8')).replac
 if(/^import\s|^export\s/m.test(state))throw new Error('Session state must be standalone');
 const css=await readFile(resolve(root,'src/editor.css'),'utf8');
 const dictionaries=JSON.parse(await readFile(resolve(root,'src/messages.json'),'utf8'));
-const chunk=`window.__ModuleLoader__.load({id:'@yyyzl/dsh-image-feedback/client.editor.js',factory(require){\n'use strict';\nconst core=(()=>{\n${core}\n})();\nconst CSS=${JSON.stringify(css)};\nconst MESSAGES=${JSON.stringify(dictionaries)};\n${state}\n${intent}\n${view}\n${editor}\nreturn {createEditor};\n}});\n`;
+const chunk=`window.__ModuleLoader__.load({id:'@yyyzl/dsh-image-feedback/client.editor.js',factory(require){\n'use strict';\nconst core=(()=>{\n${core}\n})();\nconst CSS=${JSON.stringify(css)};\nconst MESSAGES=${JSON.stringify(dictionaries)};\n${state}\n${smart}\n${smartClient}\n${intent}\n${view}\n${editor}\nreturn {createEditor};\n}});\n`;
 const entry=entrySource+'\n// lazy-editor-sha256: '+createHash('sha256').update(chunk).digest('hex')+'\n';
 new Script(entry,{filename:'client.js'});
 new Script(chunk,{filename:'client.editor.js'});

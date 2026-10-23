@@ -2,6 +2,8 @@ function createEditor({React,ctx,NS,Icon}) {
   const EDITOR_NS=NS+'Editor';
   ctx.effect(()=>ctx.locale.register(EDITOR_NS,MESSAGES));
   const controllers=new Map(),lifetime=new AbortController(),grants=new Map();
+  const smartSelection=createSmartSelectionClient();
+  ctx.effect(()=>()=>smartSelection.dispose());
   ctx.effect(()=>()=>{for(const c of controllers.values()){settleFeedbackText(core,c);c.dispose();}lifetime.abort();controllers.clear();});
   async function rpc(sessionId,payload,retryAuthorization=true) {
     let grant=grants.get(sessionId);
@@ -53,5 +55,5 @@ function createEditor({React,ctx,NS,Icon}) {
     }
     return new Promise((resolve,reject)=>canvas.toBlob(async blob=>{try{if(!blob)throw new Error('Reference image encoding failed');const data=await readFile(blob);canvas.width=canvas.height=0;resolve(data);}catch(error){canvas.width=canvas.height=0;reject(error);}},'image/png'));
   }
-  return createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference});
+  return createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference,smartSelection});
 }

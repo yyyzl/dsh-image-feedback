@@ -47,6 +47,10 @@ Use `enabled: true` to re-enable, or `remove_bundle` to uninstall. Disabling doe
 
 The public package retains the `dsh_image_feedback` storage domain, draft schema, recovery key, and legacy sidebar identifiers to reduce compatibility changes. This is not a verified migration guarantee. Publishing this repository or a release does not automatically update an existing local installation.
 
+## In development: smart hover selection (unreleased)
+
+The working tree adds local image-boundary suggestions: hover to preview, click to adopt, or drag a fully manual frame. Existing blocks and annotations retain priority, and suggestions can be disabled in More. Common closed outlines, whole paragraphs and list-row groups are supported and have been checked against a real failure example, with user confirmation in the installed UI. Confirmation selects a rectangular region, not a cutout mask. This is not included in the v0.2.0 Release above. See [implementation, testing and limits](<docs/SMART-SELECTION.md>).
+
 ## v0.2.0 changes and upgrading
 
 - One contiguous review numbering scheme across the canvas, list, exported reference and feedback text, including move-only blocks; persisted draft IDs remain unchanged.

@@ -626,7 +626,7 @@ return API;
 
 })();
 const CSS="/* Image Feedback — an image-first review desk, scoped to the native sidebar.\n   Artwork is red; interface surfaces and all other colors follow Harness tokens. */\n.dif-root {\n  --dif-annotation: #dc2626;\n  --dif-annotation-ink: #ffffff;\n  --dif-accent-soft: color-mix(in srgb, var(--dsw-alias-brand-primary) 8%, transparent);\n  --dif-accent-line: color-mix(in srgb, var(--dsw-alias-brand-primary) 24%, transparent);\n  --dif-shadow: color-mix(in srgb, var(--dsw-alias-label-primary) 9%, transparent);\n  --dif-grid: color-mix(in srgb, var(--dsw-alias-border-l2) 46%, transparent);\n  --dif-ease: cubic-bezier(.2,.7,.2,1);\n  position: relative;\n  isolation: isolate;\n  container: dif-editor / inline-size;\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  height: 100%;\n  min-width: 0;\n  min-height: 0;\n  overflow: auto;\n  box-sizing: border-box;\n  color: var(--dsw-alias-label-primary);\n  background: var(--dsw-alias-bg-base);\n  font: inherit;\n  font-size: 13px;\n  line-height: 1.5;\n  scrollbar-width: thin;\n}\n.dif-root *, .dif-root *::before, .dif-root *::after { box-sizing: border-box; }\n.dif-root :where(button,input,textarea,select,summary) { font: inherit; }\n.dif-root :where(button,summary,input,textarea,select,a,[tabindex]):focus-visible {\n  outline: 2px solid var(--dsw-alias-brand-primary);\n  outline-offset: 3px;\n}\n.dif-root :where(button,summary) { -webkit-tap-highlight-color: transparent; }\n.dif-root :where(button,input,textarea,select):disabled { cursor: not-allowed; opacity: .42; }\n.dif-root .dif-spacer { flex: 1 1 auto; min-width: 0; }\n.dif-root .dif-subtle { color: var(--dsw-alias-label-secondary); font-size: 11px; font-weight: 400; line-height: 1.6; }\n\n/* Source identity: one flexible name, quiet metadata, discreet persistence. */\n.dif-root .dif-source {\n  z-index: 6;\n  display: flex;\n  flex: 0 0 auto;\n  align-items: center;\n  gap: 10px;\n  min-width: 0;\n  min-height: 58px;\n  padding: 10px 16px;\n  border-bottom: 1px solid var(--dsw-alias-border-l1);\n  background: var(--dsw-alias-bg-base);\n}\n.dif-root .dif-source > .dif-icon { color: var(--dsw-alias-label-secondary); }\n.dif-root .dif-source-info { display: flex; flex: 1 1 auto; flex-direction: column; gap: 1px; min-width: 0; }\n.dif-root .dif-source-name { overflow: hidden; font-size: 12px; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }\n.dif-root .dif-dimensions { color: var(--dsw-alias-label-secondary); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }\n.dif-root .dif-save-state { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; color: var(--dsw-alias-label-secondary); font-size: 11px; white-space: nowrap; }\n.dif-root .dif-save-state::before { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: var(--dsw-alias-state-idle-primary); content: \"\"; }\n.dif-root .dif-save-state:is([data-state=\"saved\"],[data-state=\"ready\"])::before { background: var(--dsw-alias-state-success-primary); }\n.dif-root .dif-save-state:is([data-state=\"saving\"],[data-state=\"loading\"])::before { background: var(--dsw-alias-brand-primary); }\n.dif-root .dif-save-state:is([data-state=\"dirty\"],[data-state=\"unsaved\"])::before { background: var(--dsw-alias-state-warn-primary); }\n.dif-root .dif-save-state:is([data-state=\"error\"],[data-state=\"failed\"])::before { background: var(--dsw-alias-state-error-primary); }\n\n/* Quiet, tactile controls. Send alone receives a solid contrasting surface. */\n.dif-root .dif-btn {\n  display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center;\n  gap: 6px; min-height: 32px; margin: 0; padding: 5px 10px;\n  border: 1px solid transparent; border-radius: 8px; appearance: none;\n  color: var(--dsw-alias-label-primary); background: transparent;\n  font-size: 12px; font-weight: 500; line-height: 20px;\n  text-decoration: none; white-space: nowrap; cursor: pointer; user-select: none;\n  transition: background-color 140ms var(--dif-ease), border-color 140ms var(--dif-ease), color 140ms var(--dif-ease), box-shadow 140ms var(--dif-ease);\n}\n.dif-root .dif-btn:hover:not(:disabled) { background: var(--dsw-alias-bg-layer-2); }\n.dif-root .dif-btn:active:not(:disabled) { background: color-mix(in srgb, var(--dsw-alias-label-primary) 10%, transparent); }\n.dif-root .dif-btn[aria-pressed=\"true\"] { border-color: var(--dsw-alias-label-primary); color: var(--dsw-alias-bg-base); background: var(--dsw-alias-label-primary); font-weight: 600; }\n.dif-root .dif-btn[aria-pressed=\"true\"]:hover:not(:disabled), .dif-root .dif-btn[aria-pressed=\"true\"]:active:not(:disabled) { color: var(--dsw-alias-bg-base); background: var(--dsw-alias-label-primary); border-color: var(--dsw-alias-label-primary); }\n.dif-root .dif-icon-btn { width: 32px; height: 32px; min-height: 32px; padding: 6px; }\n.dif-root .dif-icon { display: block; flex: 0 0 18px; width: 18px; height: 18px; pointer-events: none; }\n.dif-root .dif-btn.dif-primary {\n  color: var(--dsw-alias-bg-base);\n  background: var(--dsw-alias-label-primary);\n  border-color: var(--dsw-alias-label-primary);\n  font-weight: 600;\n}\n.dif-root .dif-primary :where(.dif-tool-label, .dif-icon) { color: inherit; }\n.dif-root .dif-btn.dif-primary:hover:not(:disabled) { background: color-mix(in srgb, var(--dsw-alias-label-primary) 88%, var(--dsw-alias-bg-base)); border-color: transparent; box-shadow: 0 3px 9px var(--dif-shadow); }\n.dif-root .dif-btn.dif-primary:active:not(:disabled) { box-shadow: none; background: color-mix(in srgb, var(--dsw-alias-label-primary) 80%, var(--dsw-alias-bg-base)); }\n.dif-root .dif-btn.dif-secondary { border-color: var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-base); }\n.dif-root .dif-btn.dif-secondary:active:not(:disabled) { background: var(--dsw-alias-bg-layer-2); }\n.dif-root .dif-btn.dif-secondary:hover:not(:disabled) { border-color: var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-layer-1); }\n.dif-root .dif-text-action { color: var(--dsw-alias-label-secondary); font-size: 11px; }\n.dif-root .dif-text-action:hover:not(:disabled) { color: var(--dsw-alias-label-primary); }\n.dif-root .dif-tool-label { min-width: 0; font-size: 12px; }\n.dif-root .dif-toolbar {\n  z-index: 3; display: flex; flex: 0 0 auto; align-items: center; gap: 8px;\n  min-width: 0; min-height: 54px; padding: 8px 16px;\n  border-bottom: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-base);\n}\n.dif-root .dif-toolgroup { display: flex; flex: 0 0 auto; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 10px; background: var(--dsw-alias-bg-layer-1); }\n.dif-root .dif-toolgroup .dif-btn { min-height: 28px; padding-block: 3px; border-radius: 6px; }\n.dif-root .dif-toolgroup .dif-btn[aria-pressed=\"true\"] {\n  /* A real selected surface, not white-on-white with a barely visible border.\n     The host's contrasting primary/base pair also reverses correctly in dark mode. */\n  color: var(--dsw-alias-bg-base);\n  background: var(--dsw-alias-label-primary);\n  border-color: var(--dsw-alias-label-primary);\n  font-weight: 650;\n  box-shadow: 0 1px 3px var(--dif-shadow);\n}\n.dif-root .dif-toolgroup .dif-btn[aria-pressed=\"true\"]:hover:not(:disabled) { color: var(--dsw-alias-bg-base); background: var(--dsw-alias-label-primary); border-color: var(--dsw-alias-label-primary); }\n.dif-root .dif-toolgroup .dif-btn[aria-pressed=\"false\"] { color: var(--dsw-alias-label-secondary); }\n.dif-root .dif-toolgroup .dif-btn[aria-pressed=\"false\"]:hover:not(:disabled) { color: var(--dsw-alias-label-primary); border-color: var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-base); }\n.dif-root .dif-divider { width: 1px; height: 18px; flex: 0 0 1px; margin: 0 2px; background: var(--dsw-alias-border-l1); }\n\n/* Menus remain local to this editor. No portal covers the chat. */\n.dif-root .dif-menu { position: relative; flex: 0 0 auto; }\n.dif-root .dif-menu > summary { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid transparent; border-radius: 8px; color: var(--dsw-alias-label-secondary); list-style: none; cursor: pointer; user-select: none; }\n.dif-root .dif-menu > summary::-webkit-details-marker { display: none; }\n.dif-root .dif-menu > summary:hover, .dif-root .dif-menu[open] > summary { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-layer-2); }\n.dif-root .dif-menu-body {\n  position: absolute; z-index: 12; top: calc(100% + 8px); right: 0;\n  display: flex; flex-direction: column; gap: 3px; width: max-content; min-width: 190px;\n  max-width: min(290px, calc(100cqw - 24px)); max-height: min(360px, 65vh); overflow: auto;\n  padding: 6px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 12px;\n  background: var(--dsw-alias-bg-overlay); box-shadow: 0 4px 10px var(--dif-shadow), 0 16px 40px var(--dif-shadow);\n  animation: dif-reveal 160ms var(--dif-ease);\n}\n.dif-root .dif-menu-body .dif-btn { justify-content: flex-start; width: 100%; min-height: 36px; padding: 7px 10px; text-align: left; white-space: normal; }\n.dif-root .dif-menu-body .dif-subtle { margin: 6px 10px; max-width: 240px; }\n\n/* The image is the hero. A subtle drafting grid gives neutral breathing room. */\n.dif-root .dif-canvas-area { position: relative; display: flex; flex: 1 1 auto; min-width: 0; min-height: 140px; overflow: hidden; background: var(--dsw-alias-bg-layer-1); }\n.dif-root .dif-stage { position: absolute; inset: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; background-color: var(--dsw-alias-bg-layer-1); background-image: radial-gradient(circle, var(--dif-grid) .65px, transparent .85px); background-position: center; background-size: 20px 20px; }\n.dif-root .dif-stage:focus-visible { outline-offset: -3px; }\n.dif-root .dif-canvas-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: max-content; min-width: 100%; min-height: 100%; padding: 20px; }\n.dif-root .dif-canvas { display: block; flex: none; max-width: none; border: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-base); box-shadow: 0 2px 5px var(--dif-shadow), 0 12px 32px var(--dif-shadow); user-select: none; touch-action: none; }\n.dif-root .dif-zoom {\n  position: absolute; z-index: 2; right: 16px; bottom: 16px;\n  display: flex; align-items: center; gap: 2px; min-height: 34px; padding: 3px;\n  border: 1px solid var(--dsw-alias-border-l1); border-radius: 10px;\n  color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-overlay);\n  box-shadow: 0 3px 12px var(--dif-shadow); font-size: 11px; font-variant-numeric: tabular-nums;\n}\n.dif-root .dif-zoom .dif-icon-btn { width: 28px; height: 28px; min-height: 28px; padding: 5px; border-radius: 6px; }\n.dif-root .dif-zoom > span { min-width: 38px; text-align: center; }\n.dif-root .dif-zoom .dif-divider { height: 16px; margin-inline: 3px; }\n.dif-root .dif-mode-hint {\n  position: absolute; z-index: 1; top: 12px; left: 16px; max-width: calc(100% - 32px);\n  padding: 5px 9px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 6px;\n  color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-overlay);\n  font-size: 11px; line-height: 16px; pointer-events: none; user-select: none;\n}\n\n/* Numbered feedback echoes the actual red pins, not a second brand palette. */\n.dif-root .dif-bottom { display: flex; flex: 0 1 clamp(112px, 28%, 244px); flex-direction: column; min-width: 0; min-height: 88px; max-height: 38%; overflow: hidden; border-top: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-base); }\n.dif-root .dif-list-title { display: flex; flex: 0 0 44px; align-items: center; gap: 8px; min-width: 0; padding: 0 16px; font-size: 12px; font-weight: 600; }\n.dif-root .dif-list-title strong { font-weight: 600; }\n.dif-root .dif-count { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 6px; color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-layer-1); font-size: 11px; font-weight: 500; font-variant-numeric: tabular-nums; }\n.dif-root .dif-notes-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 10px 10px; overscroll-behavior: contain; scrollbar-width: thin; }\n.dif-root .dif-note-row { display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; min-height: 38px; margin: 2px 0; padding: 7px 8px; border: 1px solid transparent; border-radius: 8px; color: var(--dsw-alias-label-primary); background: transparent; font-size: 13px; line-height: 20px; text-align: left; cursor: pointer; transition: background-color 140ms var(--dif-ease), border-color 140ms var(--dif-ease); }\n.dif-root .dif-note-row:hover:not(:disabled) { border-color: var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-layer-1); }\n.dif-root .dif-note-row > .dif-icon:last-child { flex-basis: 14px; width: 14px; height: 14px; color: var(--dsw-alias-label-secondary); }\n.dif-root .dif-number { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; min-width: 22px; height: 22px; padding: 0 4px; border-radius: 50%; color: var(--dif-annotation-ink); background: var(--dif-annotation); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }\n.dif-root .dif-item-thumb { display: block; flex: 0 0 36px; width: 36px; height: 30px; border: 1px solid var(--dsw-alias-border-l2); border-radius: 5px; background: var(--dsw-alias-bg-layer-1); pointer-events: none; }\n.dif-root .dif-row-main { display: flex; flex: 1 1 auto; flex-direction: column; gap: 2px; min-width: 0; }\n.dif-root .dif-row-title { display: flex; align-items: baseline; gap: 7px; min-width: 0; }\n.dif-root .dif-row-meta { color: var(--dsw-alias-label-secondary); font-size: 11px; font-variant-numeric: tabular-nums; line-height: 1.5; }\n.dif-root .dif-number { corner-shape: round; }\n.dif-root .dif-note-snippet { flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }\n.dif-root .dif-kind { flex: 0 0 auto; color: var(--dsw-alias-label-secondary); font-size: 11px; font-weight: 400; white-space: nowrap; }\n.dif-root .dif-inspector { flex: 0 0 auto; min-width: 0; margin: 2px 0 8px; overflow: hidden; border: 1px solid var(--dsw-alias-border-l2); border-radius: 10px; background: var(--dsw-alias-bg-base); transition: border-color 140ms var(--dif-ease), box-shadow 140ms var(--dif-ease); }\n.dif-root .dif-inspector:focus-within { border-color: var(--dsw-alias-brand-primary); box-shadow: 0 0 0 2px var(--dif-accent-soft); }\n.dif-root .dif-note-head { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 36px; padding: 6px 8px 6px 10px; border-bottom: 1px solid var(--dsw-alias-border-l1); color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-layer-1); font-size: 11px; }\n.dif-root .dif-note-head .dif-icon-btn { width: 28px; height: 28px; min-height: 28px; padding: 5px; color: var(--dsw-alias-label-secondary); }\n.dif-root .dif-note-head .dif-btn:has(.dif-icon) { border-radius: 6px; }\n.dif-root .dif-inspector textarea { display: block; width: 100%; min-height: 72px; max-height: 160px; margin: 0; padding: 10px 12px 12px; border: 0; border-radius: 0; outline: none; color: var(--dsw-alias-label-primary); background: transparent; font-size: 13px; line-height: 1.75; resize: vertical; scrollbar-width: thin; }\n.dif-root .dif-inspector textarea:focus-visible { outline: none; }\n.dif-root .dif-inspector textarea::placeholder, .dif-root .dif-import input::placeholder { color: var(--dsw-alias-label-secondary); opacity: 1; }\n.dif-root .dif-note-help { padding: 0 12px 10px; color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 1.6; }\n.dif-root .dif-empty-notes { display: flex; align-items: center; gap: 8px; min-height: 32px; margin: 0; padding: 0 6px 6px; color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 1.6; }\n\n/* A clear, persistent hand-off: what gets sent, where, and one unmistakable CTA. */\n.dif-root .dif-footer { z-index: 2; display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; gap: 10px 16px; min-width: 0; padding: 12px 16px; border-top: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-layer-1); }\n.dif-root .dif-summary { display: flex; flex: 1 1 130px; flex-direction: column; gap: 2px; min-width: 0; color: var(--dsw-alias-label-secondary); font-size: 11px; line-height: 1.5; }\n.dif-root .dif-summary strong { color: var(--dsw-alias-label-primary); font-size: 12px; font-weight: 550; font-variant-numeric: tabular-nums; }\n.dif-root .dif-footer-actions { display: flex; flex: 0 1 auto; flex-wrap: wrap; align-items: center; gap: 8px; }\n.dif-root .dif-footer-actions .dif-btn { min-height: 38px; padding-inline: 12px; }\n.dif-root .dif-status { display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; gap: 6px; max-height: 120px; overflow: auto; padding: 10px 16px; border-top: 1px solid var(--dsw-alias-border-l1); color: var(--dsw-alias-label-secondary); background: var(--dsw-alias-bg-layer-1); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; scrollbar-width: thin; }\n.dif-root .dif-status > span { flex: 1 1 180px; }\n.dif-root .dif-status[data-error=\"true\"] { border-top-color: var(--dsw-alias-state-error-primary); color: var(--dsw-alias-state-error-primary); }\n\n/* Import surfaces are in flow: source height and translated copy can grow safely. */\n.dif-root .dif-import { display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; padding: 10px 16px; border-bottom: 1px solid var(--dsw-alias-border-l1); }\n.dif-root .dif-import input { flex: 1 1 120px; width: 0; min-width: 0; height: 36px; padding: 7px 10px; border: 1px solid var(--dsw-alias-border-l1); border-radius: 7px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); font-size: 12px; }\n.dif-root .dif-library { position: relative; z-index: 8; flex: 0 1 auto; min-height: 100px; max-height: min(360px, 48%); overflow: auto; padding: 0 12px 12px; border-bottom: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-overlay); overscroll-behavior: contain; scrollbar-width: thin; animation: dif-reveal 160ms var(--dif-ease); }\n.dif-root .dif-library-head { position: sticky; z-index: 1; top: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 48px; padding: 6px 0; border-bottom: 1px solid var(--dsw-alias-border-l1); background: var(--dsw-alias-bg-overlay); font-size: 12px; font-weight: 600; }\n.dif-root .dif-asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; padding-top: 10px; }\n.dif-root .dif-asset { display: flex; flex-direction: column; gap: 4px; min-width: 0; margin: 0; padding: 5px; overflow: hidden; border: 1px solid var(--dsw-alias-border-l1); border-radius: 9px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); text-align: left; cursor: pointer; transition: border-color 140ms var(--dif-ease), box-shadow 140ms var(--dif-ease); }\n.dif-root .dif-asset:hover:not(:disabled) { border-color: var(--dsw-alias-border-l2); box-shadow: 0 3px 10px var(--dif-shadow); }\n.dif-root .dif-asset[aria-pressed=\"true\"] { border-color: var(--dsw-alias-brand-primary); background: var(--dif-accent-soft); }\n.dif-root .dif-asset img { display: block; width: 100%; height: 84px; aspect-ratio: 4 / 3; padding: 3px; border-radius: 5px; background: var(--dsw-alias-bg-layer-1); object-fit: contain; }\n.dif-root .dif-asset :where(span,small) { display: block; max-width: 100%; overflow: hidden; padding: 0 3px; font-size: 11px; line-height: 17px; white-space: nowrap; text-overflow: ellipsis; }\n.dif-root .dif-asset small { color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }\n.dif-root .dif-inline-confirm { position: relative; z-index: 9; display: flex; flex: 0 0 auto; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-overlay); font-size: 12px; animation: dif-reveal 160ms var(--dif-ease); }\n.dif-root .dif-inline-confirm > span { flex-basis: 100%; line-height: 1.65; }\n\n/* Original redline illustration: a small demonstration, not stock decoration. */\n.dif-root .dif-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 12px; min-width: 0; overflow: auto; padding: 32px 24px; text-align: center; }\n.dif-root .dif-empty-art { flex: 0 0 auto; width: 190px; height: 130px; margin: 0 0 8px; overflow: visible; color: var(--dsw-alias-label-secondary); }\n.dif-root .dif-art-back { fill: var(--dsw-alias-bg-layer-2); stroke: var(--dsw-alias-border-l1); }\n.dif-root .dif-art-sheet { fill: var(--dsw-alias-bg-base); stroke: var(--dsw-alias-border-l2); }\n.dif-root .dif-art-skeleton { fill: var(--dsw-alias-bg-layer-2); }\n.dif-root .dif-art-selection { fill: none; stroke: var(--dif-annotation); stroke-width: 1.5; }\n.dif-root .dif-art-pin { fill: var(--dif-annotation); }\n.dif-root .dif-art-number { fill: var(--dif-annotation-ink); font-size: 10px; font-weight: 600; }\n.dif-root .dif-eyebrow { color: var(--dsw-alias-label-secondary); font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }\n.dif-root .dif-empty strong { max-width: 300px; margin: 0; color: var(--dsw-alias-label-primary); font-size: clamp(18px, 4.6cqw, 23px); font-weight: 600; letter-spacing: -.035em; line-height: 1.45; text-wrap: balance; }\n.dif-root .dif-empty p { max-width: 270px; margin: 0; color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 1.85; text-wrap: pretty; }\n.dif-root .dif-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }\n.dif-root .dif-empty-actions .dif-btn { min-height: 38px; padding-inline: 16px; }\n.dif-root .dif-empty-more { color: var(--dsw-alias-label-secondary); font-size: 11px; }\n.dif-root .dif-empty-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 14px; margin: 14px 0 0; padding: 16px 0 0; border-top: 1px solid var(--dsw-alias-border-l1); list-style: none; }\n.dif-root .dif-empty-steps li { display: flex; align-items: center; gap: 5px; color: var(--dsw-alias-label-secondary); font-size: 11px; white-space: nowrap; }\n.dif-root .dif-empty-steps span { font-size: 10px; font-variant-numeric: tabular-nums; opacity: .75; }\n.dif-root .dif-drop-target { position: absolute; z-index: 20; inset: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 2px dashed var(--dsw-alias-brand-primary); border-radius: 12px; color: var(--dsw-alias-brand-primary); background: var(--dsw-alias-bg-overlay); font-size: 14px; font-weight: 550; text-align: center; pointer-events: none; }\n\n/* Container, not viewport: useful at 280px and in a wide split-screen panel. */\n@container dif-editor (max-width: 440px) {\n  .dif-root .dif-footer { gap: 8px; }\n  .dif-root .dif-summary { flex-basis: 100%; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }\n  .dif-root .dif-footer-actions { width: 100%; }\n  .dif-root .dif-footer-actions .dif-primary { flex: 1 1 auto; }\n}\n@container dif-editor (max-width: 360px) {\n  .dif-root .dif-source { gap: 6px; padding-inline: 12px; }\n  .dif-root .dif-source > .dif-icon, .dif-root .dif-source .dif-text-action { display: none; }\n  .dif-root .dif-toolbar { gap: 4px; padding-inline: 12px; }\n  .dif-root .dif-toolgroup .dif-btn { padding-inline: 7px; }\n  .dif-root .dif-toolbar .dif-tool-label { font-size: 11px; }\n  .dif-root .dif-list-title, .dif-root .dif-footer { padding-inline: 12px; }\n  .dif-root .dif-notes-scroll { padding-inline: 8px; }\n  .dif-root .dif-zoom { right: 10px; bottom: 10px; }\n  .dif-root .dif-mode-hint { top: 10px; left: 10px; max-width: calc(100% - 20px); }\n  .dif-root .dif-empty { padding: 24px 16px; }\n  .dif-root .dif-empty-actions .dif-btn { padding-inline: 10px; }\n}\n@container dif-editor (max-width: 290px) {\n  .dif-root .dif-toolbar .dif-tool-label { display: none; }\n  .dif-root .dif-source { flex-wrap: wrap; }\n  .dif-root .dif-source-info { flex-basis: calc(100% - 100px); }\n  .dif-root .dif-save-state { margin-left: auto; }\n  .dif-root .dif-summary { flex-direction: column; }\n  .dif-root .dif-footer-actions { flex-wrap: wrap; }\n  .dif-root .dif-footer-actions .dif-btn { padding-inline: 8px; }\n  .dif-root .dif-asset-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }\n}\n@container dif-editor (min-width: 600px) {\n  .dif-root .dif-source, .dif-root .dif-toolbar, .dif-root .dif-footer { padding-inline: 20px; }\n  .dif-root .dif-list-title { padding-inline: 20px; }\n  .dif-root .dif-notes-scroll { padding-inline: 14px; }\n  .dif-root .dif-empty-art { width: 220px; height: 150px; }\n}\n/* ResizeObserver sets a presentation-only height flag; fitting stays immediate. */\n.dif-root[data-compact-height=\"true\"] .dif-source { min-height: 44px; padding-block: 5px; }\n.dif-root[data-compact-height=\"true\"] .dif-toolbar { min-height: 44px; padding-block: 4px; }\n.dif-root[data-compact-height=\"true\"] .dif-bottom { flex-basis: 104px; min-height: 88px; }\n.dif-root[data-compact-height=\"true\"] .dif-footer { padding-block: 8px; }\n.dif-root[data-compact-height=\"true\"] .dif-summary > span { display: none; }\n.dif-root[data-compact-height=\"true\"] .dif-list-title { flex-basis: 36px; }\n.dif-root[data-compact-height=\"true\"] .dif-empty { justify-content: flex-start; padding-block: 20px; }\n.dif-root[data-compact-height=\"true\"] .dif-empty-art { width: 125px; height: 86px; margin-bottom: 0; }\n.dif-root[data-compact-height=\"true\"] .dif-empty-steps { display: none; }\n@media (pointer: coarse) {\n  .dif-root .dif-btn, .dif-root .dif-icon-btn, .dif-root .dif-menu > summary, .dif-root .dif-note-head .dif-icon-btn, .dif-root .dif-zoom .dif-icon-btn { min-width: 40px; min-height: 40px; height: auto; }\n  .dif-root .dif-toolgroup .dif-btn { min-height: 40px; }\n  .dif-root .dif-note-row { min-height: 44px; }\n  .dif-root .dif-toolbar { flex-wrap: wrap; }\n}\n@media (forced-colors: active) {\n  .dif-root .dif-btn[aria-pressed=\"true\"], .dif-root .dif-inspector:focus-within, .dif-root .dif-asset[aria-pressed=\"true\"] { outline: 2px solid Highlight; outline-offset: -2px; }\n  .dif-root .dif-number { border: 1px solid CanvasText; }\n  .dif-root .dif-save-state::before { border: 1px solid CanvasText; }\n}\n@keyframes dif-reveal { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }\n@media (prefers-reduced-motion: reduce) {\n  .dif-root *, .dif-root *::before, .dif-root *::after { animation: none; transition: none; scroll-behavior: auto; }\n}\n";
-const MESSAGES={"zh":{"openFile":"选择图片","library":"会话图片","replace":"更换","options":"更多选项","tools":"图片反馈工具","path":"路径 / Base64","import":"导入","workspace":"图片审阅工作台","workflow":"图片反馈步骤","stepMark":"框选批注","stepMove":"拖动调整","stepSend":"发回会话","dropImage":"松开，开始审阅这张图片","sendIncludes":"原图 + 编号参考图，发回当前会话","paste":"让修改，落在准确的位置。","pasteHint":"粘贴截图、拖入图片，或从当前会话选择。","select":"选择","point":"点批注","selectHelp":"框选直接写批注，拖动选区调整位置；Shift 拖动可新建范围","pointHelp":"点击画面写批注；已有标记可直接拖动，点击标记继续编辑","selectHint":"框选即批注 · 拖动选区调整位置","pointHint":"点击添加批注 · 拖动标记调整位置","panHint":"拖动画布 · 也可使用空格或中键","pan":"平移视图","undo":"撤销","redo":"重做","fit":"适应画布","zoomIn":"放大","zoomOut":"缩小","global":"全局","blockNote":"图块","positionNote":"位置","addGlobal":"全局意见","notes":"修改项","commentItem":"批注","moveItem":"移动","moveOnly":"已调整位置","itemCount":"项修改","zoomHint":"滚轮 / 触控板捏合缩放 · 空格拖动平移","hostUpdate":"编号规则已更新。请保存当前修改，完整退出并重新打开 Harness 后再发送，避免图片与文字编号不一致。","noteCount":"条意见","emptyNotes":"直接在图片上框选，意见会出现在这里。","placeholder":"希望这里怎么改？","blockPlaceholder":"还需要补充什么修改？（可选）","optionalComment":"位置调整会自动回传，文字可留空","layoutChange":"布局调整","delete":"删除这条意见","reset":"复位图块","removeBlock":"移除选中图块","fill":"填入文字","send":"发送反馈","sending":"发送中…","saved":"已保存","saving":"保存中","loading":"读取中","ready":"已就绪","unsaved":"待保存","error":"操作失败","accepted":"反馈已排队，原聊天草稿保持不变。","inserted":"反馈文字已填入，尚未发送。","fillFailed":"输入框状态已改变，未插入。请重试；原草稿未被覆盖。","fillTextOnly":"只填入反馈文字；携带原图和布局参考请使用“发送反馈”。","feedbackChanged":"准备参考图时反馈发生了变化，请重新发送。","noImages":"当前会话还没有图片，可以直接粘贴或选择文件。","reload":"重新读取","unsupported":"请选择 PNG、JPEG、WebP 或 GIF 图片。","invalidPaste":"未发现图片、有效图片路径或 Base64。文字请粘贴到意见框。","deleteConfirm":"图块绑定了意见。确认同时移除图块和这些意见？","confirm":"确认","cancel":"取消","dismiss":"收起提示","export":"导出反馈 JSON","more":"更多图片","retrySave":"重试保存","changes":"处布局调整","newImageConfirm":"当前修改会先保存，切换后可从会话图片恢复。","switch":"保存并切换","reference":"图片与布局画布","sendAgain":"这份反馈已经发送；修改后可以再次发送。","sessionChanged":"会话已切换，反馈仍保留在原会话，未发送。","commandDraft":"输入框中已有斜杠命令，请先完成或退出该命令，再填入反馈。","reloadConfirm":"重新读取会放弃未保存的本地修改。建议先导出反馈 JSON。确认放弃并读取宿主版本？","cutOverlap":"这个范围包含已被移动走的源像素，不能再次拆出同一份。请直接拖动当前可见图块；原有内容和意见已保留。","keyboardHint":"空格 / 中键平移 · Ctrl/Cmd+Z 撤销 · 方向键微调图块"},"en":{"openFile":"Choose image","library":"Session images","replace":"Replace","options":"More options","tools":"Image feedback tools","path":"Path / Base64","import":"Import","workspace":"Image review desk","workflow":"Image feedback steps","stepMark":"Mark a detail","stepMove":"Move a region","stepSend":"Send to chat","dropImage":"Drop to start reviewing this image","sendIncludes":"Source + numbered reference, sent to this chat","paste":"Good feedback starts with a clear point.","pasteHint":"Paste a screenshot, drop an image, or choose from this session.","select":"Select","point":"Point","selectHelp":"Draw to write feedback, drag a region to move it; Shift-drag starts a new region","pointHelp":"Click to write a point note; drag an existing pin to reposition it, or click to edit","selectHint":"Draw to comment · Drag a region to move it","pointHint":"Click to comment · Drag a pin to reposition it","panHint":"Drag to pan · Space or middle button also works","pan":"Pan view","undo":"Undo","redo":"Redo","fit":"Fit canvas","zoomIn":"Zoom in","zoomOut":"Zoom out","global":"Global","blockNote":"Block","positionNote":"Position","addGlobal":"Global note","notes":"Changes","commentItem":"Comment","moveItem":"Move","moveOnly":"Position adjusted","itemCount":"changes","zoomHint":"Wheel / trackpad pinch to zoom · Space-drag to pan","hostUpdate":"Review numbering has changed. Save your work and fully restart Harness before sending so image and text labels stay consistent.","noteCount":"notes","emptyNotes":"Draw a region on the image. Your feedback appears here.","placeholder":"What would you like to change here?","blockPlaceholder":"Any other changes to this block? (Optional)","optionalComment":"Layout changes are included automatically; text is optional","layoutChange":"Layout change","delete":"Delete this note","reset":"Reset block","removeBlock":"Remove selected block","fill":"Insert text","send":"Send feedback","sending":"Sending…","saved":"Saved","saving":"Saving","loading":"Loading","ready":"Ready","unsaved":"Unsaved","error":"Failed","accepted":"Feedback queued. Your chat draft is unchanged.","inserted":"Feedback text inserted, not sent.","fillFailed":"The composer changed; nothing was inserted. Retry. Your draft was not overwritten.","fillTextOnly":"Inserts text only. Use Send feedback to include the source and layout reference images.","feedbackChanged":"Feedback changed while preparing the reference. Please retry.","noImages":"No images in this session yet. Paste or choose an image.","reload":"Reload","unsupported":"Choose a PNG, JPEG, WebP or GIF image.","invalidPaste":"No image, valid image path or Base64 found. Paste text into a feedback field.","deleteConfirm":"This block has notes. Remove the block and its attached notes?","confirm":"Confirm","cancel":"Cancel","dismiss":"Dismiss notice","export":"Export feedback JSON","more":"More images","retrySave":"Retry save","changes":"layout changes","newImageConfirm":"Current changes will be saved first. Reopen them from session images later.","switch":"Save and switch","reference":"Image and layout canvas","sendAgain":"This feedback was already sent. Edit it before sending again.","sessionChanged":"The viewed session changed. Feedback remains in the original session and was not sent.","commandDraft":"The composer contains a slash command. Finish or clear that command before inserting feedback.","reloadConfirm":"Reload discards unsaved local changes. Export feedback JSON first if needed. Discard and load the Host version?","cutOverlap":"This range includes source pixels already moved away. Drag the currently visible block instead; existing content and notes are unchanged.","keyboardHint":"Space / middle button to pan · Ctrl/Cmd+Z to undo · Arrow keys to nudge blocks"}};
+const MESSAGES={"zh":{"openFile":"选择图片","library":"会话图片","replace":"更换","options":"更多选项","tools":"图片反馈工具","path":"路径 / Base64","import":"导入","workspace":"图片审阅工作台","workflow":"图片反馈步骤","stepMark":"框选批注","stepMove":"拖动调整","stepSend":"发回会话","dropImage":"松开，开始审阅这张图片","sendIncludes":"原图 + 编号参考图，发回当前会话","paste":"让修改，落在准确的位置。","pasteHint":"粘贴截图、拖入图片，或从当前会话选择。","select":"选择","point":"点批注","selectHelp":"框选直接写批注，拖动选区调整位置；Shift 拖动可新建范围","pointHelp":"点击画面写批注；已有标记可直接拖动，点击标记继续编辑","smartSelection":"智能预选","smartHint":"悬停推荐 · 单击采用 · 拖动自行框选","smartAdopt":"单击采用此框 · 拖动按自己的范围框选","smartEllipse":"圆形／椭圆边界 · 单击选取外接范围","smartShape":"已识别轮廓 · 单击选取外接范围","smartRow":"行区块 · 单击采用 · 拖动自行框选","smartParagraph":"段落区块 · 单击采用 · 拖动自行框选","smartPreparing":"正在本地识别边界 · 可直接拖动框选","smartUnavailable":"智能预选暂不可用 · 仍可直接拖动框选","selectHint":"框选即批注 · 拖动选区调整位置","pointHint":"点击添加批注 · 拖动标记调整位置","panHint":"拖动画布 · 也可使用空格或中键","pan":"平移视图","undo":"撤销","redo":"重做","fit":"适应画布","zoomIn":"放大","zoomOut":"缩小","global":"全局","blockNote":"图块","positionNote":"位置","addGlobal":"全局意见","notes":"修改项","commentItem":"批注","moveItem":"移动","moveOnly":"已调整位置","itemCount":"项修改","zoomHint":"滚轮 / 触控板捏合缩放 · 空格拖动平移","hostUpdate":"编号规则已更新。请保存当前修改，完整退出并重新打开 Harness 后再发送，避免图片与文字编号不一致。","noteCount":"条意见","emptyNotes":"直接在图片上框选，意见会出现在这里。","placeholder":"希望这里怎么改？","blockPlaceholder":"还需要补充什么修改？（可选）","optionalComment":"位置调整会自动回传，文字可留空","layoutChange":"布局调整","delete":"删除这条意见","reset":"复位图块","removeBlock":"移除选中图块","fill":"填入文字","send":"发送反馈","sending":"发送中…","saved":"已保存","saving":"保存中","loading":"读取中","ready":"已就绪","unsaved":"待保存","error":"操作失败","accepted":"反馈已排队，原聊天草稿保持不变。","inserted":"反馈文字已填入，尚未发送。","fillFailed":"输入框状态已改变，未插入。请重试；原草稿未被覆盖。","fillTextOnly":"只填入反馈文字；携带原图和布局参考请使用“发送反馈”。","feedbackChanged":"准备参考图时反馈发生了变化，请重新发送。","noImages":"当前会话还没有图片，可以直接粘贴或选择文件。","reload":"重新读取","unsupported":"请选择 PNG、JPEG、WebP 或 GIF 图片。","invalidPaste":"未发现图片、有效图片路径或 Base64。文字请粘贴到意见框。","deleteConfirm":"图块绑定了意见。确认同时移除图块和这些意见？","confirm":"确认","cancel":"取消","dismiss":"收起提示","export":"导出反馈 JSON","more":"更多图片","retrySave":"重试保存","changes":"处布局调整","newImageConfirm":"当前修改会先保存，切换后可从会话图片恢复。","switch":"保存并切换","reference":"图片与布局画布","sendAgain":"这份反馈已经发送；修改后可以再次发送。","sessionChanged":"会话已切换，反馈仍保留在原会话，未发送。","commandDraft":"输入框中已有斜杠命令，请先完成或退出该命令，再填入反馈。","reloadConfirm":"重新读取会放弃未保存的本地修改。建议先导出反馈 JSON。确认放弃并读取宿主版本？","cutOverlap":"这个范围包含已被移动走的源像素，不能再次拆出同一份。请直接拖动当前可见图块；原有内容和意见已保留。","keyboardHint":"空格 / 中键平移 · Ctrl/Cmd+Z 撤销 · 方向键微调图块"},"en":{"openFile":"Choose image","library":"Session images","replace":"Replace","options":"More options","tools":"Image feedback tools","path":"Path / Base64","import":"Import","workspace":"Image review desk","workflow":"Image feedback steps","stepMark":"Mark a detail","stepMove":"Move a region","stepSend":"Send to chat","dropImage":"Drop to start reviewing this image","sendIncludes":"Source + numbered reference, sent to this chat","paste":"Good feedback starts with a clear point.","pasteHint":"Paste a screenshot, drop an image, or choose from this session.","select":"Select","point":"Point","selectHelp":"Draw to write feedback, drag a region to move it; Shift-drag starts a new region","pointHelp":"Click to write a point note; drag an existing pin to reposition it, or click to edit","smartSelection":"Smart hover selection","smartHint":"Hover for a suggestion · Click to accept · Drag your own frame","smartAdopt":"Click to accept this frame · Drag to draw your own","smartEllipse":"Round boundary · Click to select its bounding region","smartShape":"Shape boundary · Click to select its bounding region","smartRow":"Row group · Click to accept · Drag your own frame","smartParagraph":"Paragraph group · Click to accept · Drag your own frame","smartPreparing":"Finding image boundaries locally · Manual framing is ready","smartUnavailable":"Smart suggestions unavailable · Drag to frame manually","selectHint":"Draw to comment · Drag a region to move it","pointHint":"Click to comment · Drag a pin to reposition it","panHint":"Drag to pan · Space or middle button also works","pan":"Pan view","undo":"Undo","redo":"Redo","fit":"Fit canvas","zoomIn":"Zoom in","zoomOut":"Zoom out","global":"Global","blockNote":"Block","positionNote":"Position","addGlobal":"Global note","notes":"Changes","commentItem":"Comment","moveItem":"Move","moveOnly":"Position adjusted","itemCount":"changes","zoomHint":"Wheel / trackpad pinch to zoom · Space-drag to pan","hostUpdate":"Review numbering has changed. Save your work and fully restart Harness before sending so image and text labels stay consistent.","noteCount":"notes","emptyNotes":"Draw a region on the image. Your feedback appears here.","placeholder":"What would you like to change here?","blockPlaceholder":"Any other changes to this block? (Optional)","optionalComment":"Layout changes are included automatically; text is optional","layoutChange":"Layout change","delete":"Delete this note","reset":"Reset block","removeBlock":"Remove selected block","fill":"Insert text","send":"Send feedback","sending":"Sending…","saved":"Saved","saving":"Saving","loading":"Loading","ready":"Ready","unsaved":"Unsaved","error":"Failed","accepted":"Feedback queued. Your chat draft is unchanged.","inserted":"Feedback text inserted, not sent.","fillFailed":"The composer changed; nothing was inserted. Retry. Your draft was not overwritten.","fillTextOnly":"Inserts text only. Use Send feedback to include the source and layout reference images.","feedbackChanged":"Feedback changed while preparing the reference. Please retry.","noImages":"No images in this session yet. Paste or choose an image.","reload":"Reload","unsupported":"Choose a PNG, JPEG, WebP or GIF image.","invalidPaste":"No image, valid image path or Base64 found. Paste text into a feedback field.","deleteConfirm":"This block has notes. Remove the block and its attached notes?","confirm":"Confirm","cancel":"Cancel","dismiss":"Dismiss notice","export":"Export feedback JSON","more":"More images","retrySave":"Retry save","changes":"layout changes","newImageConfirm":"Current changes will be saved first. Reopen them from session images later.","switch":"Save and switch","reference":"Image and layout canvas","sendAgain":"This feedback was already sent. Edit it before sending again.","sessionChanged":"The viewed session changed. Feedback remains in the original session and was not sent.","commandDraft":"The composer contains a slash command. Finish or clear that command before inserting feedback.","reloadConfirm":"Reload discards unsaved local changes. Export feedback JSON first if needed. Discard and load the Host version?","cutOverlap":"This range includes source pixels already moved away. Drag the currently visible block instead; existing content and notes are unchanged.","keyboardHint":"Space / middle button to pan · Ctrl/Cmd+Z to undo · Arrow keys to nudge blocks"}};
 /** Pure session state machine. Browser/Host details are injected; no React or DOM. */
 function createSessionState({sessionId,core,rpc,recovery,delay=400}) {
   let state={draft:null,asset:null,history:null,status:'loading',error:'',version:0,ready:false,sending:false};
@@ -769,6 +769,1029 @@ function createSessionState({sessionId,core,rpc,recovery,delay=400}) {
   return api;
 }
 
+// Independently authored screenshot geometry heuristics, MIT-compatible.
+// No DOM, dependencies, network, source image mutation, or outer-scope state.
+function createSmartSelectionEngine() {
+  const MAX_PIXELS = 2000000;
+  const MAX_DIMENSION = 1600;
+  const MAX_CANDIDATES = 400;
+
+  function finite(value) { return typeof value === 'number' && Number.isFinite(value); }
+  function clamp(value, low, high) { return Math.max(low, Math.min(high, value)); }
+  function area(candidate) { return candidate.rect.width * candidate.rect.height; }
+  function contains(rect, x, y) {
+    return x >= rect.x && y >= rect.y && x < rect.x + rect.width && y < rect.y + rect.height;
+  }
+  function validShape(candidate) {
+    if (candidate.shape === undefined || candidate.shape === 'ellipse' || candidate.shape === 'capsule') return true;
+    if (candidate.shape !== 'polygon' || !Array.isArray(candidate.outline) || candidate.outline.length < 3 || candidate.outline.length > 8) return false;
+    let twiceArea = 0;
+    for (let i = 0; i < candidate.outline.length; i++) {
+      const p = candidate.outline[i], q = candidate.outline[(i + 1) % candidate.outline.length];
+      if (!Array.isArray(p) || p.length !== 2 || !p.every(v => finite(v) && v >= 0 && v <= 1) ||
+        !Array.isArray(q) || q.length !== 2 || !q.every(v => finite(v) && v >= 0 && v <= 1)) return false;
+      twiceArea += p[0] * q[1] - q[0] * p[1];
+    }
+    return Math.abs(twiceArea) >= 0.02 && (candidate.shapeName === undefined ||
+      ['triangle', 'diamond', 'hexagon', 'trapezoid', 'parallelogram'].includes(candidate.shapeName));
+  }
+  function inCandidate(candidate, x, y) {
+    const r = candidate.rect;
+    if (!contains(r, x, y)) return false;
+    if (candidate.shape === 'ellipse') {
+      const u = (x - r.x) / r.width * 2 - 1, v = (y - r.y) / r.height * 2 - 1;
+      return u * u + v * v <= 1;
+    }
+    if (candidate.shape === 'capsule') {
+      const radius = Math.min(r.width, r.height) / 2;
+      const cx = clamp(x, r.x + radius, r.x + r.width - radius);
+      const cy = clamp(y, r.y + radius, r.y + r.height - radius);
+      return (x - cx) ** 2 + (y - cy) ** 2 <= radius ** 2;
+    }
+    if (candidate.shape === 'polygon') {
+      const u = (x - r.x) / r.width, v = (y - r.y) / r.height;
+      let inside = false;
+      for (let i = 0, j = candidate.outline.length - 1; i < candidate.outline.length; j = i++) {
+        const a = candidate.outline[j], b = candidate.outline[i];
+        const cross = (u - a[0]) * (b[1] - a[1]) - (v - a[1]) * (b[0] - a[0]);
+        if (Math.abs(cross) < 1e-10 && u >= Math.min(a[0], b[0]) && u <= Math.max(a[0], b[0]) &&
+          v >= Math.min(a[1], b[1]) && v <= Math.max(a[1], b[1])) return true;
+        if ((a[1] > v) !== (b[1] > v) && u < (b[0] - a[0]) * (v - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+      }
+      return inside;
+    }
+    return true;
+  }
+  function sameShapeContour(a, b) {
+    if (!a.shape || a.shape !== b.shape || a.shapeName !== b.shapeName) return false;
+    const p = a.rect, q = b.rect;
+    if (Math.abs(p.x + p.width / 2 - q.x - q.width / 2) > 2 ||
+      Math.abs(p.y + p.height / 2 - q.y - q.height / 2) > 2 ||
+      Math.min(area(a), area(b)) / Math.max(area(a), area(b)) < 0.65) return false;
+    if (a.shape !== 'polygon') return Math.abs(p.x - q.x) <= 4 && Math.abs(p.y - q.y) <= 4 &&
+      Math.abs(p.x + p.width - q.x - q.width) <= 4 && Math.abs(p.y + p.height - q.y - q.height) <= 4;
+    if (a.outline.length !== b.outline.length) return false;
+    // Acute polygon tips can move several bbox pixels for a one-pixel stroke.
+    // Compare corresponding edge-normal offsets, not the tip's bbox distance.
+    for (let i = 0; i < a.outline.length; i++) {
+      const j = (i + 1) % a.outline.length, u = a.outline[i], v = a.outline[j];
+      if (u[0] !== b.outline[i][0] || u[1] !== b.outline[i][1]) return false;
+      const ax = p.x + u[0] * p.width, ay = p.y + u[1] * p.height;
+      const dx = (v[0] - u[0]) * p.width, dy = (v[1] - u[1]) * p.height, length = Math.hypot(dx, dy);
+      for (const k of [i, j]) {
+        const bx = q.x + b.outline[k][0] * q.width, by = q.y + b.outline[k][1] * q.height;
+        if (Math.abs((bx - ax) * dy - (by - ay) * dx) / length > 4) return false;
+      }
+    }
+    return true;
+  }
+  function encloses(outer, inner) {
+    return inner.x >= outer.x && inner.y >= outer.y &&
+      inner.x + inner.width <= outer.x + outer.width && inner.y + inner.height <= outer.y + outer.height;
+  }
+  function order(a, b) {
+    return b.score - a.score || area(a) - area(b) || a.rect.y - b.rect.y ||
+      a.rect.x - b.rect.x || a.rect.width - b.rect.width || a.rect.height - b.rect.height ||
+      (a.kind < b.kind ? -1 : a.kind > b.kind ? 1 : 0);
+  }
+  function difference(a, b) {
+    return Math.max(Math.abs((a & 255) - (b & 255)),
+      Math.abs(((a >>> 8) & 255) - ((b >>> 8) & 255)),
+      Math.abs(((a >>> 16) & 255) - ((b >>> 16) & 255)));
+  }
+
+  /**
+   * Input is RGBA Uint8ClampedArray, 8..1600 on each axis, <=2,000,000 pixels.
+   * Options: scale (0.25..4, pixels per UI unit), maxCandidates (1..400),
+   * preferredSize ('small' default, 'large', or a desired sqrt-area in pixels).
+   * Output coordinates always refer to the original input, with exclusive right/bottom.
+   * Nonrectangular candidates additionally carry shape: ellipse/capsule/polygon;
+   * polygons have a plain normalized outline (3..8 pairs) and shapeName. The
+   * source rect remains a bounding rectangle, never a circular/polygonal crop.
+   * Inferred layout groups use kind row/paragraph, role, lineCount and fontHeight;
+   * these are pixel-layout hypotheses, not DOM/accessibility or OCR semantics.
+   * Invalid input throws TypeError/RangeError; a valid unstructured image returns [].
+   */
+  function detect(image, options = {}) {
+    if (!image || typeof image !== 'object') throw new TypeError('Expected an RGBA image');
+    const { width, height, data } = image;
+    if (!finite(width) || !finite(height) || !Number.isInteger(width) || !Number.isInteger(height)) {
+      throw new TypeError('Image dimensions must be finite integers');
+    }
+    if (width < 8 || height < 8 || width > MAX_DIMENSION || height > MAX_DIMENSION || width * height > MAX_PIXELS) {
+      throw new RangeError('Image exceeds the 8..1600 axis / 2,000,000 pixel budget');
+    }
+    if (!(data instanceof Uint8ClampedArray)) throw new TypeError('Expected RGBA Uint8ClampedArray');
+    if (data.length !== width * height * 4) throw new RangeError('RGBA byte length does not match dimensions');
+    if (!options || typeof options !== 'object' || Array.isArray(options)) throw new TypeError('Expected options object');
+    const scale = options.scale === undefined ? 1 : options.scale;
+    if (!finite(scale) || scale < 0.25 || scale > 4) throw new RangeError('scale must be 0.25..4');
+    const limit = options.maxCandidates === undefined ? MAX_CANDIDATES : options.maxCandidates;
+    if (!Number.isInteger(limit) || limit < 1 || limit > MAX_CANDIDATES) throw new RangeError('maxCandidates must be 1..400');
+    const preference = options.preferredSize === undefined ? 'small' : options.preferredSize;
+    if (preference !== 'small' && preference !== 'large' && (!finite(preference) || preference < 4 || preference > MAX_DIMENSION)) {
+      throw new RangeError('preferredSize must be small, large, or 4..1600 pixels');
+    }
+
+    const count = width * height;
+    const pixels = new Uint32Array(count);
+    let visible = 0;
+    for (let i = 0, j = 0; i < count; i++, j += 4) {
+      const alpha = data[j + 3];
+      // Composite partial coverage consistently; ignore hidden RGB entirely.
+      const r = Math.round((data[j] * alpha + 255 * (255 - alpha)) / 255);
+      const g = Math.round((data[j + 1] * alpha + 255 * (255 - alpha)) / 255);
+      const b = Math.round((data[j + 2] * alpha + 255 * (255 - alpha)) / 255);
+      pixels[i] = r | (g << 8) | (b << 16) | (alpha >= 32 ? 0x1000000 : 0);
+      if (alpha >= 32) visible++;
+    }
+    if (visible < 32) return [];
+    const horizontal = new Uint8Array(count);
+    const vertical = new Uint8Array(count);
+    for (let y = 0, i = 0; y < height; y++) {
+      for (let x = 0; x < width; x++, i++) {
+        const p = pixels[i];
+        horizontal[i] = x + 1 < width ? (((p ^ pixels[i + 1]) & 0x1000000) ? 255 : difference(p, pixels[i + 1])) : 255;
+        vertical[i] = y + 1 < height ? (((p ^ pixels[i + width]) & 0x1000000) ? 255 : difference(p, pixels[i + width])) : 255;
+      }
+    }
+
+    const labels = new Int32Array(count);
+    const queue = new Int32Array(count);
+    const raw = [];
+    const glyphs = [];
+    const fragments = [];
+    const minSide = Math.max(8, Math.round(12 * scale));
+    const minArea = Math.max(96, Math.round(180 * scale * scale));
+    let serial = 0;
+
+    function add(rect, score, kind, shape) {
+      const size = Math.sqrt(rect.width * rect.height);
+      if (preference === 'large') score *= 0.1 + 0.9 * clamp(Math.log2(size / (32 * scale)) / 4, 0, 1);
+      else if (typeof preference === 'number') score *= Math.exp(-0.9 * Math.abs(Math.log2(size / preference)));
+      const candidate = { id: `${kind}${shape ? `:${shape.shapeName || shape.shape}` : ''}:${rect.x},${rect.y},${rect.width},${rect.height}`, rect,
+        score: Math.round(clamp(score, 0.05, 1) * 10000) / 10000, kind };
+      if (shape) {
+        candidate.shape = shape.shape;
+        if (shape.outline) { candidate.outline = shape.outline.map(p => p.slice()); candidate.shapeName = shape.shapeName; }
+      }
+      raw.push(candidate);
+      // Keep sorting/deduplication bounded even on an adversarial tiled raster.
+      if (raw.length >= 1600) { raw.sort(order); raw.length = 800; }
+      return candidate;
+    }
+
+    function perimeterSupport(x0, y0, x1, y1, label) {
+      const w = x1 - x0 + 1, h = y1 - y0 + 1;
+      const insetX = Math.min(Math.floor(w * 0.22), Math.round(12 * scale));
+      const insetY = Math.min(Math.floor(h * 0.22), Math.round(12 * scale));
+      let top = 0, bottom = 0, left = 0, right = 0;
+      let contrastTop = 0, contrastBottom = 0, contrastLeft = 0, contrastRight = 0;
+      for (let x = x0 + insetX; x <= x1 - insetX; x++) {
+        const t = y0 * width + x, b = y1 * width + x;
+        if (labels[t] === label) { top++; if (y0 > 0 && vertical[t - width] >= 4) contrastTop++; }
+        if (labels[b] === label) { bottom++; if (y1 + 1 < height && vertical[b] >= 4) contrastBottom++; }
+      }
+      for (let y = y0 + insetY; y <= y1 - insetY; y++) {
+        const l = y * width + x0, r = y * width + x1;
+        if (labels[l] === label) { left++; if (x0 > 0 && horizontal[l - 1] >= 4) contrastLeft++; }
+        if (labels[r] === label) { right++; if (x1 + 1 < width && horizontal[r] >= 4) contrastRight++; }
+      }
+      const nx = w - 2 * insetX, ny = h - 2 * insetY;
+      return { membership: Math.min(top / nx, bottom / nx, left / ny, right / ny),
+        contrast: Math.min(contrastTop / nx, contrastBottom / nx, contrastLeft / ny, contrastRight / ny) };
+    }
+
+    const polygonTemplates = [
+      { shape: 'polygon', shapeName: 'diamond', outline: [[0.5, 0], [1, 0.5], [0.5, 1], [0, 0.5]], fill: 0.5 },
+      { shape: 'polygon', shapeName: 'triangle', outline: [[0.5, 0], [1, 1], [0, 1]], fill: 0.5 },
+      { shape: 'polygon', shapeName: 'triangle', outline: [[0, 0], [1, 0], [0.5, 1]], fill: 0.5 },
+      { shape: 'polygon', shapeName: 'triangle', outline: [[0, 0.5], [1, 0], [1, 1]], fill: 0.5 },
+      { shape: 'polygon', shapeName: 'triangle', outline: [[0, 0], [1, 0.5], [0, 1]], fill: 0.5 },
+      { shape: 'polygon', shapeName: 'hexagon', outline: [[0.25, 0], [0.75, 0], [1, 0.5], [0.75, 1], [0.25, 1], [0, 0.5]], fill: 0.75 },
+      { shape: 'polygon', shapeName: 'hexagon', outline: [[0.5, 0], [1, 0.25], [1, 0.75], [0.5, 1], [0, 0.75], [0, 0.25]], fill: 0.75 },
+    ];
+    // A small explicit family, not a search over arbitrary convex hulls.
+    for (const inset of [0.15, 0.25]) {
+      polygonTemplates.push(
+        { shape: 'polygon', shapeName: 'trapezoid', outline: [[inset, 0], [1 - inset, 0], [1, 1], [0, 1]], fill: 1 - inset },
+        { shape: 'polygon', shapeName: 'trapezoid', outline: [[0, 0], [1, 0], [1 - inset, 1], [inset, 1]], fill: 1 - inset },
+        { shape: 'polygon', shapeName: 'parallelogram', outline: [[inset, 0], [1, 0], [1 - inset, 1], [0, 1]], fill: 1 - inset },
+        { shape: 'polygon', shapeName: 'parallelogram', outline: [[0, 0], [1 - inset, 0], [1, 1], [inset, 1]], fill: 1 - inset },
+      );
+    }
+    let templateChecks = 0;
+    const shapeMinSide = Math.max(18, Math.round(18 * scale));
+
+    function boundary(template, w, h) {
+      const points = [];
+      if (template.shape === 'ellipse') {
+        for (let i = 0; i < 72; i++) {
+          const angle = (i + 0.5) * Math.PI * 2 / 72, c = Math.cos(angle), s = Math.sin(angle);
+          const nx = c / w, ny = s / h, length = Math.hypot(nx, ny);
+          points.push([w / 2 + w / 2 * c, h / 2 + h / 2 * s, nx / length, ny / length]);
+        }
+      } else if (template.shape === 'capsule') {
+        const horizontal = w >= h, long = Math.max(w, h), short = Math.min(w, h), r = short / 2;
+        function put(x, y, nx, ny) { points.push(horizontal ? [x, y, nx, ny] : [y, x, ny, nx]); }
+        for (let i = 0; i < 18; i++) { const t = (i + 0.5) / 18; put(r + (long - short) * t, 0, 0, -1); }
+        for (let i = 0; i < 18; i++) {
+          const a = -Math.PI / 2 + (i + 0.5) * Math.PI / 18;
+          put(long - r + r * Math.cos(a), r + r * Math.sin(a), Math.cos(a), Math.sin(a));
+        }
+        for (let i = 0; i < 18; i++) { const t = (i + 0.5) / 18; put(long - r - (long - short) * t, short, 0, 1); }
+        for (let i = 0; i < 18; i++) {
+          const a = Math.PI / 2 + (i + 0.5) * Math.PI / 18;
+          put(r + r * Math.cos(a), r + r * Math.sin(a), Math.cos(a), Math.sin(a));
+        }
+      } else {
+        const vertices = template.outline, perSide = 72 / vertices.length;
+        for (let i = 0; i < vertices.length; i++) {
+          const a = vertices[i], b = vertices[(i + 1) % vertices.length];
+          const dx = (b[0] - a[0]) * w, dy = (b[1] - a[1]) * h, length = Math.hypot(dx, dy);
+          for (let j = 0; j < perSide; j++) {
+            const t = (j + 0.5) / perSide;
+            points.push([a[0] * w + dx * t, a[1] * h + dy * t, dy / length, -dx / length]);
+          }
+        }
+      }
+      return points;
+    }
+
+    function refinePolygonRect(rect, observations) {
+      // Fit only four bbox parameters to an already closed boundary. This
+      // removes raster line-cap spurs, not arbitrary free-form polygon vertices.
+      const matrix = Array.from({ length: 4 }, () => [0, 0, 0, 0, 0]);
+      for (const o of observations) {
+        const row = [o[2], o[3], o[2] * o[0], o[3] * o[1]];
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 4; j++) matrix[i][j] += row[i] * row[j];
+          matrix[i][4] += row[i] * o[4];
+        }
+      }
+      for (let i = 0; i < 4; i++) matrix[i][i] += 0.0001;
+      for (let col = 0; col < 4; col++) {
+        let pivot = col;
+        for (let row = col + 1; row < 4; row++) if (Math.abs(matrix[row][col]) > Math.abs(matrix[pivot][col])) pivot = row;
+        [matrix[col], matrix[pivot]] = [matrix[pivot], matrix[col]];
+        const divisor = matrix[col][col];
+        if (Math.abs(divisor) < 1e-8) return null;
+        for (let j = col; j < 5; j++) matrix[col][j] /= divisor;
+        for (let row = 0; row < 4; row++) if (row !== col) {
+          const factor = matrix[row][col];
+          for (let j = col; j < 5; j++) matrix[row][j] -= factor * matrix[col][j];
+        }
+      }
+      const [dx, dy, dw, dh] = matrix.map(row => row[4]);
+      if (![dx, dy, dx + dw, dy + dh].every(v => finite(v) && Math.abs(v) <= 3)) return null;
+      const x = Math.round(rect.x + dx), y = Math.round(rect.y + dy);
+      const right = Math.round(rect.x + rect.width + dx + dw), bottom = Math.round(rect.y + rect.height + dy + dh);
+      if (x === rect.x && y === rect.y && right === rect.x + rect.width && bottom === rect.y + rect.height) return null;
+      if (x < 1 || y < 1 || right >= width || bottom >= height || right - x < shapeMinSide || bottom - y < shapeMinSide) return null;
+      return { x, y, width: right - x, height: bottom - y };
+    }
+
+    function closedTemplate(rect, label, template, allowRefine = false) {
+      // Fixed templates/samples and a shared cap bound work even on tiled input.
+      if (++templateChecks > 6000) return null;
+      const points = boundary(template, rect.width, rect.height), referenceX = rect.x - 3, referenceY = rect.y - 3;
+      if (referenceX < 0 || referenceY < 0) return null;
+      const background = pixels[referenceY * width + referenceX];
+      const sectors = Array.from({ length: 8 }, () => ({ total: 0, support: 0, offsets: 0, flat: 0 }));
+      const offsets = [], observations = [];
+      let supported = 0, exterior = 0;
+      for (let i = 0; i < points.length; i++) {
+        const [px, py, nx, ny] = points[i], x = rect.x + px, y = rect.y + py;
+        const sector = sectors[Math.floor(i * 8 / points.length)]; sector.total++;
+        const ox = Math.floor(x + nx * 4), oy = Math.floor(y + ny * 4);
+        const fx = Math.floor(x + nx * 7), fy = Math.floor(y + ny * 7);
+        if (ox < 0 || ox >= width || oy < 0 || oy >= height || fx < 0 || fx >= width || fy < 0 || fy >= height) continue;
+        const at = oy * width + ox, outside = pixels[at];
+        if (difference(outside, background) <= 16 && difference(outside, pixels[fy * width + fx]) <= 12 &&
+          horizontal[at] <= 12 && vertical[at] <= 12) { exterior++; sector.flat++; }
+        let member = false, first = null;
+        for (let d = 2; d >= -2; d -= 0.5) {
+          const xx = Math.floor(x + nx * d), yy = Math.floor(y + ny * d);
+          if (xx < 0 || xx >= width || yy < 0 || yy >= height) continue;
+          const p = yy * width + xx;
+          if (labels[p] === label) member = true;
+          if (first === null && difference(pixels[p], outside) >= 4) first = d;
+        }
+        if (member && first !== null) {
+          supported++; sector.support++; sector.offsets += first; offsets.push(first);
+          if (allowRefine) observations.push([px / rect.width, py / rect.height, nx, ny, first]);
+        }
+      }
+      const coverage = supported / points.length, uniform = exterior / points.length;
+      if (coverage < 0.94 || uniform < 0.90 || sectors.some(s => s.support / s.total < 0.85 || s.flat / s.total < 0.75)) return null;
+      const mean = offsets.reduce((sum, value) => sum + value, 0) / offsets.length;
+      const deviation = offsets.reduce((sum, value) => sum + Math.abs(value - mean), 0) / offsets.length;
+      const sectorOffsets = sectors.map(s => s.offsets / s.support);
+      // A square/rounded rectangle can intersect an inscribed ellipse at a few
+      // angles, but its boundary offset varies strongly around the perimeter.
+      if (deviation > 0.80 || Math.max(...sectorOffsets) - Math.min(...sectorOffsets) > 1.8) {
+        if (allowRefine && template.shape === 'polygon') {
+          const refined = refinePolygonRect(rect, observations);
+          if (refined) return closedTemplate(refined, label, template, false);
+        }
+        return null;
+      }
+      return { coverage, uniform, fit: 1 - Math.min(1, deviation), rect };
+    }
+
+    function matchShape(rect, label, occupancy, edgeOnly) {
+      const w = rect.width, h = rect.height;
+      if (w < shapeMinSide || h < shapeMinSide || w > h * 4 || h > w * 4 ||
+        w * h > count * 0.70 || templateChecks >= 6000) return null;
+      const templates = [{ shape: 'ellipse', fill: Math.PI / 4 }];
+      if (Math.max(w, h) / Math.min(w, h) >= 1.35) templates.push({ shape: 'capsule',
+        fill: 1 - (1 - Math.PI / 4) * Math.min(w, h) / Math.max(w, h) });
+      templates.push(...polygonTemplates);
+      let best = null;
+      for (const template of templates) {
+        if (!edgeOnly && occupancy >= 0.35 && (occupancy > template.fill + 0.07 || occupancy < template.fill * 0.55)) continue;
+        const evidence = closedTemplate(rect, label, template, edgeOnly);
+        if (!evidence) continue;
+        const quality = evidence.coverage + evidence.uniform + evidence.fit * 0.15;
+        if (!best || quality > best.quality) best = { template, evidence, quality };
+      }
+      return best;
+    }
+
+    // Two chromatic-connectivity thresholds: the low pass preserves one-pixel
+    // borders, the second tolerates antialiasing and gentle UI gradients. Every
+    // pixel/edge is visited a constant number of times (no recursive flood fill).
+    for (const threshold of [3, 18]) {
+      labels.fill(0);
+      for (let seed = 0; seed < count; seed++) {
+        if (labels[seed] || !(pixels[seed] & 0x1000000)) continue;
+        const label = ++serial;
+        let head = 0, tail = 1;
+        queue[0] = seed;
+        labels[seed] = label;
+        let x0 = width, y0 = height, x1 = 0, y1 = 0, flat = 0;
+        let minR = 255, minG = 255, minB = 255, maxR = 0, maxG = 0, maxB = 0;
+        while (head < tail) {
+          const at = queue[head++];
+          const y = Math.floor(at / width), x = at - y * width, p = pixels[at];
+          if (x < x0) x0 = x; if (x > x1) x1 = x;
+          if (y < y0) y0 = y; if (y > y1) y1 = y;
+          const r = p & 255, g = (p >>> 8) & 255, b = (p >>> 16) & 255;
+          if (r < minR) minR = r; if (r > maxR) maxR = r;
+          if (g < minG) minG = g; if (g > maxG) maxG = g;
+          if (b < minB) minB = b; if (b > maxB) maxB = b;
+          if (horizontal[at] <= 4 && vertical[at] <= 4) flat++;
+          if (x && !labels[at - 1] && horizontal[at - 1] <= threshold) { labels[at - 1] = label; queue[tail++] = at - 1; }
+          if (x + 1 < width && !labels[at + 1] && horizontal[at] <= threshold) { labels[at + 1] = label; queue[tail++] = at + 1; }
+          if (y && !labels[at - width] && vertical[at - width] <= threshold) { labels[at - width] = label; queue[tail++] = at - width; }
+          if (y + 1 < height && !labels[at + width] && vertical[at] <= threshold) { labels[at + width] = label; queue[tail++] = at + width; }
+        }
+        const w = x1 - x0 + 1, h = y1 - y0 + 1;
+        const range = Math.max(maxR - minR, maxG - minG, maxB - minB);
+        const frame = x0 === 0 || y0 === 0 || x1 === width - 1 || y1 === height - 1;
+        // Glyph hypotheses are not emitted individually. Grouping below demands
+        // multiple baseline-aligned pieces and flat, coherent surrounding paint.
+        if (threshold === 3 && !frame && range <= 80 && h <= 48 * scale && w <= 64 * scale &&
+          tail >= 2 && tail <= 1600 * scale * scale && tail / (w * h) >= 0.10) {
+          const piece = { x: x0, y: y0, width: w, height: h, color: pixels[seed], pixels: tail };
+          if (h >= Math.max(5, 5 * scale) && w <= h * 2.8 && glyphs.length < 6000) glyphs.push(piece);
+          else if (fragments.length < 6000) fragments.push(piece);
+        }
+        if (frame || w < minSide || h < minSide || w * h < minArea ||
+          w > h * 24 || h > w * 12 || range > 80 || w * h > count * 0.88) continue;
+        const support = perimeterSupport(x0, y0, x1, y1, label);
+        const occupancy = tail / (w * h);
+        // A closed border may have very low occupancy but must support all four
+        // straight sides. Filled regions also need locally flat interior paint.
+        const isBorder = occupancy < 0.42;
+        const rectangular = support.membership >= 0.66 && support.contrast >= 0.60 &&
+          (isBorder ? (support.membership >= 0.84 && tail >= (w + h) * 0.8) : (occupancy >= 0.50 && flat / tail >= 0.48));
+        const kind = h <= 80 * scale && w <= 480 * scale ? 'control' : 'panel';
+        const rect = { x: x0, y: y0, width: w, height: h };
+        if (rectangular) {
+          const score = 0.67 + 0.13 * support.membership + 0.13 * support.contrast +
+            (isBorder ? 0.045 : 0.035 * Math.min(1, flat / tail));
+          add(rect, score, kind);
+        } else {
+          const match = matchShape(rect, label, occupancy, false);
+          if (!match) continue;
+          add(rect, 0.83 + 0.10 * match.evidence.coverage + 0.04 * match.evidence.uniform +
+            0.015 * match.evidence.fit, kind, match.template);
+        }
+        const last = glyphs[glyphs.length - 1];
+        if (threshold === 3 && last && last.x === x0 && last.y === y0 && last.width === w && last.height === h) glyphs.pop();
+      }
+    }
+
+    // One additional 8-connected edge pass joins thin antialiased outline
+    // fragments and the perimeter of paint-varied avatars. This does not infer
+    // arbitrary hulls: every proposal must pass the same closed-template test.
+    const edgeMask = new Uint8Array(count);
+    for (let y = 0, i = 0; y < height; y++) for (let x = 0; x < width; x++, i++) {
+      edgeMask[i] = horizontal[i] >= 12 || vertical[i] >= 12 ||
+        (x > 0 && horizontal[i - 1] >= 12) || (y > 0 && vertical[i - width] >= 12) ? 1 : 0;
+    }
+    labels.fill(0);
+    for (let seed = 0; seed < count; seed++) {
+      if (!edgeMask[seed] || labels[seed]) continue;
+      const label = ++serial;
+      let head = 0, tail = 1, x0 = width, y0 = height, x1 = 0, y1 = 0;
+      queue[0] = seed; labels[seed] = label;
+      while (head < tail) {
+        const at = queue[head++], y = Math.floor(at / width), x = at - y * width;
+        x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+        for (let dy = -1; dy <= 1; dy++) {
+          const yy = y + dy;
+          if (yy < 0 || yy >= height) continue;
+          for (let dx = -1; dx <= 1; dx++) {
+            const xx = x + dx;
+            if (xx < 0 || xx >= width || (!dx && !dy)) continue;
+            const next = yy * width + xx;
+            if (edgeMask[next] && !labels[next]) { labels[next] = label; queue[tail++] = next; }
+          }
+        }
+      }
+      const w = x1 - x0 + 1, h = y1 - y0 + 1;
+      if (x0 === 0 || y0 === 0 || x1 === width - 1 || y1 === height - 1 || tail < (w + h) * 0.8) continue;
+      // The mask deliberately marks BOTH pixels beside a contrast edge. Remove
+      // that one-pixel exterior halo before fitting or returning source bounds.
+      const rect = { x: x0 + 1, y: y0 + 1, width: w - 2, height: h - 2 };
+      const match = matchShape(rect, label, tail / (w * h), true);
+      if (match) add(match.evidence.rect, 0.836 + 0.10 * match.evidence.coverage + 0.04 * match.evidence.uniform +
+        0.015 * match.evidence.fit, h <= 80 * scale && w <= 480 * scale ? 'control' : 'panel', match.template);
+    }
+
+    // Assemble aligned foreground islands into text runs, not glyph boxes.
+    // A capped active-row search avoids quadratic work on noisy images.
+    glyphs.sort((a, b) => (a.y + a.height / 2) - (b.y + b.height / 2) || a.x - b.x);
+    const rows = [];
+    for (const g of glyphs) {
+      const cy = g.y + g.height / 2;
+      let row = null, best = Infinity;
+      for (let j = rows.length - 1, checked = 0; j >= 0 && checked < 32; j--, checked++) {
+        const r = rows[j], delta = Math.abs(cy - r.cy);
+        if (delta <= Math.min(g.height, r.height) * 0.32 && g.height / r.height > 0.45 &&
+          g.height / r.height < 2.2 && difference(g.color, r.color) < 64 && delta < best) { row = r; best = delta; }
+      }
+      if (row) { row.items.push(g); row.cy = (row.cy * (row.items.length - 1) + cy) / row.items.length; }
+      else rows.push({ cy, height: g.height, color: g.color, items: [g] });
+    }
+    // Attach detached dots/diagonal tips only to nearby established lines. A
+    // bounded spatial grid avoids all-pairs matching on adversarial noise.
+    const bins = new Map(), cell = Math.max(12, Math.round(24 * scale));
+    for (const row of rows) for (const g of row.items) {
+      const key = `${Math.floor((g.x + g.width / 2) / cell)},${Math.floor((g.y + g.height / 2) / cell)}`;
+      let bin = bins.get(key);
+      if (!bin) { bin = []; bins.set(key, bin); }
+      if (bin.length < 32) bin.push({ row, g });
+    }
+    for (const f of fragments) {
+      let matched = null, bestDistance = Infinity;
+      const cy = f.y + f.height / 2;
+      const bx = Math.floor((f.x + f.width / 2) / cell), by = Math.floor(cy / cell);
+      for (let yy = by - 2; yy <= by + 2; yy++) for (let xx = bx - 2; xx <= bx + 2; xx++) {
+        const bin = bins.get(`${xx},${yy}`);
+        if (!bin) continue;
+        for (const { row, g } of bin) {
+          if (row.items.length < 3 || Math.abs(cy - row.cy) > row.height * 0.65 || difference(f.color, row.color) > 32) continue;
+          const dx = Math.max(0, g.x - f.x - f.width, f.x - g.x - g.width);
+          const dy = Math.max(0, g.y - f.y - f.height, f.y - g.y - g.height);
+          const distance = dx + dy;
+          if (distance <= Math.max(1, Math.round(g.height * 0.18)) && distance < bestDistance) {
+            matched = row; bestDistance = distance;
+          }
+        }
+      }
+      if (matched) {
+        if (!matched.fragments) matched.fragments = [];
+        if (matched.fragments.length < 128) matched.fragments.push(f);
+      }
+    }
+    for (const row of rows) {
+      row.items.sort((a, b) => a.x - b.x);
+      let run = [];
+      function emit() {
+        if (run.length < 3) { run = []; return; }
+        let x0 = width, x1 = 0, y0 = height, y1 = 0, ink = 0, totalH = 0;
+        for (const g of run) {
+          x0 = Math.min(x0, g.x); x1 = Math.max(x1, g.x + g.width);
+          y0 = Math.min(y0, g.y); y1 = Math.max(y1, g.y + g.height);
+          ink += g.pixels; totalH += g.height;
+        }
+        const meanH = totalH / run.length;
+        for (const f of row.fragments || []) {
+          if (f.x + f.width < x0 - meanH * 0.18 || f.x > x1 + meanH * 0.18) continue;
+          x0 = Math.min(x0, f.x); x1 = Math.max(x1, f.x + f.width);
+          y0 = Math.min(y0, f.y); y1 = Math.max(y1, f.y + f.height);
+          ink += f.pixels;
+        }
+        const w = x1 - x0, h = y1 - y0;
+        if (w < h * 1.5 || h > meanH * 1.7 || ink / (w * h) < 0.08 || ink / (w * h) > 0.85) { run = []; return; }
+        // Sample the blank line margins. Photographs/noise rarely share one
+        // uniform background on both sides of a full baseline-aligned run.
+        let samples = 0, good = 0;
+        const background = pixels[Math.max(0, y0 - 2) * width + x0];
+        for (let x = x0; x < x1; x += Math.max(1, Math.floor(w / 48))) {
+          for (const y of [y0 - 2, y1 + 1]) {
+            if (y < 0 || y >= height) continue;
+            samples++;
+            if (difference(pixels[y * width + x], background) <= 12) good++;
+          }
+        }
+        if (!samples || good / samples < 0.88 || difference(background, row.color) < 24) { run = []; return; }
+        const pad = Math.max(1, Math.round(2 * scale));
+        const rect = { x: Math.max(0, x0 - pad), y: Math.max(0, y0 - pad),
+          width: Math.min(width, x1 + pad) - Math.max(0, x0 - pad),
+          height: Math.min(height, y1 + pad) - Math.max(0, y0 - pad) };
+        add(rect, 0.65 + 0.07 * Math.min(1, run.length / 8), 'text');
+        run = [];
+      }
+      for (const g of row.items) {
+        const previous = run[run.length - 1];
+        if (previous && (g.x - (previous.x + previous.width) > Math.max(4 * scale, Math.max(g.height, previous.height) * 1.15) ||
+          g.x < previous.x + previous.width - Math.min(g.width, previous.width) * 0.25)) emit();
+        run.push(g);
+      }
+      emit();
+    }
+
+    const layoutGroups = [];
+    function detectLayout() {
+      // Dominant LOCAL paint is a reference, not a transitive neighbor flood.
+      // Low-contrast AA ramps may connect a selected row to the page in the
+      // chromatic passes; they do not make dark/gray text cease to be ink.
+      const tile = Math.max(12, Math.round(24 * scale));
+      const columns = Math.ceil(width / tile), tileRows = Math.ceil(height / tile);
+      const backgrounds = new Uint32Array(columns * tileRows), confident = new Uint8Array(backgrounds.length);
+      const histogram = new Uint16Array(32768), touched = new Uint16Array(tile * tile);
+      function key(p) { return ((p & 255) >>> 3) | ((((p >>> 8) & 255) >>> 3) << 5) | ((((p >>> 16) & 255) >>> 3) << 10); }
+      for (let ty = 0; ty < tileRows; ty++) for (let tx = 0; tx < columns; tx++) {
+        const left = tx * tile, top = ty * tile, right = Math.min(width, left + tile), bottom = Math.min(height, top + tile);
+        let used = 0, samples = 0, bestKey = 0, bestCount = 0;
+        for (let y = top; y < bottom; y += 2) for (let x = left; x < right; x += 2) {
+          const i = y * width + x;
+          if (!(pixels[i] & 0x1000000)) continue;
+          samples++;
+          const k = key(pixels[i]);
+          if (!histogram[k]) touched[used++] = k;
+          const n = ++histogram[k];
+          if (n > bestCount) { bestCount = n; bestKey = k; }
+        }
+        if (bestCount >= 4 && bestCount / Math.max(1, samples) >= 0.28) {
+          let red = 0, green = 0, blue = 0, n = 0;
+          for (let y = top; y < bottom; y += 2) for (let x = left; x < right; x += 2) {
+            const i = y * width + x, p = pixels[i];
+            if ((p & 0x1000000) && key(p) === bestKey) {
+              red += p & 255; green += (p >>> 8) & 255; blue += (p >>> 16) & 255; n++;
+            }
+          }
+          const at = ty * columns + tx;
+          backgrounds[at] = Math.round(red / n) | (Math.round(green / n) << 8) | (Math.round(blue / n) << 16) | 0x1000000;
+          confident[at] = 1;
+        }
+        for (let i = 0; i < used; i++) histogram[touched[i]] = 0;
+      }
+      // Dense bold text can dominate a tile that coincides exactly with a line.
+      // Neighbor consensus supplies the surrounding paint without assuming that
+      // ink is black or that a screenshot uses a light theme.
+      const cleaned = backgrounds.slice(), cleanConfidence = confident.slice();
+      for (let ty = 0; ty < tileRows; ty++) for (let tx = 0; tx < columns; tx++) {
+        const neighbors = [];
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const xx = tx + dx, yy = ty + dy;
+          if (xx >= 0 && xx < columns && yy >= 0 && yy < tileRows) {
+            const at = yy * columns + xx; if (confident[at]) neighbors.push(backgrounds[at]);
+          }
+        }
+        let votes = 0, paint = 0;
+        for (const candidate of neighbors) {
+          let n = 0; for (const p of neighbors) if (difference(candidate, p) <= 12) n++;
+          if (n > votes) { votes = n; paint = candidate; }
+        }
+        if (votes >= 3) { cleaned[ty * columns + tx] = paint; cleanConfidence[ty * columns + tx] = 1; }
+      }
+      backgrounds.set(cleaned); confident.set(cleanConfidence);
+      function paintAt(x, y) { return Math.floor(y / tile) * columns + Math.floor(x / tile); }
+      const ink = new Uint8Array(count), expanded = new Uint8Array(count);
+      for (let y = 0, i = 0; y < height; y++) for (let x = 0; x < width; x++, i++) {
+        const t = paintAt(x, y);
+        if (confident[t] && (pixels[i] & 0x1000000) && difference(pixels[i], backgrounds[t]) >= 20) ink[i] = 1;
+      }
+      // Small separable dilation joins AA/CJK radicals and punctuation, but not
+      // successive lines. Original ink, not the dilation, defines returned bounds.
+      const rx = Math.max(2, Math.round(3 * scale)), ry = Math.max(1, Math.round(1.5 * scale));
+      for (let y = 0; y < height; y++) {
+        const start = y * width; let sum = 0;
+        for (let x = 0; x <= rx && x < width; x++) sum += ink[start + x];
+        for (let x = 0; x < width; x++) {
+          edgeMask[start + x] = sum ? 1 : 0;
+          if (x - rx >= 0) sum -= ink[start + x - rx];
+          if (x + rx + 1 < width) sum += ink[start + x + rx + 1];
+        }
+      }
+      for (let x = 0; x < width; x++) {
+        let sum = 0;
+        for (let y = 0; y <= ry && y < height; y++) sum += edgeMask[y * width + x];
+        for (let y = 0; y < height; y++) {
+          expanded[y * width + x] = sum ? 1 : 0;
+          if (y - ry >= 0) sum -= edgeMask[(y - ry) * width + x];
+          if (y + ry + 1 < height) sum += edgeMask[(y + ry + 1) * width + x];
+        }
+      }
+      labels.fill(0);
+      const pieces = [];
+      for (let seed = 0; seed < count; seed++) {
+        if (!expanded[seed] || labels[seed]) continue;
+        let head = 0, tail = 1, n = 0, x0 = width, y0 = height, x1 = 0, y1 = 0, first = seed;
+        queue[0] = seed; labels[seed] = 1;
+        while (head < tail) {
+          const at = queue[head++], y = Math.floor(at / width), x = at - y * width;
+          if (ink[at]) {
+            if (!n) first = at;
+            n++; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+          }
+          for (let dy = -1; dy <= 1; dy++) {
+            const yy = y + dy; if (yy < 0 || yy >= height) continue;
+            for (let dx = -1; dx <= 1; dx++) {
+              const xx = x + dx; if (xx < 0 || xx >= width || (!dx && !dy)) continue;
+              const next = yy * width + xx;
+              if (expanded[next] && !labels[next]) { labels[next] = 1; queue[tail++] = next; }
+            }
+          }
+        }
+        const w = x1 - x0 + 1, h = y1 - y0 + 1;
+        if (pieces.length >= 1600 || n < 4 || h < Math.max(3, 4 * scale) || h > Math.max(14, 60 * scale) ||
+          w < h * 0.55 || w * h > count * 0.25 || n / (w * h) < 0.035 || n / (w * h) > 0.82) continue;
+        const base = backgrounds[paintAt(first % width, Math.floor(first / width))];
+        let margin = 0, good = 0;
+        for (let x = x0; x <= x1; x += Math.max(1, Math.floor(w / 48))) for (const y of [y0 - 2, y1 + 2]) {
+          if (y < 0 || y >= height) continue;
+          margin++;
+          if (difference(pixels[y * width + x], base) <= 16) good++;
+        }
+        if (!margin || good / margin < 0.78) continue;
+        pieces.push({ x: x0, y: y0, width: w, height: h, ink: n, background: base });
+      }
+      function closedLabel(line) {
+        return raw.find(c => {
+          const r = c.rect;
+          if (c.kind !== 'control' || line.width > r.width * 1.25 || line.height > r.height * 1.25 ||
+            !inCandidate(c, line.x + line.width / 2, line.y + line.height / 2)) return false;
+          const overlap = Math.max(0, Math.min(r.x + r.width, line.x + line.width) - Math.max(r.x, line.x)) *
+            Math.max(0, Math.min(r.y + r.height, line.y + line.height) - Math.max(r.y, line.y));
+          return overlap / Math.min(area(c), line.width * line.height) >= 0.80;
+        });
+      }
+      pieces.sort((a, b) => a.y + a.height / 2 - b.y - b.height / 2 || a.x - b.x);
+      const bands = [];
+      for (const piece of pieces) {
+        let best = null, distance = Infinity; const cy = piece.y + piece.height / 2;
+        for (let i = bands.length - 1, checked = 0; i >= 0 && checked < 48; i--, checked++) {
+          const band = bands[i], delta = Math.abs(cy - band.cy);
+          if (delta <= Math.max(piece.height, band.height) * 0.36 && piece.height / band.height >= 0.4 &&
+            piece.height / band.height <= 2.5 && delta < distance) { best = band; distance = delta; }
+        }
+        if (best) { best.items.push(piece); best.cy = (best.cy * (best.items.length - 1) + cy) / best.items.length; best.height = Math.max(best.height, piece.height); }
+        else bands.push({ cy, height: piece.height, items: [piece] });
+      }
+      const lines = [];
+      for (const band of bands) {
+        band.items.sort((a, b) => a.x - b.x);
+        let line = null;
+        function finishLine() {
+          if (line && line.width >= line.height * 1.8 && line.ink >= Math.max(8, line.height * 1.5)) {
+            const control = closedLabel(line);
+            if (!control) lines.push(line);
+            else if (!control.shape && control.rect.width / control.rect.height >= 4.5 && control.rect.width >= line.height * 10) {
+              line.closed = control; lines.push(line);
+            }
+          }
+          line = null;
+        }
+        for (const p of band.items) {
+          if (line && (p.x - line.x - line.width > Math.max(4, Math.max(line.height, p.height) * 1.8) ||
+            difference(p.background, line.background) > 20)) finishLine();
+          if (!line) line = { ...p, used: false };
+          else {
+            const right = Math.max(line.x + line.width, p.x + p.width), bottom = Math.max(line.y + line.height, p.y + p.height);
+            line.x = Math.min(line.x, p.x); line.y = Math.min(line.y, p.y); line.width = right - line.x; line.height = bottom - line.y; line.ink += p.ink;
+          }
+        }
+        finishLine();
+      }
+      lines.sort((a, b) => a.y - b.y || a.x - b.x);
+      function group(rect, score, kind, fontHeight, children, role) {
+        if (layoutGroups.length >= 160 || rect.width * rect.height > count * 0.65) return;
+        const c = add(rect, score, kind); c.role = role; c.fontHeight = Math.round(fontHeight * 100) / 100;
+        c.lineCount = children.length; layoutGroups.push(c);
+        for (const child of children) { child.used = true; child.parentId = c.id; }
+      }
+      function padded(x0, y0, x1, y1, px, py) {
+        const x = Math.max(0, Math.floor(x0 - px)), y = Math.max(0, Math.floor(y0 - py));
+        return { x, y, width: Math.min(width, Math.ceil(x1 + px)) - x, height: Math.min(height, Math.ceil(y1 + py)) - y };
+      }
+      function surfaceFor(line, maxHeight) {
+        const sx = Math.max(0, Math.floor(line.x)), sy = Math.max(0, line.y - 2), paint = pixels[sy * width + sx];
+        let left = sx, end = sx;
+        while (left > 0 && difference(pixels[sy * width + left - 1], paint) <= 3) left--;
+        while (end + 1 < width && difference(pixels[sy * width + end + 1], paint) <= 3) end++;
+        if (left === 0 || end + 1 === width || end - left < line.height * 5 || end - left > width * 0.8) return null;
+        function painted(y) {
+          let good = 0;
+          for (let k = 0; k < 24; k++) {
+            const x = Math.floor(left + (end - left) * (k + 0.5) / 24);
+            const at = y * width + x;
+            if (difference(pixels[at], paint) <= 3 || ink[at]) good++;
+          }
+          return good >= 16;
+        }
+        let top = sy, bottom = sy;
+        while (top > 0 && sy - top < maxHeight && painted(top - 1)) top--;
+        while (bottom + 1 < height && bottom - sy < maxHeight && painted(bottom + 1)) bottom++;
+        if (bottom - top + 1 < line.height * 1.3 || bottom - top + 1 > maxHeight ||
+          top > line.y || bottom < line.y + line.height - 1) return null;
+        // A text band is not a painted surface boundary. Most of each outside
+        // strip must actually contrast with the fixed paint on all four sides.
+        const contrast = [0, 0, 0, 0], samples = 16;
+        if (left < 2 || end + 2 >= width || top < 2 || bottom + 2 >= height) return null;
+        for (let k = 0; k < samples; k++) {
+          const x = Math.floor(left + (end - left) * (0.12 + 0.76 * (k + 0.5) / samples));
+          const y = Math.floor(top + (bottom - top) * (0.15 + 0.70 * (k + 0.5) / samples));
+          if (difference(pixels[(top - 2) * width + x], paint) >= 5) contrast[0]++;
+          if (difference(pixels[(bottom + 2) * width + x], paint) >= 5) contrast[1]++;
+          if (difference(pixels[y * width + left - 2], paint) >= 5) contrast[2]++;
+          if (difference(pixels[y * width + end + 2], paint) >= 5) contrast[3]++;
+        }
+        if (contrast.some(n => n < samples * 0.70)) return null;
+        return { x: left, y: top, width: end - left + 1, height: bottom - top + 1 };
+      }
+      // Visible row paint is stronger evidence than inferred list rhythm and can
+      // include a leading icon that shifts the text run's apparent left edge.
+      for (const line of lines) {
+        if (line.closed) continue;
+        const surface = surfaceFor(line, line.height * 4);
+        if (surface) group(surface, 0.97, 'row', line.height, [line], 'surface-row');
+      }
+      // Paragraph rhythm: wrapped-line gaps must be substantially smaller than
+      // paragraph/list spacing; a short final line still inherits the full width.
+      for (let i = 0; i < lines.length; i++) {
+        const first = lines[i]; if (first.used || first.closed) continue;
+        const children = [first]; let last = first;
+        for (let countLines = 1; countLines < 12; countLines++) {
+          let next = null, cost = Infinity;
+          for (let j = i + 1; j < lines.length; j++) {
+            const l = lines[j], gap = l.y - last.y - last.height, size = Math.max(last.height, l.height);
+            if (l.y > last.y + last.height + size * 1.3) break;
+            if (l.used || l.closed || children.includes(l) || gap < 0 || gap > size * 1.20 ||
+              gap > Math.min(last.height, l.height) * 1.10 || Math.abs(l.x - first.x) > size * 0.65 || l.height / first.height < 0.55 || l.height / first.height > 1.8 ||
+              difference(l.background, first.background) > 16) continue;
+            const value = gap + Math.abs(l.x - first.x);
+            if (value < cost) { next = l; cost = value; }
+          }
+          if (!next) break;
+          children.push(next); last = next;
+        }
+        if (children.length < 2) continue;
+        const x0 = Math.min(...children.map(l => l.x)), y0 = first.y;
+        const x1 = Math.max(...children.map(l => l.x + l.width)), y1 = Math.max(...children.map(l => l.y + l.height));
+        const font = children.reduce((sum, l) => sum + l.height, 0) / children.length;
+        group(padded(x0, y0, x1, y1, font * 0.52, font * 0.55), 0.94, 'paragraph', font, children, 'paragraph');
+      }
+      // Repeated left-aligned single lines establish a list's row rhythm. Color
+      // is deliberately not a foreground join criterion (gray timestamps count).
+      const clusters = [];
+      for (const line of lines) {
+        if (line.used || line.width < line.height * 3) continue;
+        let cluster = null;
+        for (const c of clusters) if (Math.abs(c.x - line.x) <= Math.max(4, line.height * 0.65) &&
+          line.height / c.height >= 0.55 && line.height / c.height <= 1.8 && difference(line.background, c.background) <= 24) { cluster = c; break; }
+        if (cluster) cluster.lines.push(line);
+        else if (clusters.length < 240) clusters.push({ x: line.x, height: line.height, background: line.background, lines: [line] });
+      }
+      for (const cluster of clusters) {
+        if (cluster.lines.length < 3) continue;
+        cluster.lines.sort((a, b) => a.y - b.y);
+        const heights = cluster.lines.map(l => l.height).sort((a, b) => a - b), font = heights[Math.floor(heights.length / 2)];
+        const gaps = [];
+        for (let i = 1; i < cluster.lines.length; i++) {
+          const d = cluster.lines[i].y + cluster.lines[i].height / 2 - cluster.lines[i - 1].y - cluster.lines[i - 1].height / 2;
+          if (d >= font * 1.75 && d <= font * 4.0) gaps.push(d);
+        }
+        if (gaps.length < 2) continue;
+        gaps.sort((a, b) => a - b); const stride = gaps[Math.floor(gaps.length / 2)];
+        const regular = cluster.lines.filter((l, i, a) => {
+          const cy = l.y + l.height / 2;
+          return (i > 0 && Math.abs(cy - a[i - 1].y - a[i - 1].height / 2 - stride) <= stride * 0.23) ||
+            (i + 1 < a.length && Math.abs(a[i + 1].y + a[i + 1].height / 2 - cy - stride) <= stride * 0.23);
+        });
+        if (regular.length < 3) continue;
+        const members = regular.map(title => {
+          const cy = title.y + title.height / 2, attached = [title];
+          for (const l of lines) if (!l.used && l !== title && l.x >= title.x + title.width &&
+            l.x - title.x - title.width <= font * 6 && Math.abs(l.y + l.height / 2 - cy) <= font * 0.38 &&
+            difference(l.background, title.background) <= 24) attached.push(l);
+          return { title, cy, attached, right: Math.max(...attached.map(l => l.x + l.width)) };
+        });
+        const right = Math.max(...members.map(m => m.right)) + font * 0.25;
+        for (const m of members) {
+          if (m.title.used) continue;
+          let rect = padded(cluster.x, m.cy - stride * 0.48, right, m.cy + stride * 0.48, 0, 0);
+          rect.x = Math.max(0, Math.floor(cluster.x - font * 0.8)); rect.width = Math.min(width, Math.ceil(right)) - rect.x;
+          let role = 'repeated-row', score = 0.91;
+          // An existing closed wide surface becomes a semantic row only after
+          // repeated sibling rhythm establishes list context (not for a lone button).
+          const surface = m.title.closed ? { ...m.title.closed.rect } : surfaceFor(m.title, stride * 1.35);
+          if (surface) { rect = surface; role = 'surface-row'; score = 0.97; }
+          group(rect, score, 'row', font, m.attached, role);
+        }
+      }
+      for (const line of lines) {
+        if (line.used || line.closed) continue;
+        const pad = Math.max(1, Math.round(2 * scale));
+        const c = add(padded(line.x, line.y, line.x + line.width, line.y + line.height, pad, pad), 0.76, 'text');
+        c.role = 'line';
+      }
+      // Only contributing small text is hidden; real closed controls/avatars
+      // remain independent targets inside a larger inferred layout rectangle.
+      for (const c of raw) for (const parent of layoutGroups) if (c !== parent && encloses(parent.rect, c.rect) &&
+        (c.kind === 'text' || (c.kind === 'control' && !c.shape && c.rect.height <= parent.fontHeight * 1.25 && c.rect.width <= parent.fontHeight * 1.4))) {
+        c.parentId = parent.id; break;
+      }
+    }
+    detectLayout();
+    raw.sort(order);
+    // Reserve some capacity for useful layout hierarchy even on a page with
+    // hundreds of closed shapes. The final total still cannot exceed the cap.
+    layoutGroups.sort(order);
+    const prioritized = layoutGroups.slice(0, Math.min(120, Math.ceil(limit * 0.4))).concat(raw);
+    const result = [];
+    for (const c of prioritized) {
+      if (c.parentId && layoutGroups.some(g => g.id === c.parentId)) continue;
+      // Text inside a closed control is a label, not a competing hover target.
+      if (c.kind === 'text' && raw.some(r => r.kind === 'control' && encloses(r.rect, c.rect) && area(r) < area(c) * 30 &&
+        inCandidate(r, c.rect.x + c.rect.width / 2, c.rect.y + c.rect.height / 2))) continue;
+      let duplicate = false;
+      for (const r of result) {
+        const a = c.rect, b = r.rect;
+        const intersection = Math.max(0, Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x)) *
+          Math.max(0, Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y));
+        const shapeDuplicate = sameShapeContour(c, r);
+        if (shapeDuplicate || intersection / (area(c) + area(r) - intersection) >= 0.86 ||
+          (Math.abs(a.x - b.x) <= 2 && Math.abs(a.y - b.y) <= 2 &&
+           Math.abs(a.x + a.width - b.x - b.width) <= 2 && Math.abs(a.y + a.height - b.y - b.height) <= 2)) {
+          duplicate = true; break;
+        }
+      }
+      if (!duplicate) result.push(c);
+      if (result.length === limit) break;
+    }
+    return result;
+  }
+
+  /** Pure deterministic picking. Previous must still exist with the same id and
+   * geometry, contain the point (no sticky expanded bounds), and be within 0.07
+   * utility of the best current candidate. Candidate/point objects are unmodified. */
+  function pick(candidates, point, previous = null) {
+    if (!Array.isArray(candidates) || !point || !finite(point.x) || !finite(point.y) || point.x < 0 || point.y < 0) return null;
+    let best = null, bestUtility = -Infinity, retained = null, retainedUtility = -Infinity;
+    const eligible = [];
+    for (let i = 0; i < Math.min(candidates.length, MAX_CANDIDATES); i++) {
+      const c = candidates[i], r = c && c.rect;
+      if (!r || typeof c.id !== 'string' || typeof c.kind !== 'string' || !finite(c.score) ||
+        !finite(r.x) || !finite(r.y) || !finite(r.width) || !finite(r.height) ||
+        r.x < 0 || r.y < 0 || r.width < 4 || r.height < 4 || !finite(r.width * r.height) ||
+        !validShape(c) || !inCandidate(c, point.x, point.y)) continue;
+      eligible.push(c);
+    }
+    const groups = eligible.filter(c => c.kind === 'paragraph' || c.kind === 'row');
+    for (const c of eligible) {
+      const r = c.rect;
+      if (c.parentId && eligible.some(parent => parent.id === c.parentId)) continue;
+      const grouped = c.kind === 'paragraph' || c.kind === 'row';
+      let kindBonus = grouped ? 0.16 : c.kind === 'control' ? 0.10 : c.kind === 'text' ? -0.015 : 0;
+      if (c.kind === 'control' && c.score >= 0.8 && groups.some(g => finite(g.fontHeight) &&
+        r.height >= g.fontHeight * 1.35 && area(c) < area(g) * 0.65 && encloses(g.rect, r))) kindBonus += 0.22;
+      const utility = clamp(c.score, 0, 1) + kindBonus - (grouped ? 0.035 : 0.085) * Math.log2(Math.max(1, area(c) / 768));
+      if (utility > bestUtility || (utility === bestUtility && (!best || order(c, best) < 0 ||
+        (order(c, best) === 0 && c.id < best.id)))) { best = c; bestUtility = utility; }
+      if (previous && c.id === previous.id && previous.rect && r.x === previous.rect.x && r.y === previous.rect.y &&
+        r.width === previous.rect.width && r.height === previous.rect.height && previous.shape === c.shape &&
+        validShape(previous) && inCandidate(previous, point.x, point.y)) { retained = c; retainedUtility = utility; }
+    }
+    return retained && retainedUtility >= bestUtility - 0.07 ? retained : best;
+  }
+
+  return { detect, pick };
+}
+
+/** Serialize only our standalone detector; no imports, network or page access in the worker. */
+function createSmartSelectionWorkerSource(engineFactory=createSmartSelectionEngine) {
+  return `const engine=(${engineFactory.toString()})();self.onmessage=event=>{const {id,image,options}=event.data;try{self.postMessage({id,candidates:engine.detect(image,options)});}catch(error){self.postMessage({id,error:String(error.message||error)});}};self.postMessage({ready:true});`;
+}
+
+/** Local-only, bounded single-flight analysis. Completed results alone enter the two-image cache. */
+function createSmartSelectionClient({readPixels=null,createWorker=null}={}) {
+  const cache=new Map();
+  let active=null,queued=null,worker=null,workerURL=null,disposed=false,nextId=0;
+  function revoke(){if(workerURL){URL.revokeObjectURL(workerURL);workerURL=null;}}
+  function killWorker(){worker?.terminate();worker=null;revoke();}
+  function finish(entry,error,value){
+    if(entry.done)return;entry.done=true;clearTimeout(entry.timer);
+    if(entry.image){entry.image.src='';entry.image=null;}
+    if(entry.canvas){entry.canvas.width=entry.canvas.height=0;entry.canvas=null;}
+    if(!error){cache.set(entry.key,value);while(cache.size>2)cache.delete(cache.keys().next().value);}
+    for(const consumer of entry.consumers){consumer.signal?.removeEventListener('abort',consumer.abort);error?consumer.reject(error):consumer.resolve(value);}
+    entry.consumers.clear();
+    if(active===entry)active=null;if(queued===entry)queued=null;
+    pump();
+  }
+  function cancel(entry,message){if(entry.done)return;if(active===entry)killWorker();finish(entry,new Error(message));}
+  function ensureWorker(){
+    if(disposed)throw new Error('Smart selection is disposed.');
+    if(worker)return worker;
+    if(!createWorker&&typeof Worker!=='function')throw new Error('Background image analysis is unavailable.');
+    if(!createWorker)workerURL=URL.createObjectURL(new Blob([createSmartSelectionWorkerSource()],{type:'text/javascript'}));
+    try{worker=createWorker?createWorker():new Worker(workerURL);}catch(error){revoke();throw error;}
+    const target=worker;
+    target.onmessage=event=>{
+      if(worker!==target)return;
+      if(event.data.ready){revoke();return;}
+      const entry=active;if(!entry||entry.id!==event.data.id)return;
+      if(event.data.error){finish(entry,new Error(event.data.error));return;}
+      const sx=entry.asset.width/entry.sampleWidth,sy=entry.asset.height/entry.sampleHeight;
+      const candidates=event.data.candidates.map(item=>{
+        const x=Math.max(0,Math.floor(item.rect.x*sx)),y=Math.max(0,Math.floor(item.rect.y*sy));
+        const right=Math.min(entry.asset.width,Math.ceil((item.rect.x+item.rect.width)*sx)),bottom=Math.min(entry.asset.height,Math.ceil((item.rect.y+item.rect.height)*sy));
+        return {...item,...(Number.isFinite(item.fontHeight)?{fontHeight:item.fontHeight*sy}:{}),rect:{x,y,width:right-x,height:bottom-y}};
+      }).filter(item=>item.rect.width>=2&&item.rect.height>=2);
+      finish(entry,null,Object.freeze({assetId:entry.asset.assetId,width:entry.asset.width,height:entry.asset.height,candidates:Object.freeze(candidates)}));
+    };
+    target.onerror=()=>{if(worker!==target)return;const entry=active;killWorker();if(entry)finish(entry,new Error('Background image analysis failed.'));};
+    target.onmessageerror=()=>{if(worker!==target)return;const entry=active;killWorker();if(entry)finish(entry,new Error('Background image analysis could not be read.'));};
+    return worker;
+  }
+  async function decode(entry){
+      // Decode only the already-authorized source URL; never inspect OS controls or host-page structure.
+      const image=entry.image=new Image();image.decoding='async';image.src=entry.asset.url;
+      await image.decode();if(entry.done||disposed)return;
+      const width=image.naturalWidth,height=image.naturalHeight;
+      if(width!==entry.asset.width||height!==entry.asset.height)throw new Error('Smart selection source dimensions changed.');
+      const ratio=Math.min(1,1600/Math.max(width,height),Math.sqrt(1200000/(width*height)));
+      const canvas=entry.canvas=document.createElement('canvas');
+      canvas.width=Math.max(1,Math.round(width*ratio));canvas.height=Math.max(1,Math.round(height*ratio));
+      const draw=canvas.getContext('2d',{willReadFrequently:true});if(!draw)throw new Error('Image pixels are unavailable.');
+      draw.drawImage(image,0,0,canvas.width,canvas.height);
+      const pixels=draw.getImageData(0,0,canvas.width,canvas.height);
+      canvas.width=canvas.height=0;entry.canvas=null;image.src='';entry.image=null;
+      return {pixels,ratio};
+  }
+  async function prepare(entry){
+    try{
+      const decoded=await (readPixels?readPixels(entry.asset):decode(entry));
+      if(entry.done||disposed)return;
+      const {pixels,ratio}=decoded;entry.sampleWidth=pixels.width;entry.sampleHeight=pixels.height;
+      const target=ensureWorker();
+      target.postMessage({id:entry.id,image:{width:pixels.width,height:pixels.height,data:pixels.data},options:{scale:Math.max(.25,ratio)}},[pixels.data.buffer]);
+    }catch(error){if(!entry.done)finish(entry,error);}
+  }
+  function pump(){
+    if(disposed||active||!queued)return;
+    active=queued;queued=null;const entry=active;
+    // The deadline starts at admission, never while waiting behind another image.
+    entry.timer=setTimeout(()=>cancel(entry,'Background image analysis exceeded its time limit.'),8000);
+    prepare(entry);
+  }
+  return {
+    analyze(asset,{signal}={}){
+      if(disposed)return Promise.reject(new Error('Smart selection is disposed.'));
+      if(signal?.aborted)return Promise.reject(new Error('Smart selection was cancelled.'));
+      if(!asset?.url||!asset.assetId||!Number.isInteger(asset.width)||!Number.isInteger(asset.height)||asset.width<1||asset.height<1)return Promise.reject(new Error('Load a valid image first.'));
+      const key=['smart-raster-v2-layout',asset.assetId,asset.url,asset.width,asset.height].join('\n');
+      if(cache.has(key))return Promise.resolve(cache.get(key));
+      let entry=active?.key===key?active:queued?.key===key?queued:null;
+      if(!entry){
+        if(queued){const previous=queued;queued=null;finish(previous,new Error('A newer image superseded queued analysis.'));}
+        entry={id:++nextId,key,asset:{...asset},consumers:new Set(),done:false};queued=entry;
+      }
+      const result=new Promise((resolve,reject)=>{
+        const consumer={resolve,reject,signal,abort:null};
+        consumer.abort=()=>{
+          signal?.removeEventListener('abort',consumer.abort);entry.consumers.delete(consumer);reject(new Error('Smart selection was cancelled.'));
+          if(!entry.consumers.size)cancel(entry,'Smart selection was cancelled.');
+        };
+        entry.consumers.add(consumer);signal?.addEventListener('abort',consumer.abort,{once:true});
+        if(signal?.aborted)consumer.abort();
+      });
+      pump();return result;
+    },
+    dispose(){
+      if(disposed)return;disposed=true;killWorker();cache.clear();
+      if(queued)cancel(queued,'Smart selection is disposed.');
+      if(active)cancel(active,'Smart selection is disposed.');
+    }
+  };
+}
+
 /** Pure view helpers. Zoom never mutates a draft or consumes an undo step. */
 function wheelZoomScale(scale,deltaY,deltaMode=0,viewportHeight=600,pinch=false) {
   if(![scale,deltaY,viewportHeight].every(Number.isFinite)||scale<=0)return scale;
@@ -815,6 +1838,48 @@ function selectionRectangle(start,end,scale=1) {
   const rect={x,y,width:Math.round(Math.max(start.x,end.x))-x,height:Math.round(Math.max(start.y,end.y))-y};
   return rect.width>=2&&rect.height>=2?rect:null;
 }
+/** Filter layout ownership once per immutable block list, never once per mouse event. */
+function prepareSmartHoverIndex(core,draft,index) {
+  if(!draft||!index||index.assetId!==draft.asset.assetId||index.width!==draft.asset.width||index.height!==draft.asset.height)return null;
+  if(index.blocks===draft.blocks)return index;
+  const overlap=(a,b)=>a.x<b.x+b.width&&b.x<a.x+a.width&&a.y<b.y+b.height&&b.y<a.y+a.height;
+  const candidates=index.candidates.filter(item=>{
+    const r=item.rect;
+    return r&&['x','y','width','height'].every(key=>Number.isFinite(r[key]))&&r.width>=2&&r.height>=2&&r.x>=0&&r.y>=0&&r.x+r.width<=index.width&&r.y+r.height<=index.height&&!draft.blocks.some(block=>overlap(r,block.source)||overlap(r,block.destination));
+  });
+  return {...index,candidates,blocks:draft.blocks};
+}
+/** Preview-only hit testing. No draft validation, pixel scan or geometry rebuilding on pointermove. */
+function smartHoverCandidate(core,engine,draft,index,position,previous=null) {
+  if(!draft||!index||index.assetId!==draft.asset.assetId||index.width!==draft.asset.width||index.height!==draft.asset.height)return null;
+  if(!position||!Number.isFinite(position.x)||!Number.isFinite(position.y)||position.x<0||position.y<0||position.x>=index.width||position.y>=index.height)return null;
+  const prepared=prepareSmartHoverIndex(core,draft,index);
+  return prepared?engine.pick(prepared.candidates,position,previous):null;
+}
+function selectionGestureCurrent(gesture,controller,sessionId) {
+  const now=controller.getSnapshot();
+  return !!gesture&&gesture.owner===controller&&gesture.sessionId===sessionId&&gesture.history===now.history&&!!now.draft&&gesture.assetId===now.draft.asset.assetId&&(gesture.kind==='pan'||gesture.version===now.history.version);
+}
+/** Convert optional shape metadata into a bounded, non-interactive SVG geometry. */
+function smartSelectionOutline(candidate) {
+  const r=candidate?.rect;
+  if(!r||!['x','y','width','height'].every(key=>Number.isFinite(r[key]))||r.width<=0||r.height<=0)return null;
+  const rect={x:r.x,y:r.y,width:r.width,height:r.height};
+  if(candidate.shape==='ellipse')return {tag:'ellipse',attrs:{cx:r.x+r.width/2,cy:r.y+r.height/2,rx:r.width/2,ry:r.height/2}};
+  if(candidate.shape==='capsule')return {tag:'rect',attrs:{...rect,rx:Math.min(r.width,r.height)/2}};
+  if(candidate.shape==='polygon'&&Array.isArray(candidate.outline)&&candidate.outline.length>=3&&candidate.outline.length<=8&&candidate.outline.every(p=>Array.isArray(p)&&p.length===2&&p.every(n=>Number.isFinite(n)&&n>=0&&n<=1)))return {tag:'polygon',attrs:{points:candidate.outline.map(([u,v])=>(r.x+u*r.width)+','+(r.y+v*r.height)).join(' ')}};
+  return {tag:'rect',attrs:rect};
+}
+/** A preview is only a click shortcut: once a manual drag starts it can never snap back. */
+function selectionGestureResult(start,end,scale,candidate=null,manual=false) {
+  const rect=selectionRectangle(start,end,scale);
+  if(rect)return rect;
+  if(manual||Math.hypot(end.x-start.x,end.y-start.y)*scale>=4)return null;
+  const r=candidate?.rect;
+  if(!r||!['x','y','width','height'].every(key=>Number.isFinite(r[key]))||r.width<2||r.height<2)return null;
+  return {x:r.x,y:r.y,width:r.width,height:r.height};
+}
+
 /** Move only a point anchor in layout pixels; its free/local binding and all image blocks stay unchanged. */
 function movePointAnnotation(core,draft,noteId,layoutPoint) {
   const current=core.validateDraft(draft),note=current.annotations.find(item=>item.id===noteId);
@@ -899,7 +1964,7 @@ function writeBlockComment(core,draft,blockId,text,selectedNoteId) {
 }
 
 /* Native sidebar view. Only the image canvas consumes gestures; no document listeners. */
-function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference}) {
+function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference,smartSelection}) {
   const h=React.createElement;
   const settleText=c=>settleFeedbackText(core,c);
   const paths={
@@ -939,6 +2004,8 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
     const [library,setLibrary]=React.useState(null),[pathOpen,setPathOpen]=React.useState(false),[pathValue,setPathValue]=React.useState('');
     const [confirmation,setConfirmation]=React.useState(null),[focusRequest,setFocusRequest]=React.useState(0);
     const [compactHeight,setCompactHeight]=React.useState(false),[fileHover,setFileHover]=React.useState(false),[panning,setPanning]=React.useState(false);
+    const [smartEnabled,setSmartEnabled]=React.useState(true),[smartScan,setSmartScan]=React.useState(null),[smartHover,setSmartHover]=React.useState(null);
+    const smartEngine=React.useMemo(()=>createSmartSelectionEngine(),[]),hoverPoint=React.useRef(null),hoverCandidate=React.useRef(null);
     const rootRef=React.useRef(null),notesScrollRef=React.useRef(null),confirmationRef=React.useRef(null),dragDepth=React.useRef(0);
     // Reveal only inside our own two scrollports; never scroll the chat or shell.
     function revealInEditor(target){
@@ -969,8 +2036,30 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
     const activeNote=draft&&(block?blockComment(draft,block.id,selectedNote):draft.annotations.find(n=>n.id===selectedNote));
     const showDraft=(transient?.kind==='region-move'||transient?.kind==='point-move')?transient.draft:draft&&transient?.kind==='move'?{...draft,blocks:draft.blocks.map(b=>b.id===transient.id?{...b,destination:{...b.destination,...transient.point}}:b)}:draft;
     const displaySelected=transient?.kind==='region-move'?transient.blockId:selected;
-    const moves=draft?core.getMoves(draft):[],items=draft?core.getReviewItems(draft):[],displayItems=showDraft?core.getReviewItems(showDraft):[],isLocked=busy||state.sending;
+    const moves=React.useMemo(()=>draft?core.getMoves(draft):[],[draft]);
+    const items=React.useMemo(()=>draft?core.getReviewItems(draft):[],[draft]);
+    const displayItems=React.useMemo(()=>showDraft===draft?items:showDraft?core.getReviewItems(showDraft):[],[showDraft,items]),isLocked=busy||state.sending;
     const activeItem=items.find(item=>activeNote?item.annotationId===activeNote.id:block&&item.key==='block:'+block.id)||null;
+    const sourceSmartIndex=draft&&smartScan&&smartScan.assetId===draft.asset.assetId?smartScan.index:null;
+    const smartIndex=React.useMemo(()=>prepareSmartHoverIndex(core,draft,sourceSmartIndex),[sourceSmartIndex,draft?.blocks]);
+    const smartPreview=draft&&smartHover&&smartEnabled&&tool==='select'&&!isLocked&&!pointer.current&&smartHover.assetId===draft.asset.assetId?smartHover.candidate:null;
+    const smartGeometry=smartSelectionOutline(smartPreview);
+    function clearSmartHover(){hoverPoint.current=null;hoverCandidate.current=null;setSmartHover(null);}
+    React.useEffect(()=>{
+      let current=true;clearSmartHover();
+      if(!draft||!asset||!smartEnabled){setSmartScan(null);return;}
+      const assetId=draft.asset.assetId,stop=new AbortController();setSmartScan({assetId,status:'loading',index:null});
+      smartSelection.analyze({...asset,width:draft.asset.width,height:draft.asset.height},{signal:stop.signal}).then(index=>{if(current)setSmartScan({assetId,status:'ready',index});}).catch(()=>{if(current)setSmartScan({assetId,status:'unavailable',index:null});});
+      return()=>{current=false;stop.abort();};
+    },[draft?.asset.assetId,asset?.url,smartEnabled]);
+    React.useEffect(()=>{
+      const p=hoverPoint.current;
+      if(!p||tool!=='select'||!smartEnabled||isLocked||pointer.current)return;
+      const candidate=smartHoverCandidate(core,smartEngine,draft,smartIndex,p);
+      hoverCandidate.current=candidate;setSmartHover(candidate?{assetId:draft.asset.assetId,candidate}:null);
+    },[smartIndex]);
+    React.useEffect(()=>{clearSmartHover();},[tool,smartEnabled,isLocked,c,state.history,draft,scale]);
+    React.useEffect(()=>{cancelPointer();},[c,draft?.asset.assetId,state.history]);
     const editKey=block?'block:'+block.id:activeNote?'note:'+activeNote.id:null;
     function clearWheelGesture(){if(wheelTimer.current!==null)clearTimeout(wheelTimer.current);wheelTimer.current=null;wheelGesture.current=null;}
     function viewCenter(){const stage=stageRef.current,r=stage.getBoundingClientRect();return {x:r.left+stage.clientLeft+stage.clientWidth/2,y:r.top+stage.clientTop+stage.clientHeight/2};}
@@ -1042,12 +2131,19 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
     function paste(event){if(event.target.closest('textarea,input,[contenteditable=true]')||isLocked)return;const file=[...event.clipboardData.files].find(f=>f.type.startsWith('image/'));if(file){event.preventDefault();fromFile(file).catch(error);return;}const text=event.clipboardData.getData('text/plain');if(text){event.preventDefault();try{requestImport(sourceOf(text));}catch(e){error(e);}}}
     function openLibrary(){if(menuRef.current)menuRef.current.open=false;act(async()=>setLibrary(await rpc(props.sessionId,{action:'list',limit:30})));}
     function point(event){const r=svgRef.current.getBoundingClientRect();return {x:Math.max(0,Math.min(draft.asset.width,(event.clientX-r.left)/r.width*draft.asset.width)),y:Math.max(0,Math.min(draft.asset.height,(event.clientY-r.top)/r.height*draft.asset.height))};}
+    function updateSmartHover(event){
+      if(!draft||!smartEnabled||tool!=='select'||isLocked||space.current||event.shiftKey||event.pointerType==='touch'||event.buttons||event.target.closest('[data-note-id],[data-block-id]')){clearSmartHover();return;}
+      const p=point(event);hoverPoint.current=p;
+      const candidate=smartHoverCandidate(core,smartEngine,draft,smartIndex,p,hoverCandidate.current);
+      if(candidate?.id===hoverCandidate.current?.id)return;
+      hoverCandidate.current=candidate;setSmartHover(candidate?{assetId:draft.asset.assetId,candidate}:null);
+    }
     function down(event){
       if(!draft||isLocked||pointer.current||![0,1].includes(event.button))return;
       event.preventDefault();
       if(event.button===1||space.current||tool==='pan'){
         finishEditor();stageRef.current?.focus({preventScroll:true});
-        pointer.current={kind:'pan',x:event.clientX,y:event.clientY,left:stageRef.current.scrollLeft,top:stageRef.current.scrollTop};setPanning(true);event.currentTarget.setPointerCapture(event.pointerId);return;
+        pointer.current={pointerId:event.pointerId,owner:c,sessionId:props.sessionId,history:c.getSnapshot().history,kind:'pan',assetId:draft.asset.assetId,x:event.clientX,y:event.clientY,left:stageRef.current.scrollLeft,top:stageRef.current.scrollTop};setPanning(true);event.currentTarget.setPointerCapture(event.pointerId);return;
       }
       const p=point(event),noteId=event.target.closest('[data-note-id]')?.getAttribute('data-note-id');
       const markerHit=!!event.target.closest('[data-note-marker]'),now=c.getSnapshot().draft;
@@ -1056,12 +2152,14 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
       // Inactive transparent notes must not intercept a block; an explicitly selected frame keeps its drag intent.
       const routedNoteId=blockId&&!markerHit&&note?.target.kind==='region'&&activeNote?.id!==noteId?null:noteId;
       const intent=selectionIntent({tool,blockId,noteId:routedNoteId,noteKind:note?.target.kind,noteLocalKind:note?.target.local?.kind,forceNew:event.shiftKey});
+      const candidate=intent==='draw-region'&&smartEnabled&&!event.shiftKey&&event.pointerType!=='touch'?smartHoverCandidate(core,smartEngine,now,smartIndex,p,hoverCandidate.current):null;
+      clearSmartHover();
       if(intent==='edit-note'){chooseNote(noteId);return;}
       if(intent==='move-point'){
         if(activeNote?.id!==noteId)finishEditor();
         const current=c.getSnapshot().draft.annotations.find(n=>n.id===noteId);if(!current)return;
         setSelected(current.target.kind==='block'?current.target.blockId:null);setSelectedNote(noteId);
-        pointer.current={kind:'point-move',noteId,start:p,origin:targetPoint(c.getSnapshot().draft,current),version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
+        pointer.current={pointerId:event.pointerId,owner:c,sessionId:props.sessionId,history:c.getSnapshot().history,kind:'point-move',noteId,start:p,origin:targetPoint(c.getSnapshot().draft,current),version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
         event.currentTarget.setPointerCapture(event.pointerId);return;
       }
       if(intent==='move-region'){
@@ -1069,7 +2167,7 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
         if(activeNote?.id!==noteId)finishEditor();
         const current=c.getSnapshot().draft.annotations.find(n=>n.id===noteId);if(!current)return;
         const r=current.target.rect;setSelected(null);setSelectedNote(noteId);
-        pointer.current={kind:'region-move',noteId,start:p,origin:{x:r.x,y:r.y},width:r.width,height:r.height,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
+        pointer.current={pointerId:event.pointerId,owner:c,sessionId:props.sessionId,history:c.getSnapshot().history,kind:'region-move',noteId,start:p,origin:{x:r.x,y:r.y},width:r.width,height:r.height,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
         event.currentTarget.setPointerCapture(event.pointerId);return;
       }
       finishEditor();stageRef.current?.focus({preventScroll:true});
@@ -1079,13 +2177,15 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
       }
       if(intent==='move-block'){
         chooseBlock(blockId);const b=c.getSnapshot().draft.blocks.find(b=>b.id===blockId);
-        pointer.current={kind:'move',id:blockId,start:p,origin:{x:b.destination.x,y:b.destination.y},width:b.source.width,height:b.source.height,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
-      }else pointer.current={kind:intent,start:p,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
+        pointer.current={pointerId:event.pointerId,owner:c,sessionId:props.sessionId,history:c.getSnapshot().history,kind:'move',id:blockId,start:p,origin:{x:b.destination.x,y:b.destination.y},width:b.source.width,height:b.source.height,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
+      }else pointer.current={pointerId:event.pointerId,owner:c,sessionId:props.sessionId,history:c.getSnapshot().history,kind:intent,start:p,candidate,manual:false,version:c.getSnapshot().history.version,assetId:draft.asset.assetId};
       event.currentTarget.setPointerCapture(event.pointerId);
     }
     function destination(a,p){return {x:Math.round(Math.max(0,Math.min(draft.asset.width-a.width,a.origin.x+p.x-a.start.x))),y:Math.round(Math.max(0,Math.min(draft.asset.height-a.height,a.origin.y+p.y-a.start.y)))};}
     function move(event){
-      const a=pointer.current;if(!a)return;
+      const a=pointer.current;if(!a){updateSmartHover(event);return;}
+      if(a.pointerId!==event.pointerId)return;
+      if(!selectionGestureCurrent(a,c,props.sessionId)){cancelPointer();return;}
       if(a.kind==='pan'){stageRef.current.scrollLeft=a.left-event.clientX+a.x;stageRef.current.scrollTop=a.top-event.clientY+a.y;return;}
       const p=point(event);
       if(a.kind==='move'){setTransient({kind:'move',id:a.id,point:destination(a,p)});return;}
@@ -1104,12 +2204,19 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
         }catch(e){cancelPointer();if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId);error(e);}
         return;
       }
+      if(Math.hypot(p.x-a.start.x,p.y-a.start.y)*scale>=4)a.manual=true;
       setTransient({kind:a.kind,rect:{x:Math.min(a.start.x,p.x),y:Math.min(a.start.y,p.y),width:Math.abs(p.x-a.start.x),height:Math.abs(p.y-a.start.y)}});
     }
-    function cancelPointer(){pointer.current=null;setTransient(null);setPanning(false);}
+    function cancelPointer(event){
+      const a=pointer.current;if(event?.pointerId!==undefined&&a?.pointerId!==event.pointerId)return;
+      pointer.current=null;
+      if(a&&svgRef.current?.hasPointerCapture(a.pointerId))svgRef.current.releasePointerCapture(a.pointerId);
+      setTransient(null);setPanning(false);clearSmartHover();
+    }
     function up(event){
-      const a=pointer.current;if(!a)return;cancelPointer();if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId);
-      if(a.kind==='pan'||a.version!==c.getSnapshot().history.version||a.assetId!==c.getSnapshot().draft.asset.assetId)return;
+      const a=pointer.current;if(!a||a.pointerId!==event.pointerId)return;cancelPointer();
+      const now=c.getSnapshot();
+      if(a.kind==='pan'||!now.draft||!now.history||!selectionGestureCurrent(a,c,props.sessionId))return;
       const p=point(event),dragged=Math.hypot(p.x-a.start.x,p.y-a.start.y)*scale>=4;
       if(a.kind==='point-move'){
         if(!dragged){chooseNote(a.noteId,true);return;}
@@ -1124,16 +2231,17 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
         if(!dragged){chooseBlock(a.id,true);return;}
         change(d=>core.moveBlock(d,a.id,destination(a,p),{bounds:'clamp'}));return;
       }
-      const rect=selectionRectangle(a.start,p,scale);if(!rect){setSelected(null);setSelectedNote(null);return;}
+      const rect=selectionGestureResult(a.start,p,scale,event.shiftKey?null:a.candidate,a.manual);if(!rect){setSelected(null);setSelectedNote(null);return;}
       addNote({kind:'region',space:'layout',rect});
     }
     function key(event){
       if(event.nativeEvent?.isComposing)return;
+      if(event.key==='Shift')clearSmartHover();
       if(event.key==='Escape'&&pathOpen&&event.target.closest('.dif-import')){event.preventDefault();setPathOpen(false);stageRef.current?.focus({preventScroll:true});return;}
       if(event.target.closest('textarea,input,[contenteditable=true]'))return;
       // Keyboard history and movement obey the same submission lock as buttons.
       if(isLocked)return;
-      if(event.code==='Space'&&!event.target.closest('button,summary,a,select')){space.current=true;event.preventDefault();return;}
+      if(event.code==='Space'&&!event.target.closest('button,summary,a,select')){space.current=true;clearSmartHover();event.preventDefault();return;}
       if(event.key==='Escape'){c.cancelTextEdit();cancelPointer();setConfirmation(null);setLibrary(null);setPathOpen(false);if(menuRef.current)menuRef.current.open=false;setSelected(null);setSelectedNote(null);return;}
       if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();event.shiftKey?c.redo():c.undo();return;}
       if(block&&stageRef.current?.contains(event.target)&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)){event.preventDefault();const n=event.shiftKey?10:1;change(d=>{const b=d.blocks.find(x=>x.id===selected);return core.moveBlock(d,selected,{x:b.destination.x+(event.key==='ArrowRight'?n:event.key==='ArrowLeft'?-n:0),y:b.destination.y+(event.key==='ArrowDown'?n:event.key==='ArrowUp'?-n:0)},{bounds:'clamp'});});}
@@ -1166,7 +2274,7 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
       stage.scrollTop+=r.top+p.y*scale-(v.top+stage.clientTop+stage.clientHeight/2);
     }
     const thumbnail=item=>item.move&&h('svg',{className:'dif-item-thumb',viewBox:`${item.block.source.x} ${item.block.source.y} ${item.block.source.width} ${item.block.source.height}`,preserveAspectRatio:'xMidYMid slice','aria-hidden':true},h('image',{href:asset.url,width:draft.asset.width,height:draft.asset.height}));
-    const drawSvg=()=>h('svg',{ref:svgRef,className:'dif-canvas',width:Math.max(1,draft.asset.width*scale),height:Math.max(1,draft.asset.height*scale),viewBox:`0 0 ${draft.asset.width} ${draft.asset.height}`,role:'img','aria-label':t('reference'),style:{cursor:panning?'grabbing':tool==='pan'?'grab':tool==='select'?'default':'crosshair'},onPointerDown:down,onPointerMove:move,onPointerUp:up,onPointerCancel:cancelPointer,onLostPointerCapture:cancelPointer},
+    const drawSvg=()=>h('svg',{ref:svgRef,className:'dif-canvas',width:Math.max(1,draft.asset.width*scale),height:Math.max(1,draft.asset.height*scale),viewBox:`0 0 ${draft.asset.width} ${draft.asset.height}`,role:'img','aria-label':t('reference'),style:{cursor:panning?'grabbing':tool==='pan'?'grab':tool==='select'?'default':'crosshair'},onPointerDown:down,onPointerMove:move,onPointerUp:up,onPointerCancel:cancelPointer,onLostPointerCapture:cancelPointer,onPointerLeave:()=>{if(!pointer.current)clearSmartHover();}},
       h('defs',null,h('mask',{id:clipId,maskUnits:'userSpaceOnUse',x:0,y:0,width:draft.asset.width,height:draft.asset.height},h('rect',{width:draft.asset.width,height:draft.asset.height,fill:'white'}),...showDraft.blocks.map(b=>h('rect',{key:b.id,...b.source,fill:'black'})))),
       h('image',{href:asset.url,width:draft.asset.width,height:draft.asset.height,mask:`url(#${clipId})`,pointerEvents:'none'}),
       ...showDraft.blocks.filter(b=>b.destination.x!==b.source.x||b.destination.y!==b.source.y).map(b=>h('rect',{key:'hole'+b.id,...b.source,fill:'none',stroke:'var(--dsw-alias-border-l2)',strokeWidth:1/scale,strokeDasharray:`${4/scale} ${3/scale}`,pointerEvents:'none'})),
@@ -1179,10 +2287,12 @@ function createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targ
          anchor.kind==='region'&&h('rect',{...anchor.rect,fill:'transparent',pointerEvents:item.annotation?.target.kind==='region'?undefined:'none',style:{cursor:tool==='select'?'move':'crosshair'},stroke:'var(--dif-annotation)',strokeWidth:(hot?2:1.5)/scale,strokeDasharray:hot?undefined:[4/scale,3/scale].join(' ')}),
          h('circle',{'data-note-marker':item.annotationId?true:undefined,style:{cursor:anchor.kind==='point'?'grab':tool==='select'?'move':'pointer'},cx:x,cy:y,r:marker,fill:'var(--dif-annotation)',stroke:'var(--dsw-alias-bg-base)',strokeWidth:(hot?2:1)/scale}),
          h('text',{x,y,fill:'var(--dif-annotation-ink)',fontSize:marker*1.15,fontWeight:600,textAnchor:'middle',dominantBaseline:'central',pointerEvents:'none'},item.number));}),
-transient?.rect&&h('rect',{...transient.rect,fill:'color-mix(in srgb,var(--dif-annotation) 8%,transparent)',stroke:'var(--dif-annotation)',strokeWidth:2/scale,pointerEvents:'none'})
+smartGeometry&&h(smartGeometry.tag,{'data-smart-preview':true,'data-smart-kind':smartPreview.kind,...smartGeometry.attrs,className:'dif-smart-preview',fill:'color-mix(in srgb,var(--dif-annotation) 5%,transparent)',stroke:'var(--dif-annotation)',strokeWidth:1.5/scale,strokeDasharray:`${5/scale} ${3/scale}`,pointerEvents:'none','aria-hidden':true}),
+ transient?.rect&&h('rect',{...transient.rect,fill:'color-mix(in srgb,var(--dif-annotation) 8%,transparent)',stroke:'var(--dif-annotation)',strokeWidth:2/scale,pointerEvents:'none'})
     );
     const menu=()=>h('details',{className:'dif-menu',ref:menuRef},h('summary',{className:'dif-btn dif-icon-btn',title:t('options'),'aria-label':t('options')},glyph('more')),h('div',{className:'dif-menu-body'},
       button('openFile',()=>{menuRef.current.open=false;fileRef.current.click();},{icon:'image',disabled:!state.ready}),button('library',openLibrary,{icon:'image',disabled:!state.ready}),button('path',()=>{setPathOpen(x=>!x);menuRef.current.open=false;},{disabled:!state.ready}),
+      draft&&button('smartSelection',()=>{clearSmartHover();setSmartEnabled(value=>!value);},{icon:smartEnabled?'check':undefined,'aria-pressed':smartEnabled,title:t('smartHint')}),
       draft&&button('export',exportJSON,{icon:'download'}),block&&button('removeBlock',()=>{menuRef.current.open=false;removeBlock();},{icon:'trash'}),draft&&h('p',{className:'dif-subtle'},t('keyboardHint'))));
     const inspector=(activeNote||block)&&h('div',{className:'dif-inspector','data-testid':'active-feedback'},
       h('div',{className:'dif-note-head'},h('span',{className:'dif-number'},activeItem?.number||'—'),h('span',{className:'dif-kind'},itemKind(activeItem)),h('span',{className:'dif-subtle'},block?`${block.destination.x-block.source.x>=0?'+':''}${block.destination.x-block.source.x}, ${block.destination.y-block.source.y>=0?'+':''}${block.destination.y-block.source.y} px`:''),h('span',{className:'dif-spacer'}),block&&button('reset',()=>change(d=>core.resetBlock(d,block.id)),{icon:'reset',iconOnly:true}),button(activeNote?'delete':'removeBlock',activeNote?removeNote:removeBlock,{icon:'trash',iconOnly:true})),
@@ -1199,8 +2309,8 @@ transient?.rect&&h('rect',{...transient.rect,fill:'color-mix(in srgb,var(--dif-a
       pathOpen&&h('div',{className:'dif-import'},h('input',{type:'text',value:pathValue,placeholder:t('path'),'aria-label':t('path'),onChange:e=>setPathValue(e.target.value)}),button('import',()=>{try{requestImport(sourceOf(pathValue));setPathOpen(false);setPathValue('');}catch(e){error(e);}},{disabled:!state.ready}),button('cancel',()=>setPathOpen(false),{icon:'close',iconOnly:true})),
       library&&h('div',{className:'dif-library'},h('div',{className:'dif-library-head'},h('strong',null,t('library')),h('span',{className:'dif-spacer'}),button('openFile',()=>fileRef.current.click(),{icon:'image'}),button('cancel',()=>setLibrary(null),{icon:'close',iconOnly:true})),library.items.length?h('div',{className:'dif-asset-grid'},...library.items.map(a=>h('button',{key:a.assetId||a.attachmentId,type:'button',className:'dif-asset',disabled:isLocked,'aria-pressed':!!draft&&(a.assetId===draft.asset.assetId||a.attachmentId===draft.asset.attachmentId),onClick:()=>requestImport(a.assetId?{kind:'stored',assetId:a.assetId}:{kind:'history',attachmentId:a.attachmentId})},a.url?h('img',{src:a.url,alt:'',loading:'lazy'}):glyph('image'),h('span',null,a.name||t('reference')),h('small',null,`${a.width} × ${a.height}`)))):h('p',{className:'dif-subtle'},t('noImages')),library.nextOffset!=null&&button('more',()=>act(async()=>{const next=await rpc(props.sessionId,{action:'list',offset:library.nextOffset,limit:30});setLibrary({...next,items:[...library.items,...next.items]});}))),
       confirmation&&h('div',{ref:confirmationRef,className:'dif-inline-confirm',role:'alert',tabIndex:-1},h('span',null,t(confirmation.kind==='switch'?'newImageConfirm':confirmation.kind==='reload'?'reloadConfirm':'deleteConfirm')),button(confirmation.kind==='switch'?'switch':'confirm',()=>{const fn=confirmation.run;setConfirmation(null);fn();}),button('cancel',()=>setConfirmation(null))),
-      h('div',{className:'dif-canvas-area'},h('div',{className:'dif-stage',ref:stageRef,tabIndex:0,'aria-label':t('reference')},draft?h('div',{className:'dif-canvas-wrap'},drawSvg()):h('div',{className:'dif-empty'},emptyArtwork(),h('span',{className:'dif-eyebrow'},t('workspace')),h('strong',null,t('paste')),h('p',null,t('pasteHint')),h('div',{className:'dif-empty-actions'},button('openFile',()=>fileRef.current.click(),{icon:'image',className:'dif-primary',disabled:!state.ready}),button('library',openLibrary,{className:'dif-secondary',disabled:!state.ready})),button('path',()=>setPathOpen(x=>!x),{className:'dif-empty-more dif-text-action',disabled:!state.ready}),h('ol',{className:'dif-empty-steps','aria-label':t('workflow')},...['stepMark','stepMove','stepSend'].map((step,i)=>h('li',{key:step},h('span',{'aria-hidden':true},'0'+(i+1)),t(step)))))),
-        draft&&h('div',{className:'dif-mode-hint'},t(tool==='point'?'pointHint':tool==='pan'?'panHint':'selectHint')),
+      h('div',{className:'dif-canvas-area'},h('div',{className:'dif-stage',ref:stageRef,tabIndex:0,onScroll:clearSmartHover,'aria-label':t('reference')},draft?h('div',{className:'dif-canvas-wrap'},drawSvg()):h('div',{className:'dif-empty'},emptyArtwork(),h('span',{className:'dif-eyebrow'},t('workspace')),h('strong',null,t('paste')),h('p',null,t('pasteHint')),h('div',{className:'dif-empty-actions'},button('openFile',()=>fileRef.current.click(),{icon:'image',className:'dif-primary',disabled:!state.ready}),button('library',openLibrary,{className:'dif-secondary',disabled:!state.ready})),button('path',()=>setPathOpen(x=>!x),{className:'dif-empty-more dif-text-action',disabled:!state.ready}),h('ol',{className:'dif-empty-steps','aria-label':t('workflow')},...['stepMark','stepMove','stepSend'].map((step,i)=>h('li',{key:step},h('span',{'aria-hidden':true},'0'+(i+1)),t(step)))))),
+        draft&&h('div',{className:'dif-mode-hint'},t(tool==='point'?'pointHint':tool==='pan'?'panHint':!smartEnabled?'selectHint':smartScan?.status==='loading'?'smartPreparing':smartScan?.status==='unavailable'?'smartUnavailable':smartPreview?.kind==='paragraph'?'smartParagraph':smartPreview?.kind==='row'||smartPreview?.role==='row'?'smartRow':smartPreview?.shape==='ellipse'?'smartEllipse':smartPreview?.shape==='polygon'||smartPreview?.shape==='capsule'?'smartShape':smartPreview?'smartAdopt':'smartHint')),
         draft&&h('div',{className:'dif-zoom',title:t('zoomHint'),'aria-label':t('zoomHint')},button('pan',()=>setMode(tool==='pan'?'select':'pan'),{icon:'pan',iconOnly:true,'aria-pressed':tool==='pan'}),h('i',{className:'dif-divider'}),button('zoomOut',()=>zoomTo(scale/1.25),{icon:'minus',iconOnly:true}),h('span',null,Math.round(scale*100)+'%'),button('zoomIn',()=>zoomTo(scale*1.25),{icon:'plus',iconOnly:true}),button('fit',()=>{clearWheelGesture();pendingZoom.current=null;nativeGesture.current=null;setZoom(null);},{icon:'fit',iconOnly:true}))),
       draft&&h('div',{className:'dif-bottom'},h('div',{className:'dif-list-title'},h('strong',null,t('notes')),h('span',{className:'dif-count'},items.length),h('span',{className:'dif-spacer'}),button('addGlobal',()=>addNote({kind:'global'}),{icon:'plus',className:'dif-text-action'})),
                  h('div',{className:'dif-notes-scroll',ref:notesScrollRef},
@@ -1217,6 +2327,8 @@ function createEditor({React,ctx,NS,Icon}) {
   const EDITOR_NS=NS+'Editor';
   ctx.effect(()=>ctx.locale.register(EDITOR_NS,MESSAGES));
   const controllers=new Map(),lifetime=new AbortController(),grants=new Map();
+  const smartSelection=createSmartSelectionClient();
+  ctx.effect(()=>()=>smartSelection.dispose());
   ctx.effect(()=>()=>{for(const c of controllers.values()){settleFeedbackText(core,c);c.dispose();}lifetime.abort();controllers.clear();});
   async function rpc(sessionId,payload,retryAuthorization=true) {
     let grant=grants.get(sessionId);
@@ -1268,7 +2380,7 @@ function createEditor({React,ctx,NS,Icon}) {
     }
     return new Promise((resolve,reject)=>canvas.toBlob(async blob=>{try{if(!blob)throw new Error('Reference image encoding failed');const data=await readFile(blob);canvas.width=canvas.height=0;resolve(data);}catch(error){canvas.width=canvas.height=0;reject(error);}},'image/png'));
   }
-  return createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference});
+  return createEditorView({React,ctx,EDITOR_NS,Icon,controller,rpc,readFile,targetPoint,renderReference,smartSelection});
 }
 
 return {createEditor};
