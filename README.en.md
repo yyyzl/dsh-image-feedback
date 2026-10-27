@@ -4,7 +4,7 @@
 
 A native DeepSeek Harness sidebar: draw a region, type feedback immediately, drag regions to rearrange image blocks, then send the original image, numbered reference, and feedback to the current session.
 
-- Package identifier: `@yyyzl/dsh-image-feedback`, version `0.2.0`.
+- Package identifier: `@yyyzl/dsh-image-feedback`, source build version `0.3.0`; the published installation URLs below remain pinned to `0.2.0`.
 - Distribution: [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>), not npm. `private: true` intentionally prevents accidental npm publication. The package identifier does not establish npm availability or ownership of that registry scope.
 - Compatibility is declared in the [manifest](<package.json>). Main interactions were checked on the original local implementation with Harness `0.2.1-rc.2`; live installation and migration of the public namespace have not yet been verified. See [testing status](<docs/TESTING.md>).
 - Market status: v0.1.0 was accepted through [request #53](<https://github.com/polang233/dsh-plugin-index/issues/53>). Updating the market to v0.2.0 requires maintainer review of its pinned commit.

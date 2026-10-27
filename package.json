@@ -1,6 +1,6 @@
 {
   "name": "@yyyzl/dsh-image-feedback",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Annotate images, reposition regions and pins, and send independent image feedback in DeepSeek Harness.",

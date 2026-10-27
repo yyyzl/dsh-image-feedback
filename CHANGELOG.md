@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## Unreleased — 0.3.0
 
+- Add local smart-hover recommendations, including closed shapes, whole text rows and paragraphs, with a manual-selection fallback.
 - Fix undo and redo in focused comment editors, including focus recovery after removing a comment.
 - Add New feedback with save protection and Clear current with confirmation and one-step undo.
 - Replace Fit canvas with the explicit Show full image label and explanation.

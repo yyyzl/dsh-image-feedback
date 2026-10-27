@@ -4,7 +4,7 @@
 
 DeepSeek Harness 原生右侧栏插件：框选后直接写意见，拖动选区调整位置，再将原图、编号参考图与反馈独立发送到当前会话。
 
-- 包标识：`@yyyzl/dsh-image-feedback`，版本 `0.2.0`。
+- 包标识：`@yyyzl/dsh-image-feedback`，当前源码构建版本 `0.3.0`；下方已发布版本的安装地址仍固定为 `0.2.0`。
 - 分发：本仓库的 [GitHub Releases](<https://github.com/yyyzl/dsh-image-feedback/releases>)，不是 npm。保留 `private: true` 防止误发布到 npm；包名不代表 npm 上已存在该包或已确认同名 scope 的所有权。
 - 兼容性边界由[清单](<package.json>)声明；原本地实现已在 Harness `0.2.1-rc.2` 验证过主要交互。公开命名版本的实机安装和旧版迁移尚未验证，详见[测试说明](<docs/TESTING.md>)。
 - 市场状态：[开放插件市场申请 #53](<https://github.com/polang233/dsh-plugin-index/issues/53>) 已审核收录 v0.1.0；v0.2.0 需维护者重新核查固定提交后升级。
