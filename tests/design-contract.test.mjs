@@ -60,7 +60,9 @@ test('keyboard submission lock and path Escape precede history mutations',async(
   const key=view.slice(view.indexOf('function key('),view.indexOf('function removeBlock('));
   assert.match(key,/isComposing/);
   assert.ok(key.indexOf("event.key==='Escape'&&pathOpen")<key.indexOf("event.target.closest('textarea,input"));
-  assert.ok(key.indexOf('if(isLocked)return;')<key.indexOf('c.redo()'));
+  const history=view.slice(view.indexOf('function historyAction('),view.indexOf('function key('));
+  assert.ok(history.indexOf('if(isLocked||confirmation||pointer.current)return;')<history.indexOf('c[direction]()'));
+  assert.match(view,/onKeyDownCapture:shortcutKey/);
   assert.ok(key.indexOf('if(isLocked)return;')<key.indexOf('core.moveBlock'));
   assert.match(view,/dragDepth\.current=0;setFileHover\(false\)/);
   assert.match(view,/dropEffect=isLocked\?'none':'copy'/);

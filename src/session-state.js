@@ -114,6 +114,16 @@ export function createSessionState({sessionId,core,rpc,recovery,delay=400}) {
         finally{savingDraft=null;}
       });return queue;
     },
+    async newProject(){
+      await api.ensureLoaded();
+      if(disposed||!state.ready||state.sending)throw new Error('Finish the current operation before starting new feedback.');
+      api.finishTextEdit();
+      const started=epoch;
+      await api.flush();
+      if(disposed||started!==epoch||state.sending)throw new Error('The current draft changed while saving. Its newer edits are retained; retry new feedback.');
+      clearTimeout(saveTimer);epoch++;lastSaved=null;submission=null;
+      publish({draft:null,asset:null,history:null,version:0,status:'saved',error:''});persist();
+    },
     async useAsset(asset){
       await api.ensureLoaded();if(!state.ready)throw new Error('Load the saved state before importing a new image.');
       api.finishTextEdit();

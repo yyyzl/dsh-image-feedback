@@ -74,7 +74,8 @@ Moves can be sent without written comments. “Queued” means the Host accepted
 
 - Annotation outlines are red, with white numbers on red markers; reference exports use the same palette.
 - Click a marker or note row to edit. Blur completes a text edit; a newly created empty note is cancelled. Esc cancels the current text transaction; Ctrl/Cmd+Enter finishes it.
-- A text-edit transaction or a drag creates one undo step. With the canvas focused, use Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z; text fields keep normal text shortcuts.
+- A text-edit transaction or a drag creates one undo step. Use Ctrl/Cmd+Z to undo and Ctrl/Cmd+Shift+Z or Ctrl+Y to redo in both the canvas and comment editor; path inputs retain native text undo.
+- **New feedback** (Ctrl/Cmd+N) saves the current feedback before opening an empty workspace. **Clear current** keeps the image and removes all comments and moves after confirmation; one undo restores everything. **Show full image** centers and scales the image to fit the canvas.
 - **Point comments:** click to edit; drag a marker to reposition it without moving pixels. Free points stay within the canvas; block-bound points retain their binding and stay inside that block.
 - Shift-drag starts a new region inside an existing selection. Arrow keys nudge a selected block; Shift makes larger nudges.
 - Use the pan tool, Space-drag, or middle-button drag after zooming. Blocks can be reset; removing a block with comments requires confirmation.

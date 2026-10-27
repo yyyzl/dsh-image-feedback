@@ -1,4 +1,15 @@
 /** Pure view helpers. Zoom never mutates a draft or consumes an undo step. */
+// 仅接管反馈编辑器的撤销；路径框等普通输入保留浏览器文字操作。
+export function feedbackShortcut(event,{editable=false,editingNote=false}={}) {
+  if(event.defaultPrevented||event.isComposing||event.nativeEvent?.isComposing||event.altKey||!(event.ctrlKey||event.metaKey))return null;
+  const key=event.key.toLowerCase();
+  if(key==='n'&&!event.shiftKey)return 'new';
+  if(editable&&!editingNote)return null;
+  if(key==='z')return event.shiftKey?'redo':'undo';
+  if(key==='y'&&!event.shiftKey)return 'redo';
+  return null;
+}
+
 export function wheelZoomScale(scale,deltaY,deltaMode=0,viewportHeight=600,pinch=false) {
   if(![scale,deltaY,viewportHeight].every(Number.isFinite)||scale<=0)return scale;
   const pixels=deltaY*(deltaMode===1?16:deltaMode===2?Math.max(1,viewportHeight):1);

@@ -327,6 +327,13 @@ export function resetAllMoves(input) {
   return derive(draft, { blocks: draft.blocks.map((block) => moved(block) ? { ...block, destination: block.source } : block) });
 }
 
+/** 清除当前反馈，保留素材绑定和编号进度；通过 History 可整体撤销。 */
+export function clearFeedback(input) {
+  const draft = validateDraft(input);
+  if (!draft.blocks.length && !draft.annotations.length) return draft;
+  return derive(draft, { blocks: [], annotations: [] });
+}
+
 /** order='front'|'back' or a zero-based final layer index. */
 export function reorderBlock(input, id, order) {
   const draft = validateDraft(input); const block = blockById(draft, id);
@@ -617,6 +624,6 @@ export class History {
 
 const API = Object.freeze({ SCHEMA_VERSION, LIMITS, CoreError, createDraft, validateDraft, serializeDraft, deserializeDraft,
   rectanglesOverlap, containsPoint, rectFromPoints, viewToAsset, assetToView, subtractRect, getSourceRemainders,
-  addBlock, moveBlock, resetBlock, resetAllMoves, reorderBlock, removeBlock, splitBlock, cutBlock, hitTest,
+  addBlock, moveBlock, resetBlock, resetAllMoves, clearFeedback, reorderBlock, removeBlock, splitBlock, cutBlock, hitTest,
   addAnnotation, updateAnnotation, removeAnnotation, resolveAnnotation, getMoves, getReviewItems, hasFeedback, buildFeedback, History });
 export default API;

@@ -35,7 +35,7 @@
     "pan": "平移视图",
     "undo": "撤销",
     "redo": "重做",
-    "fit": "适应画布",
+    "fit": "显示全图",
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "global": "全局",
@@ -92,7 +92,14 @@
     "commandDraft": "输入框中已有斜杠命令，请先完成或退出该命令，再填入反馈。",
     "reloadConfirm": "重新读取会放弃未保存的本地修改。建议先导出反馈 JSON。确认放弃并读取宿主版本？",
     "cutOverlap": "这个范围包含已被移动走的源像素，不能再次拆出同一份。请直接拖动当前可见图块；原有内容和意见已保留。",
-    "keyboardHint": "空格 / 中键平移 · Ctrl/Cmd+Z 撤销 · 方向键微调图块"
+    "keyboardHint": "Ctrl/⌘+N 新建 · Ctrl/⌘+Z 撤销 · Ctrl/⌘+Shift+Z 或 Ctrl+Y 重做 · 空格 / 中键平移",
+    "newProject": "新建反馈",
+    "newProjectConfirm": "新建前会先保存当前反馈，然后返回空白工作区。之后可从会话图片恢复；保存失败时保留当前内容。",
+    "fitHint": "缩放并居中，让整张图片显示在画布内",
+    "clearFeedback": "清空当前",
+    "clearHint": "保留当前图片，清除全部批注并复原图块移动",
+    "clearConfirm": "清除当前图片的全部批注、文字意见和图块移动？图片会保留，可按 Ctrl/⌘+Z 一次恢复。",
+    "cleared": "当前反馈已清空，图片保留。可按 Ctrl/⌘+Z 恢复。"
   },
   "en": {
     "openFile": "Choose image",
@@ -130,7 +137,7 @@
     "pan": "Pan view",
     "undo": "Undo",
     "redo": "Redo",
-    "fit": "Fit canvas",
+    "fit": "Show full image",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "global": "Global",
@@ -187,6 +194,13 @@
     "commandDraft": "The composer contains a slash command. Finish or clear that command before inserting feedback.",
     "reloadConfirm": "Reload discards unsaved local changes. Export feedback JSON first if needed. Discard and load the Host version?",
     "cutOverlap": "This range includes source pixels already moved away. Drag the currently visible block instead; existing content and notes are unchanged.",
-    "keyboardHint": "Space / middle button to pan · Ctrl/Cmd+Z to undo · Arrow keys to nudge blocks"
+    "keyboardHint": "Ctrl/Cmd+N new · Ctrl/Cmd+Z undo · Ctrl/Cmd+Shift+Z or Ctrl+Y redo · Space / middle button to pan",
+    "newProject": "New feedback",
+    "newProjectConfirm": "Save the current feedback and return to an empty workspace? Reopen it from session images later. If saving fails, your current work stays open.",
+    "fitHint": "Zoom and center the image so it is fully visible on the canvas",
+    "clearFeedback": "Clear current",
+    "clearHint": "Keep the image, remove all comments and restore moved regions",
+    "clearConfirm": "Clear all comments and region moves on this image? The image stays open. Undo restores everything in one step.",
+    "cleared": "Feedback cleared. The image stays open; undo restores your work."
   }
 }

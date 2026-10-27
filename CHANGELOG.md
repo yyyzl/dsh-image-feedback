@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Fix undo and redo in focused comment editors, including focus recovery after removing a comment.
+- Add New feedback with save protection and Clear current with confirmation and one-step undo.
+- Replace Fit canvas with the explicit Show full image label and explanation.
+
 ## 0.2.0 — 2026-10-23
 
 ### Added
